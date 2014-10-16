@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>org.theeuropeanlibrary</groupId>
+    <artifactId>maia</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+    <inceptionYear>2014</inceptionYear>
+    <name>MAIA</name>
+    <description>The European Library domain model (providers, datasets, records, ...), format transformations, converters, etc.</description>
+    <organization>
+        <url>http://www.theeuropeanlibrary.org</url>
+        <name>The European Library Development Team</name>
+    </organization>
+    
+    <scm>
+        <connection>scm:git:git://github.com/TheEuropeanLibrary/MAIA.git</connection>
+        <developerConnection>scm:git:git@github.com:TheEuropeanLibrary/MAIA.git</developerConnection>
+        <url>https://github.com/TheEuropeanLibrary/MAIA</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <id>1nf1n1ty08</id>
+            <name>Markus Muhr</name>
+            <email>markus.muhr@ theeuropeanlibrary.org</email>
+            <organization>The European Library</organization>
+            <organizationUrl>http://www.theeuropeanlibrary.org</organizationUrl>
+            <roles>                
+                <role>software-architect</role>
+                <role>scrum-master</role>
+                <role>technical-manager</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>nfreire</id>
+            <name>Nuno Freire</name>
+            <email>nuno.freire@ theeuropeanlibrary.org</email>
+            <organization>The European Library</organization>
+            <organizationUrl>http://www.theeuropeanlibrary.org</organizationUrl>
+            <roles>                
+                <role>data-specialist</role>
+                <role>computer-scientist</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>stzanakis</id>
+            <name>Simon Tzanakis</name>
+            <email>simon.tzanakis@ theeuropeanlibrary.org</email>
+            <organization>The European Library</organization>
+            <organizationUrl>http://www.theeuropeanlibrary.org</organizationUrl>
+            <roles>                
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>koufakis</id>
+            <name>Emmanouil Koufakis</name>
+            <email>emmanouil.koufakis@ theeuropeanlibrary.org</email>
+            <organization>The European Library</organization>
+            <organizationUrl>http://www.theeuropeanlibrary.org</organizationUrl>
+            <roles>                
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>alena-fedasenka</id>
+            <name>Alena Fedasenka</name>
+            <email>alena.fedasenka@ theeuropeanlibrary.org</email>
+            <organization>The European Library</organization>
+            <organizationUrl>http://www.theeuropeanlibrary.org</organizationUrl>
+            <roles>                
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+    
+    <modules>
+        <module>common</module>
+    </modules>
+    
+    <properties>
+        <version.jdk>1.7</version.jdk>
+        <version.junit>4.10</version.junit>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <configuration>
+                        <source>${version.jdk}</source>
+                        <target>${version.jdk}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>1.6</version>
+                    <configuration>
+                        <licenseName>eupl</licenseName>
+                        <licenseResolver>file://${main.directory}/license</licenseResolver>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>first</id>
+                            <goals>
+                                <goal>update-file-header</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Ignore/Execute plugin execution -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <!-- copy-dependency plugin -->
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-dependency-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>copy-dependencies</goal>
+                                            <goal>unpack</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                                <!-- copy-dependency plugin -->
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>com.qmino</groupId>
+                                        <artifactId>miredot-maven-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>restdoc</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+    <!--    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>1.9.5</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>-->
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <repositories>
+        
+    </repositories>
+    
+    <repositories>
+        <repository>
+            <id>tel.release</id>
+            <name>tel.release</name>
+            <url>http://nexus.tel.ulcc.ac.uk/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>tel.snapshot</id>
+            <name>tel.snapshot</name>
+            <url>http://nexus.tel.ulcc.ac.uk/nexus/content/groups/public-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+<!--        <repository>
+            <id>opennlp.sf.net</id>
+            <url>http://opennlp.sourceforge.net/maven2</url>
+        </repository>-->
+        <!--                                <repository>
+            <id>miredot</id>
+            <name>MireDot Releases</name>
+            <url>http://nexus.qmino.com/content/repositories/miredot</url>
+        </repository>-->
+    </repositories>
+
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>tel.plugins</id>
+            <name>Maven Plugin Repository</name>
+            <url>http://nexus.tel.ulcc.ac.uk/nexus/content/groups/public</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>tel.release</id>
+            <name>TEL Release Repository</name>
+            <url>http://nexus.tel.ulcc.ac.uk/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>tel.snapshot</id>
+            <name>TEL Snapshot Repository</name>
+            <url>http://nexus.tel.ulcc.ac.uk/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>
