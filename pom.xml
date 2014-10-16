@@ -85,6 +85,8 @@
         <version.jdk>1.7</version.jdk>
         <version.junit>4.10</version.junit>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <version.jackson>1.9.13</version.jackson>
     </properties>
     
     <build>
@@ -162,16 +164,6 @@
         </pluginManagement>
     </build>
     
-    <!--    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>1.9.5</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>-->
-
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
