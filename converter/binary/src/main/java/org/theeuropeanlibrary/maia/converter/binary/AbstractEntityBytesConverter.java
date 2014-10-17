@@ -35,7 +35,7 @@ import org.theeuropeanlibrary.maia.common.definitions.AbstractEntity;
  * @since Feb 18, 2011
  */
 @SuppressWarnings("rawtypes")
-public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> extends Converter<byte[], T> {
+public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> extends AbstractBinaryConverter<byte[], T> {
 
     private static final int ID = 1;
     private static final int FIELD = 2;
@@ -60,7 +60,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         CodedOutputStream output = CodedOutputStream.newInstance(bout);
         try {
-            output.writeString(ID, (String)bean.getId());
+            output.writeString(ID, (String) bean.getId());
 
             Map<QualifiedValue<?>, TKey<?, ?>> reverseLookup = new HashMap<>();
 

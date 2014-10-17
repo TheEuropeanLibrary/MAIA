@@ -1,12 +1,5 @@
 package org.theeuropeanlibrary.maia.common;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.logging.Logger;
-
 /**
  * Base abstract class for converters. It provides abstract methods for encoding
  * and decoding of object typed by generics. Furthermore, encoding and decoding
@@ -21,70 +14,29 @@ import java.util.logging.Logger;
  * @author Markus Muhr (markus.muhr@kb.nl)
  * @since Feb 18, 2011
  */
-public abstract class Converter<E, D> {
-
-    /**
-     * private logging variable
-     */
-    private final static Logger log = Logger.getLogger(Converter.class.getName());
+public interface Converter<E, D> {
 
     /**
      * @return encode data type
      */
-    public abstract Class<E> getEncodeType();
+    Class<E> getEncodeType();
 
     /**
      * @return decode data type
      */
-    public abstract Class<D> getDecodeType();
+    Class<D> getDecodeType();
 
     /**
      * @param data
      * @return the encoded data
      * @throws org.theeuropeanlibrary.maia.common.ConverterException
      */
-    public abstract E encode(D data) throws ConverterException;
+    E encode(D data) throws ConverterException;
 
     /**
      * @param data
      * @return the decoded data
      * @throws org.theeuropeanlibrary.maia.common.ConverterException
      */
-    public abstract D decode(E data) throws ConverterException;
-
-    /**
-     * @param data object that should be encoded in bytes
-     * @return the byte array of the object (object stream to bytes)
-     * @throws IOException
-     */
-    public byte[] encodeToByteArray(E data) throws IOException {
-        log.warning("Fallback serialization of object to byte[]");
-
-        if (data == null) {
-            return new byte[0];
-        }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(data);
-        return bos.toByteArray();
-    }
-
-    /**
-     * @param data byte array to be decoded to an object
-     * @return the object read from the bytes (object stream from bytes)
-     * @throws IOException
-     */
-    @SuppressWarnings("unchecked")
-    public D decodeFromByteArray(byte[] data) throws IOException {
-        log.warning("Fallback deserialization from a objectstream");
-
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(data);
-            ObjectInputStream ois = new ObjectInputStream(bis);
-            Object obj = ois.readObject();
-            return (D) obj;
-        } catch (ClassNotFoundException e) {
-            throw new IOException(e.getMessage());
-        }
-    }
+    D decode(E data) throws ConverterException;
 }
