@@ -1,7 +1,7 @@
 package org.theeuropeanlibrary.maia.converter.binary;
 
 import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.common.ConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.common.BinaryConverterFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
 import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedRelation;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.TKey;
@@ -35,15 +36,15 @@ import org.theeuropeanlibrary.maia.common.definitions.AbstractEntity;
  * @since Feb 18, 2011
  */
 @SuppressWarnings("rawtypes")
-public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> extends AbstractBinaryConverter<byte[], T> {
+public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> extends AbstractBinaryConverter<byte[], T> {
 
     private static final int ID = 1;
     private static final int FIELD = 2;
     private static final int RELATION = 3;
 
-    private final ConverterFactory converterFactory;
+    private final BinaryConverterFactory converterFactory;
 
-    public AbstractEntityBytesConverter(ConverterFactory converterFactory) {
+    public AbstractEntityBinaryConverter(BinaryConverterFactory converterFactory) {
         this.converterFactory = converterFactory;
     }
 
@@ -56,7 +57,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
 
     @SuppressWarnings("unchecked")
     @Override
-    public byte[] encode(T bean) {
+    public byte[] encode(T bean)  throws ConverterException {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         CodedOutputStream output = CodedOutputStream.newInstance(bout);
         try {
@@ -87,8 +88,8 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
             }
 
             output.flush();
-        } catch (Throwable e) {
-            throw new RuntimeException("Could not write entity '" + bean.getId()
+        } catch (IOException e) {
+            throw new ConverterException("Could not write entity '" + bean.getId()
                     + "' to byte array!", e);
         } finally {
             try {
@@ -104,7 +105,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
     }
 
     @Override
-    public T decode(byte[] data) {
+    public T decode(byte[] data) throws ConverterException {
         byte[] decompressedData;
         if (data[0] == 120) {
             decompressedData = decompress(data);
@@ -136,8 +137,8 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
                         break;
                 }
             }
-        } catch (Throwable e) {
-            throw new RuntimeException("Could not read entity from byte array!", e);
+        } catch (IOException e) {
+            throw new ConverterException("Could not read entity from byte array!", e);
         } finally {
             try {
                 bin.close();
@@ -248,7 +249,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
                         try {
                             int id = Integer.parseInt(k);
                             key = (TKey<NS, T>) converterFactory.getKey(id);
-                        } catch (Throwable t) {
+                        } catch (NumberFormatException t) {
                             key = (TKey<NS, T>) TKey.fromString(k);
                         }
                         break;
@@ -321,7 +322,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
         try {
             QualifiedValue<?> source = null;
             QualifiedValue<?> target = null;
-            Set<Enum<?>> qualifiers = new HashSet<Enum<?>>();
+            Set<Enum<?>> qualifiers = new HashSet<>();
 
             while ((tag = input.readTag()) != 0) {
                 int field = WireFormat.getTagFieldNumber(tag);
@@ -428,7 +429,7 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
         try {
             int order = -1;
             T value = null;
-            Set<Enum<?>> qualifiers = new HashSet<Enum<?>>();
+            Set<Enum<?>> qualifiers = new HashSet<>();
             while ((tag = input.readTag()) != 0) {
                 int field = WireFormat.getTagFieldNumber(tag);
                 switch (field) {
@@ -441,8 +442,8 @@ public abstract class AbstractEntityBytesConverter<T extends AbstractEntity> ext
                             try {
                                 ByteString b = input.readBytes();
                                 value = (T) converter.decode(b.toByteArray());
-                            } catch (Exception e) {
-                                throw new RuntimeException("Error decoding a "
+                            } catch (IOException e) {
+                                throw new ConverterException("Error decoding a "
                                         + key.getType().getName(), e);
                             }
                         } else {

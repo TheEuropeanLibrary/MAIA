@@ -1,7 +1,7 @@
 package org.theeuropeanlibrary.maia.converter.binary;
 
 import org.theeuropeanlibrary.maia.common.definitions.Dataset;
-import org.theeuropeanlibrary.maia.converter.binary.common.ConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.common.BinaryConverterFactory;
 
 /**
  * This class converts records from and to byte arrays.
@@ -9,9 +9,9 @@ import org.theeuropeanlibrary.maia.converter.binary.common.ConverterFactory;
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 17.10.2014
  */
-public class DatasetEntityBytesConverter extends AbstractEntityBytesConverter<Dataset> {
+public class DatasetEntityBinaryConverter extends AbstractEntityBinaryConverter<Dataset> {
 
-    public DatasetEntityBytesConverter(ConverterFactory factory) {
+    public DatasetEntityBinaryConverter(BinaryConverterFactory factory) {
         super(factory);
     }
 

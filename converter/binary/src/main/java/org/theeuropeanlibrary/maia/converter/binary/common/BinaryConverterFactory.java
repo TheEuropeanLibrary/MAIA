@@ -11,17 +11,17 @@ import org.theeuropeanlibrary.maia.common.TKey;
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 4 de Nov de 2011
  */
-public interface ConverterFactory {
+public interface BinaryConverterFactory {
 
     /**
-     * Get all classes for which the {@link ConverterFactory} has a converter
+     * Get all classes for which the {@link BinaryConverterFactory} has a converter
      *
      * @return classes supported for conversion
      */
     Set<Class<?>> getSupportedClasses();
 
     /**
-     * Get all classes for which the {@link ConverterFactory} has a base type
+     * Get all classes for which the {@link BinaryConverterFactory} has a base type
      * encoder
      *
      * @return classes supported

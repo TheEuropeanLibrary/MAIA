@@ -2,9 +2,10 @@ package org.theeuropeanlibrary.maia.converter.binary;
 
 import java.util.List;
 import junit.framework.Assert;
+import org.theeuropeanlibrary.maia.common.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
-import org.theeuropeanlibrary.maia.converter.binary.definitions.TestConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.definitions.TestBinaryConverterFactory;
 import org.theeuropeanlibrary.maia.converter.binary.definitions.TestKeyRegistry;
 import org.theeuropeanlibrary.maia.converter.binary.definitions.TestType;
 
@@ -16,8 +17,8 @@ import org.theeuropeanlibrary.maia.converter.binary.definitions.TestType;
  */
 public class TestBinaryConverter {
 
-    public void simpleTest() {
-        RecordEntityBytesConverter conv = new RecordEntityBytesConverter(new TestConverterFactory());
+    public void simpleTest() throws ConverterException {
+        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new TestBinaryConverterFactory());
 
         String id = "1";
         String test = "test";

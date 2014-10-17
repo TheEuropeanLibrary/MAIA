@@ -18,7 +18,7 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.common.ConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.common.BinaryConverterFactory;
 
 /**
  * This class defines generic functionality to get specific converters for given
@@ -28,7 +28,7 @@ import org.theeuropeanlibrary.maia.converter.binary.common.ConverterFactory;
  * @since 7 de Jun de 2011
  */
 @SuppressWarnings({"rawtypes", "cast", "unchecked"})
-public class BaseConverterFactory implements ConverterFactory {
+public class BaseBinaryConverterFactory implements BinaryConverterFactory {
 
     protected final Map<Class<?>, Converter> converters = new HashMap<>();
     protected final Map<Class<?>, BaseTypeEncoder> baseTypeEncoders = new HashMap<>();
@@ -39,7 +39,7 @@ public class BaseConverterFactory implements ConverterFactory {
     protected final Map<String, String> enumFieldId = new HashMap<>();
     protected final Map<String, String> fieldIdEnum = new HashMap<>();
 
-    public BaseConverterFactory() {
+    public BaseBinaryConverterFactory() {
         baseTypeEncoders.put(String.class, new StringEncoder());
         baseTypeEncoders.put(Boolean.class, new BooleanEncoder());
         baseTypeEncoders.put(Date.class, new DateEncoder());
@@ -50,12 +50,12 @@ public class BaseConverterFactory implements ConverterFactory {
         baseTypeEncoders.put(Float.class, new FloatEncoder());
     }
 
-    public BaseConverterFactory(Class<?> keyRegistry, Class<?> qualifierRegistry) {
+    public BaseBinaryConverterFactory(Class<?> keyRegistry, Class<?> qualifierRegistry) {
         setupKeys(keyRegistry);
         setupQualifiers(qualifierRegistry);
     }
 
-    private void setupKeys(Class<?> keyRegistry) throws RuntimeException {
+    private void setupKeys(Class<?> keyRegistry) {
         for (Field f : keyRegistry.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
             if (ann != null) {
@@ -67,14 +67,14 @@ public class BaseConverterFactory implements ConverterFactory {
                 try {
                     tkeyFieldId.put((TKey<?, ?>) f.get(TKey.class), ann.value());
                     fieldIdTkey.put(ann.value(), (TKey<?, ?>) f.get(TKey.class));
-                } catch (Exception e) {
+                } catch (IllegalArgumentException | IllegalAccessException e) {
                     throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
                 }
             }
         }
     }
 
-    private void setupQualifiers(Class<?> qualifierRegistry) throws RuntimeException {
+    private void setupQualifiers(Class<?> qualifierRegistry) {
         for (Field f : qualifierRegistry.getDeclaredFields()) {
             FieldId fann = f.getAnnotation(FieldId.class);
             if (fann == null) {
@@ -84,7 +84,7 @@ public class BaseConverterFactory implements ConverterFactory {
             Class<?> qualifierType;
             try {
                 qualifierType = (Class<?>) f.get(Enum.class);
-            } catch (Exception e) {
+            } catch (IllegalAccessException | IllegalArgumentException e) {
                 throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
 // continue;
             }
@@ -114,23 +114,21 @@ public class BaseConverterFactory implements ConverterFactory {
                     }
                 }
 
-                if (fann != null) {
-                    String first = fann.value() + "@" + g.getName();
+                String first = fann.value() + "@" + g.getName();
 
-                    if (fieldIdEnum.containsKey(first)) {
-                        throw new RuntimeException(
-                                "Duplicate field id '" + first + "' is not allowed!");
-                    }
-
-                    try {
-                        fieldIdEnum.put(first, none);
-                        enumFieldId.put(none, first);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
-                    }
+                if (fieldIdEnum.containsKey(first)) {
+                    throw new RuntimeException(
+                            "Duplicate field id '" + first + "' is not allowed!");
                 }
 
-                if (fann != null && eann != null) {
+                try {
+                    fieldIdEnum.put(first, none);
+                    enumFieldId.put(none, first);
+                } catch (Exception e) {
+                    throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
+                }
+
+                if (eann != null) {
                     String full = fann.value() + "@" + eann.value();
 
                     if (fieldIdEnum.containsKey(full)) {
