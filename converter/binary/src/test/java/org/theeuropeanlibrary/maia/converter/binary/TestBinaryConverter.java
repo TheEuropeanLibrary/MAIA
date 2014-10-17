@@ -4,9 +4,10 @@ import java.util.List;
 import junit.framework.Assert;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
-import org.theeuropeanlibrary.maia.converter.binary.common.TestConverterFactory;
-import org.theeuropeanlibrary.maia.converter.binary.common.TestKeyRegistry;
-import org.theeuropeanlibrary.maia.converter.binary.common.TestQualifierRegistry.TestType;
+import org.theeuropeanlibrary.maia.converter.binary.definitions.TestConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.definitions.TestKeyRegistry;
+import org.theeuropeanlibrary.maia.converter.binary.definitions.TestType;
+
 /**
  * This class tests conversion from and to binary format.
  *

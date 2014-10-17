@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.definitions;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
