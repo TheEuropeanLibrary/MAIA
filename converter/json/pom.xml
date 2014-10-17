@@ -4,19 +4,20 @@
     
     <parent>
         <groupId>org.theeuropeanlibrary</groupId>
-        <artifactId>maia</artifactId>
+        <artifactId>maia-converter</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
-    <artifactId>maia-converter</artifactId>
-    <name>MAIA: Converter</name>
-    <packaging>pom</packaging>
-    
-    <modules>
-        <module>binary</module>
-        <module>json</module>
-        <module>xml</module>
-    </modules>
+    <artifactId>maia-converter-json</artifactId>
+    <name>MAIA: Converter JSON</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.theeuropeanlibrary</groupId>
+            <artifactId>maia-common</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+   
 </project>
