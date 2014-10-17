@@ -9,6 +9,11 @@ import org.theeuropeanlibrary.maia.common.FieldId;
  * @since 17.10.2014
  */
 public final class TestQualifierRegistry {
+
     @FieldId(1)
     public static final Class<TestType> TEST_TYPE = TestType.class;
+
+    public static enum TestType {
+        TYPE_1;
+    }
 }

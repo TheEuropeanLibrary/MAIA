@@ -6,8 +6,7 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.converter.binary.common.TestConverterFactory;
 import org.theeuropeanlibrary.maia.converter.binary.common.TestKeyRegistry;
-import org.theeuropeanlibrary.maia.converter.binary.common.TestType;
-
+import org.theeuropeanlibrary.maia.converter.binary.common.TestQualifierRegistry.TestType;
 /**
  * This class tests conversion from and to binary format.
  *
