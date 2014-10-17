@@ -10,40 +10,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class DataProvider {
 
-	public DataProvider() {
-	}
-	
-	public DataProvider(final String id) {
-		this.id = id;
-	}
-	
+    public DataProvider() {
+    }
+
+    public DataProvider(final String id) {
+        this.id = id;
+    }
+
     /**
      * The provider id.
      */
     private String id;
-    
+
     /**
      * The provider name.
      */
     private String name;
 
-
     public String getId() {
         return id;
     }
-
 
     public void setId(String id) {
         this.id = id;
     }
 
     public String getName() {
-		return name;
-	}
-    
+        return name;
+    }
+
     public void setName(String name) {
-		this.name = name;
-	}
+        this.name = name;
+    }
 
     @Override
     public int hashCode() {
@@ -52,7 +50,6 @@ public class DataProvider {
         hash = 37 * hash + Objects.hashCode(this.name);
         return hash;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -71,9 +68,9 @@ public class DataProvider {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-    	return super.toString();
+        return super.toString();
     }
 }
