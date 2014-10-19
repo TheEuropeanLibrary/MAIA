@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import org.theeuropeanlibrary.maia.common.ConverterException;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldSerializer;

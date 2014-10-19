@@ -14,7 +14,7 @@ import com.google.protobuf.CodedOutputStream;
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 5 de Abr de 2011
  */
-public interface FieldConverterInterface {
+public interface FieldConverter {
 
     /**
      * Initializes the field converter

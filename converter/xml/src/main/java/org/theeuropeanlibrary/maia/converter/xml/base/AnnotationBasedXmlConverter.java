@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.theeuropeanlibrary.maia.common.ConverterException;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldSerializer;

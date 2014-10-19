@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Logger;
-import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
 
 /**
  * Base abstract class for converters. It provides abstract methods for encoding

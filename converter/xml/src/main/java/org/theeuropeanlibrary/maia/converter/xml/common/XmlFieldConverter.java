@@ -1,6 +1,6 @@
 package org.theeuropeanlibrary.maia.converter.xml.common;
 
-import org.theeuropeanlibrary.maia.common.ConverterException;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.w3c.dom.Element;
 
 /**

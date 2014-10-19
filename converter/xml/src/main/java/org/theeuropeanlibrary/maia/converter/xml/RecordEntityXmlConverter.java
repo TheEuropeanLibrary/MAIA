@@ -1,6 +1,6 @@
 package org.theeuropeanlibrary.maia.converter.xml;
 
-import org.theeuropeanlibrary.maia.common.ConverterException;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.definitions.Dataset;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;

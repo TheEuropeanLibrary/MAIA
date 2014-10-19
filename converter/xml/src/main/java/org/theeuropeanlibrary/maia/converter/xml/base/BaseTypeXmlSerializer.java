@@ -3,7 +3,7 @@ package org.theeuropeanlibrary.maia.converter.xml.base;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.theeuropeanlibrary.maia.common.ConverterException;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
 
 import org.theeuropeanlibrary.maia.converter.xml.basetype.BaseTypeEncoder;

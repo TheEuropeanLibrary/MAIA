@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import org.theeuropeanlibrary.central.convert.DoubleEncoder;
 import org.theeuropeanlibrary.central.convert.ShortEncoder;
-import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BooleanEncoder;

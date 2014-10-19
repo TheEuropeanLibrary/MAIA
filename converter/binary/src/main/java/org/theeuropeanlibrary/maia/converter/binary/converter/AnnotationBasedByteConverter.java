@@ -1,5 +1,6 @@
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.converter;
 
+import org.theeuropeanlibrary.maia.converter.binary.factory.BaseTypeFieldConverterFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,8 +14,9 @@ import java.util.Map;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
-import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.converter.binary.common.FieldConverter;
 
 /**
  * A <code>Converter</code> that converts objects according to annotations added
@@ -29,7 +31,7 @@ import org.theeuropeanlibrary.maia.common.FieldId;
 public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
 
     private Class<T> theClass;
-    private ArrayList<FieldConverterInterface> idIndexedFieldArray;
+    private ArrayList<FieldConverter> idIndexedFieldArray;
 
     /**
      * Creates a new instance of this class.
@@ -39,23 +41,23 @@ public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
      * fields containing complex Objects
      */
     public AnnotationBasedByteConverter(Class<T> theClass,
-            Map<Integer, FieldConverterInterface> customEncoders) {
+            Map<Integer, FieldConverter> customEncoders) {
         this.theClass = theClass;
-        ArrayList<FieldConverterInterface> fieldsWithAnnotatoins = new ArrayList<FieldConverterInterface>();
-        HashMap<Integer, FieldConverterInterface> idToFieldMap = new HashMap<Integer, FieldConverterInterface>();
+        ArrayList<FieldConverter> fieldsWithAnnotatoins = new ArrayList<FieldConverter>();
+        HashMap<Integer, FieldConverter> idToFieldMap = new HashMap<Integer, FieldConverter>();
         int maxFieldId = initFieldsFromClass(theClass, customEncoders, fieldsWithAnnotatoins,
                 idToFieldMap);
 
-        idIndexedFieldArray = new ArrayList<FieldConverterInterface>(maxFieldId + 1);
+        idIndexedFieldArray = new ArrayList<FieldConverter>(maxFieldId + 1);
         for (int i = 0; i <= maxFieldId; i++) {
             idIndexedFieldArray.add(idToFieldMap.get(i));
         }
     }
 
     private int initFieldsFromClass(Class<?> theClass,
-            Map<Integer, FieldConverterInterface> customEncoders,
-            ArrayList<FieldConverterInterface> fieldsWithAnnotatoins,
-            HashMap<Integer, FieldConverterInterface> idToFieldMap) {
+            Map<Integer, FieldConverter> customEncoders,
+            ArrayList<FieldConverter> fieldsWithAnnotatoins,
+            HashMap<Integer, FieldConverter> idToFieldMap) {
         int maxFieldId = 0;
 
         if (!theClass.getSuperclass().equals(Object.class)) {
@@ -67,7 +69,7 @@ public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
             f.setAccessible(true);
             FieldId ann = f.getAnnotation(FieldId.class);
             if (ann != null) {
-                FieldConverterInterface fldConv = null;
+                FieldConverter fldConv = null;
                 maxFieldId = Math.max(maxFieldId, ann.value());
                 if (customEncoders != null) {
                     fldConv = customEncoders.get(ann.value());
@@ -96,7 +98,7 @@ public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
             int tag;
             while ((tag = input.readTag()) != 0) {
                 tag = WireFormat.getTagFieldNumber(tag);
-                FieldConverterInterface fieldBufferSetter = idIndexedFieldArray.get(tag);
+                FieldConverter fieldBufferSetter = idIndexedFieldArray.get(tag);
                 fieldBufferSetter.decode(obj, input);
             }
             return obj;
@@ -129,7 +131,7 @@ public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         CodedOutputStream output = CodedOutputStream.newInstance(bout);
         try {
-            for (FieldConverterInterface conv : idIndexedFieldArray) {
+            for (FieldConverter conv : idIndexedFieldArray) {
                 if (conv != null) {
                     conv.encode(data, output);
                 }

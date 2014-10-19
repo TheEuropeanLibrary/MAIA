@@ -1,8 +1,8 @@
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.factory;
 
 import java.util.Date;
 import org.theeuropeanlibrary.central.convert.DoubleEncoder;
-import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BinaryEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BooleanEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.DateEncoder;
@@ -11,6 +11,9 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.FloatEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeConverter;
+import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.converter.BaseTypeEncoderBasedConverter;
 
 /**
  * Factory to retrieve base type converters.F

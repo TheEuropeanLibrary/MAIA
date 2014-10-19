@@ -2,7 +2,7 @@
 package org.theeuropeanlibrary.maia.converter.binary.common;
 
 import java.util.Set;
-import org.theeuropeanlibrary.maia.common.Converter;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.TKey;
 
 /**

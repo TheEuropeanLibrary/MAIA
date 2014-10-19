@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.common;
+package org.theeuropeanlibrary.maia.common.converter;
 
 /**
  * This exception is thrown by all public methods in the {@link Converter}.

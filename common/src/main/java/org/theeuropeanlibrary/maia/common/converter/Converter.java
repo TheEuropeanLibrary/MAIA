@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.common;
+package org.theeuropeanlibrary.maia.common.converter;
 
 /**
  * Base abstract class for converters. It provides abstract methods for encoding

@@ -12,7 +12,7 @@ import com.google.protobuf.CodedOutputStream;
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 5 de Abr de 2011
  */
-public class BaseTypeConverter implements FieldConverterInterface {
+public class BaseTypeConverter implements FieldConverter {
 
     private Field field;
     private int id;
