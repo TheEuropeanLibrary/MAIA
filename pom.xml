@@ -80,6 +80,7 @@
     <modules>
         <module>common</module>
         <module>converter</module>
+        <module>tel</module>
     </modules>
     
     <properties>
