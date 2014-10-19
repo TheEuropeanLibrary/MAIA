@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.definitions;
+package org.theeuropeanlibrary.maia.common.registry;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
@@ -10,9 +10,16 @@ import org.theeuropeanlibrary.maia.common.TKey;
  * @since 17.10.2014
  */
 public final class TestKeyRegistry {
+
     @FieldId(1)
-    public static final TKey<TestKeyRegistry, String> TEST = TKey.register(
+    public static final TKey<TestKeyRegistry, String> BASE = TKey.register(
             TestKeyRegistry.class,
-            "test",
+            "base",
             String.class);
+
+    @FieldId(2)
+    public static final TKey<TestKeyRegistry, TestKey> COMPLEX = TKey.register(
+            TestKeyRegistry.class,
+            "complex",
+            TestKey.class);
 }

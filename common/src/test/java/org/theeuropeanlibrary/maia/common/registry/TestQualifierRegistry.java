@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.definitions;
+package org.theeuropeanlibrary.maia.common.registry;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 
@@ -11,5 +11,5 @@ import org.theeuropeanlibrary.maia.common.FieldId;
 public final class TestQualifierRegistry {
 
     @FieldId(1)
-    public static final Class<TestType> TEST_TYPE = TestType.class;
+    public static final Class<TestQualifier> TEST_TYPE = TestQualifier.class;
 }

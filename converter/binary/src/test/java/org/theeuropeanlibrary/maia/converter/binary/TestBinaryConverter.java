@@ -5,9 +5,8 @@ import junit.framework.Assert;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
-import org.theeuropeanlibrary.maia.converter.binary.definitions.TestBinaryConverterFactory;
-import org.theeuropeanlibrary.maia.converter.binary.definitions.TestKeyRegistry;
-import org.theeuropeanlibrary.maia.converter.binary.definitions.TestType;
+import org.theeuropeanlibrary.maia.common.registry.TestKeyRegistry;
+import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
 
 /**
  * This class tests conversion from and to binary format.
@@ -25,12 +24,12 @@ public class TestBinaryConverter {
 
         Record<String> mdr = new Record<>();
         mdr.setId(id);
-        mdr.addValue(TestKeyRegistry.TEST, test, TestType.TYPE_1);
+        mdr.addValue(TestKeyRegistry.BASE, test, TestQualifier.TYPE_1);
 
         byte[] mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
-        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestKeyRegistry.TEST);
+        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestKeyRegistry.BASE);
         QualifiedValue<String> decodedTest = field.get(0);
 
         Assert.assertEquals(id, mdr.getId());

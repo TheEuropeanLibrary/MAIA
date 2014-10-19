@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.definitions;
+package org.theeuropeanlibrary.maia.common.registry;
 
 /**
  * Test qualifier.
@@ -6,7 +6,7 @@ package org.theeuropeanlibrary.maia.converter.binary.definitions;
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 17.10.2014
  */
-public enum TestType {
+public enum TestQualifier {
 
     TYPE_1;
 }

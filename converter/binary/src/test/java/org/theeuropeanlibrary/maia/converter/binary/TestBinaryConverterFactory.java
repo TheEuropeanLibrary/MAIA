@@ -1,5 +1,7 @@
-package org.theeuropeanlibrary.maia.converter.binary.definitions;
+package org.theeuropeanlibrary.maia.converter.binary;
 
+import org.theeuropeanlibrary.maia.common.registry.TestKeyRegistry;
+import org.theeuropeanlibrary.maia.common.registry.TestQualifierRegistry;
 import org.theeuropeanlibrary.maia.converter.binary.factory.BaseBinaryConverterFactory;
 
 /**
