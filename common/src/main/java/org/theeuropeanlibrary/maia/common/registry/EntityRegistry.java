@@ -1,6 +1,7 @@
 package org.theeuropeanlibrary.maia.common.registry;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 
@@ -16,19 +17,34 @@ public interface EntityRegistry {
     /**
      * Retrieves all available keys!
      *
-     * @param <NS> name space
-     * @param <T> generic type
      * @return keys
      */
-    <NS, T> Set<TKey<NS, T>> getAvailableKeys();
+    Set<TKey<?, ?>> getAvailableKeys();
 
     /**
-     * Retrieves all available qualifiers for a given key!
+     * Retrieves all available keys!
      *
-     * @param <NS> name space
-     * @param <T> generic type
-     * @param key
-     * @return qualifier
+     * @return keys
      */
-    <NS, T> List<Class<? extends Enum<?>>> getQualifiersForKey(TKey<NS, T> key);
+    Set<Class<? extends Enum<?>>> getAvailableQualifiers();
+
+    /**
+     * Returns valid enums for the given key or null. Note null is supposed to
+     * happen only for dynamic keys and not for the ones defined in this map, as
+     * dynamic keys do not enforce only specific qualifiers.
+     *
+     * @param key typed key for which known qualifiers should be retrieved
+     * @return valid enums for the given key or null
+     */
+    Set<Class<? extends Enum<?>>> getQualifiers(TKey<?, ?> key);
+
+    /**
+     * Returns valid relation targets for the given key or null. Note null is
+     * supposed to happen only for dynamic keys and not for the ones defined in
+     * this map, as dynamic keys do not enforce only specific relations.
+     *
+     * @param key typed key for which known relation targets should be retrieved
+     * @return valid keys with enums for the given key or null
+     */
+    Map<TKey<?, ?>, List<Class<? extends Enum<?>>>> getRelationTargets(TKey<?, ?> key);
 }

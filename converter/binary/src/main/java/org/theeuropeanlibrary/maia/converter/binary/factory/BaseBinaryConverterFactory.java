@@ -50,15 +50,15 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
         baseTypeEncoders.put(Float.class, new FloatEncoder());
     }
 
-    public BaseBinaryConverterFactory(Class<?> keyRegistry, Class<?> qualifierRegistry) {
-        setupKeys(keyRegistry);
-        setupQualifiers(qualifierRegistry);
+    public BaseBinaryConverterFactory(Class<?> registry) {
+        setupKeys(registry);
+        setupQualifiers(registry);
     }
 
     private void setupKeys(Class<?> keyRegistry) {
         for (Field f : keyRegistry.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
-            if (ann != null) {
+            if (ann != null && f.getClass().isAssignableFrom(TKey.class)) {
                 if (fieldIdTkey.containsKey(ann.value())) {
                     throw new RuntimeException(
                             "Duplicate field id '" + ann.value() + "' is not allowed!");
@@ -77,7 +77,7 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     private void setupQualifiers(Class<?> qualifierRegistry) {
         for (Field f : qualifierRegistry.getDeclaredFields()) {
             FieldId fann = f.getAnnotation(FieldId.class);
-            if (fann == null) {
+            if (fann == null || f.getClass().isAssignableFrom(TKey.class)) {
                 continue;
             }
 

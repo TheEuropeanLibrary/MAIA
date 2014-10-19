@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>maia-common</artifactId>
-    <name>MAIA: Common definitions</name>
+    <name>MAIA: Common</name>
 
     <dependencies>
         <dependency>
