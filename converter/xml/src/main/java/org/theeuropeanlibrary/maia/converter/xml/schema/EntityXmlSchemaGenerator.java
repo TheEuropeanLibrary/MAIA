@@ -53,7 +53,7 @@ public class EntityXmlSchemaGenerator {
             Set<TKey> baseKeys = new HashSet<>();
             HashSet<Class<? extends Enum<?>>> allQualifiers = new HashSet<>();
             for (TKey key : registry.getAvailableKeys()) {
-                List<Class<? extends Enum<?>>> validEnums = registry.getQualifiersForKey(key);
+                Set<Class<? extends Enum<?>>> validEnums = registry.getQualifiers(key);
                 allQualifiers.addAll(validEnums);
                 if (factory.getConverter(key.getType()) != null) {
                     complexKeys.add(key);
@@ -89,7 +89,7 @@ public class EntityXmlSchemaGenerator {
                 XmlFieldConverter serializer = factory.getConverter(key.getType());
                 Element elementEl = fieldStandaloneGenerator.toXmlSchema(serializer, schemaEl,
                         factory.getElementName(key), 1, 1, parentClasses);
-                List<Class<? extends Enum<?>>> validEnums = registry.getQualifiersForKey(key);
+                Set<Class<? extends Enum<?>>> validEnums = registry.getQualifiers(key);
 
                 if (key.getType().isEnum()) {
                     Element subElementEl = schemaEl.getOwnerDocument().createElement("xs:element");
