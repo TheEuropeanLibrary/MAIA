@@ -1,5 +1,7 @@
 package org.theeuropeanlibrary.maia.common.definitions;
 
+import org.theeuropeanlibrary.maia.common.AbstractEntity;
+
 /**
  * Implements {@link Dataset} holding all information in memory.
  *

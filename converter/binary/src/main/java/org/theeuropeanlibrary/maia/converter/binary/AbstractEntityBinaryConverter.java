@@ -24,7 +24,7 @@ import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedRelation;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.TKey;
-import org.theeuropeanlibrary.maia.common.definitions.AbstractEntity;
+import org.theeuropeanlibrary.maia.common.AbstractEntity;
 
 /**
  * Converts between entities and byte array.

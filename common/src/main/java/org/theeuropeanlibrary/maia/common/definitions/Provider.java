@@ -1,5 +1,6 @@
 package org.theeuropeanlibrary.maia.common.definitions;
 
+import org.theeuropeanlibrary.maia.common.AbstractEntity;
 import java.util.HashSet;
 import java.util.Set;
 

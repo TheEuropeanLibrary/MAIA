@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.common.definitions;
+package org.theeuropeanlibrary.maia.common;
 
 import java.util.ArrayList;
 import java.util.Arrays;

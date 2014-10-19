@@ -29,14 +29,14 @@ public interface Converter<E, D> {
     /**
      * @param data
      * @return the encoded data
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     E encode(D data) throws ConverterException;
 
     /**
      * @param data
      * @return the decoded data
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     D decode(E data) throws ConverterException;
 }
