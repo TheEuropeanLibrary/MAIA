@@ -10,14 +10,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.theeuropeanlibrary.maia.common.Entity;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedRelation;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
-import org.theeuropeanlibrary.maia.common.TKey;
 
 /**
  * In-memory implementation of {@link Entity}. It is supposed to be the core
- * class for usage if there is no need for a special implementation due to
  * special requirements of the storage backend.
  *
  * @param <ID> unique ID
