@@ -2,6 +2,7 @@ package org.theeuropeanlibrary.maia.common;
 
 import junit.framework.Assert;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
+import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 
 /**
@@ -21,9 +22,9 @@ public class RecordTest {
 
         Record record = new Record();
         record.setId(id);
-        record.addValue(TestEntityRegistry.BASE, base);
+        record.addValue(TestEntityConstants.BASE, base);
 
         Assert.assertEquals(id, record.getId());
-        Assert.assertEquals(base, record.getFirstValue(TestEntityRegistry.BASE));
+        Assert.assertEquals(base, record.getFirstValue(TestEntityConstants.BASE));
     }
 }

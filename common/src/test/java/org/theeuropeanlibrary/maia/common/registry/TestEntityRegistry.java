@@ -6,9 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
-import static org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry.TEST_TYPE;
+import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.BASE;
+import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.COMPLEX;
+import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.TEST_TYPE;
 
 /**
  * This class provides registration of keys used for tests.
@@ -20,23 +21,6 @@ public final class TestEntityRegistry implements EntityRegistry {
 
     public static TestEntityRegistry INSTANCE = new TestEntityRegistry();
 
-    // Keys
-    @FieldId(1)
-    public static final TKey<TestEntityRegistry, String> BASE = TKey.register(
-            TestEntityRegistry.class,
-            "base",
-            String.class);
-
-    @FieldId(2)
-    public static final TKey<TestEntityRegistry, TestKey> COMPLEX = TKey.register(
-            TestEntityRegistry.class,
-            "complex",
-            TestKey.class);
-
-    // Qualifiers
-    @FieldId(1)
-    public static final Class<TestQualifier> TEST_TYPE = TestQualifier.class;
-
     private final Set<TKey<?, ?>> keys = new HashSet<>();
 
     private final Set<Class<? extends Enum<?>>> qualifiers = new HashSet<>();
@@ -46,6 +30,11 @@ public final class TestEntityRegistry implements EntityRegistry {
     private final Map<TKey<?, ?>, Map<TKey<?, ?>, List<Class<? extends Enum<?>>>>> validRelations = new HashMap<>();
 
     private TestEntityRegistry() {
+        keys.add(BASE);
+        keys.add(COMPLEX);
+
+        qualifiers.add(TEST_TYPE);
+
         validQualifiers.put(BASE, new HashSet<Class<? extends Enum<?>>>() {
             {
                 add(TEST_TYPE);

@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
-import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
+import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
 
 /**
@@ -26,12 +26,12 @@ public class BinaryConverterTest {
 
         Record<String> mdr = new Record<>();
         mdr.setId(id);
-        mdr.addValue(TestEntityRegistry.BASE, test, TestQualifier.TYPE_1);
+        mdr.addValue(TestEntityConstants.BASE, test, TestQualifier.TYPE_1);
 
         byte[] mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
-        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityRegistry.BASE);
+        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
         QualifiedValue<String> decodedTest = field.get(0);
 
         Assert.assertEquals(id, mdr.getId());

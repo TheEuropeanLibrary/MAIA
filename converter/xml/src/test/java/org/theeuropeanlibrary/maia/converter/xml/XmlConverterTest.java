@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.Entity;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
-import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
+import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
 import org.w3c.dom.Element;
 
@@ -21,19 +21,19 @@ public class XmlConverterTest {
 
     @Test
     public void encodeDecodeRecordTest() throws ConverterException {
-        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(new TestXmlFieldConverterFactory());
-
         String id = "1";
         String test = "test";
 
         Record<String> mdr = new Record<>();
         mdr.setId(id);
-        mdr.addValue(TestEntityRegistry.BASE, test, TestQualifier.TYPE_1);
+        mdr.addValue(TestEntityConstants.BASE, test, TestQualifier.TYPE_1);
+
+        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(new TestXmlFieldConverterFactory());
 
         Element mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
-        List<Entity.QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityRegistry.BASE);
+        List<Entity.QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
         Entity.QualifiedValue<String> decodedTest = field.get(0);
 
         Assert.assertEquals(id, mdr.getId());
