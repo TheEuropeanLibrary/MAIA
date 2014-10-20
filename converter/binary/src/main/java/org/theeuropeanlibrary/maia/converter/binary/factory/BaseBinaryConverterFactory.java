@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.theeuropeanlibrary.central.convert.DoubleEncoder;
 import org.theeuropeanlibrary.central.convert.ShortEncoder;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
@@ -51,6 +53,7 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     }
 
     public BaseBinaryConverterFactory(Class<?> registry) {
+        this();
         setupKeys(registry);
         setupQualifiers(registry);
     }
@@ -58,18 +61,23 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     private void setupKeys(Class<?> keyRegistry) {
         for (Field f : keyRegistry.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
-            if (ann != null && f.getClass().isAssignableFrom(TKey.class)) {
+            if (ann != null) {
+                Object key;
+                try {
+                    key = f.get(TKey.class);
+                } catch (IllegalAccessException | IllegalArgumentException ex) {
+                    key = null;
+                }
+                if (key == null || !(key instanceof TKey)) {
+                    continue;
+                }
                 if (fieldIdTkey.containsKey(ann.value())) {
                     throw new RuntimeException(
                             "Duplicate field id '" + ann.value() + "' is not allowed!");
                 }
 
-                try {
-                    tkeyFieldId.put((TKey<?, ?>) f.get(TKey.class), ann.value());
-                    fieldIdTkey.put(ann.value(), (TKey<?, ?>) f.get(TKey.class));
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
-                }
+                tkeyFieldId.put((TKey<?, ?>) key, ann.value());
+                fieldIdTkey.put(ann.value(), (TKey<?, ?>) key);
             }
         }
     }
@@ -77,7 +85,16 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     private void setupQualifiers(Class<?> qualifierRegistry) {
         for (Field f : qualifierRegistry.getDeclaredFields()) {
             FieldId fann = f.getAnnotation(FieldId.class);
-            if (fann == null || f.getClass().isAssignableFrom(TKey.class)) {
+            if (fann == null) {
+                continue;
+            }
+            Object key;
+            try {
+                key = f.get(TKey.class);
+            } catch (IllegalAccessException | IllegalArgumentException ex) {
+                key = null;
+            }
+            if (key == null || (key instanceof TKey)) {
                 continue;
             }
 
