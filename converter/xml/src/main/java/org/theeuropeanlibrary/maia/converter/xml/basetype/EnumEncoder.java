@@ -5,25 +5,25 @@ import java.util.regex.Pattern;
 
 /**
  * A field converter for Enum types
- * 
+ *
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 6 de Abr de 2011
  */
 @SuppressWarnings("rawtypes")
 public class EnumEncoder implements BaseTypeEncoder<Enum<?>> {
-    Pattern               SPACE_PREFFIX = Pattern.compile("^\\s+");
-    Pattern               SPACE_SUFFIX  = Pattern.compile("\\s+$");
+
+    private static final Pattern SPACE_PREFFIX = Pattern.compile("^\\s+");
+    private static final Pattern SPACE_SUFFIX = Pattern.compile("\\s+$");
 
     /**
-     * the type of enum
+     * type of enum
      */
-    Class<? extends Enum> type;
+    private final Class<? extends Enum> type;
 
     /**
      * Creates a new instance of this class.
-     * 
-     * @param type
-     *            the type of enum
+     *
+     * @param type the type of enum
      */
     public EnumEncoder(Class<? extends Enum> type) {
         super();
@@ -37,7 +37,7 @@ public class EnumEncoder implements BaseTypeEncoder<Enum<?>> {
                 "");
         Enum en;
         try {
-             en = Enum.valueOf(type, cleaned);
+            en = Enum.valueOf(type, cleaned);
         } catch (Exception e) {
             // FIXME: Hack!!!!
 //            if (type.equals(Language.class)) {
@@ -46,7 +46,7 @@ public class EnumEncoder implements BaseTypeEncoder<Enum<?>> {
 //                    throw e;
 //                }
 //            } else {
-                throw e;
+            throw e;
 //            }
         }
         return en;

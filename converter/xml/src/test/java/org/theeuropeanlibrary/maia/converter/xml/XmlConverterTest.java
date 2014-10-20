@@ -1,23 +1,27 @@
-package org.theeuropeanlibrary.maia.converter.binary;
+package org.theeuropeanlibrary.maia.converter.xml;
 
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.Test;
+import org.theeuropeanlibrary.maia.common.Entity;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
-import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
+import org.w3c.dom.Element;
 
 /**
- * This class tests conversion from and to binary format.
+ * This class tests conversion from and to xml representations of a simple test
+ * model.
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
- * @since 17.10.2014
+ * @since 20.10.2014
  */
-public class TestBinaryConverter {
+public class XmlConverterTest {
 
-    public void simpleTest() throws ConverterException {
-        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new TestBinaryConverterFactory());
+    @Test
+    public void encodeDecodeRecordTest() throws ConverterException {
+        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(new TestXmlFieldConverterFactory());
 
         String id = "1";
         String test = "test";
@@ -26,11 +30,11 @@ public class TestBinaryConverter {
         mdr.setId(id);
         mdr.addValue(TestEntityRegistry.BASE, test, TestQualifier.TYPE_1);
 
-        byte[] mdrEncoded = conv.encode(mdr);
+        Element mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
-        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityRegistry.BASE);
-        QualifiedValue<String> decodedTest = field.get(0);
+        List<Entity.QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityRegistry.BASE);
+        Entity.QualifiedValue<String> decodedTest = field.get(0);
 
         Assert.assertEquals(id, mdr.getId());
         Assert.assertEquals(test, decodedTest.getValue());

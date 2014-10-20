@@ -63,12 +63,10 @@ public interface XmlFieldConverterFactory {
     /**
      * Gets a TKey for a given element name
      *
-     * @param <NS> name space
-     * @param <T> generic type
      * @param elemName
      * @return key
      */
-    <NS, T> TKey<NS, T> getKey(String elemName);
+    TKey<?, ?> getKey(String elemName);
 
     /**
      * Gets a field ID for a given TKey
@@ -76,7 +74,7 @@ public interface XmlFieldConverterFactory {
      * @param qualifier
      * @return integer
      */
-    String getAttributeName(Class qualifier);
+    String getAttributeName(Class<? extends Enum<?>> qualifier);
 
     /**
      * Gets a TKey for a given field ID
@@ -84,5 +82,5 @@ public interface XmlFieldConverterFactory {
      * @param attrName
      * @return key
      */
-    Class getQualifier(String attrName);
+    Class<? extends Enum<?>> getQualifier(String attrName);
 }

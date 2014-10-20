@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
 public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> implements Converter<Element, T>, XmlFieldConverter<T> {
 
     public static final String XML_NAMESPACE = "http://theeuropeanlibrary.org/internal_object_model";
-    
+
     private final XmlFieldConverterFactory converterFactory;
 
     public AbstractEntityXmlConverter(XmlFieldConverterFactory converterFactory) {
@@ -60,7 +60,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
      *
      * @param xmlElement the XML representation of the object
      * @param bean the target
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     public void decode(Element xmlElement, T bean) throws ConverterException {
         bean.setId(Long.parseLong(xmlElement.getAttribute("ID")));
@@ -84,7 +84,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
             if (!el.getLocalName().equals("FieldRelation")) {
                 String orderIndex = el.getAttribute("OrderIndex");
                 if (!el.getLocalName().equals("Generic")) {
-                    TKey<Object, Object> tkey = converterFactory.getKey(el.getLocalName());
+                    TKey<?, ?> tkey = converterFactory.getKey(el.getLocalName());
                     XmlFieldConverter fieldDef = converterFactory.getConverter(tkey.getType());
                     Object fldVal = fieldDef.decode(el);
 
