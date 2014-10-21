@@ -20,7 +20,7 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
  * @param <ID> unique ID
  *
  * @author Markus Muhr (markus.muhr@kb.nl)
- * @since Mar 22, 2011
+ * @since 22.03.2011
  */
 @SuppressWarnings("unchecked")
 public class AbstractEntity<ID> implements Entity<ID> {
