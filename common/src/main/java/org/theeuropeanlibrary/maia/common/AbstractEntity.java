@@ -31,6 +31,29 @@ public class AbstractEntity<ID> implements Entity<ID> {
     private ID id;
 
     /**
+     * holds for each key a list of known qualified values
+     */
+    private final Map<TKey<?, ?>, List<QualifiedValue<?>>> fields = new HashMap<>();
+
+    /**
+     * Maintain index in order to retain ordering. null: not calculated yet
+     */
+    private transient Integer nextOrderIndex = null;
+
+    // modeling structure information
+    /**
+     * holds relations starting from source nodes, giving back target nodes with
+     * connected qualifications
+     */
+    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> sourcesLookup = new HashMap<>();
+
+    /**
+     * holds relations ending in target nodes, giving back source nodes with
+     * connected qualifications
+     */
+    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> targetsLookup = new HashMap<>();
+
+    /**
      * Creates a new instance of this class.
      */
     public AbstractEntity() {
@@ -88,16 +111,6 @@ public class AbstractEntity<ID> implements Entity<ID> {
         }
         return true;
     }
-
-    /**
-     * holds for each key a list of known qualified values
-     */
-    private final HashMap<TKey<?, ?>, List<QualifiedValue<?>>> fields = new HashMap<>();
-
-    /**
-     * Maintain index in order to retain ordering. null: not calculated yet
-     */
-    private transient Integer nextOrderIndex = null;
 
     @Override
     public <N, T> T getFirstValue(TKey<N, T> key, Enum<?>... qualifiers) {
@@ -270,19 +283,6 @@ public class AbstractEntity<ID> implements Entity<ID> {
         }
         return contained;
     }
-
-    // modeling structure information
-    /**
-     * holds relations starting from source nodes, giving back target nodes with
-     * connected qualifications
-     */
-    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> sourcesLookup = new HashMap<>();
-
-    /**
-     * holds relations ending in target nodes, giving back source nodes with
-     * connected qualifications
-     */
-    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> targetsLookup = new HashMap<>();
 
     @Override
     public <S, T> void addRelation(QualifiedValue<S> source, QualifiedValue<T> target,

@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Andreas Juffinger <andreas.juffinger@kb.nl>
  * @author Markus Muhr <markus.muhr@theeuropeanlibrary.org>
- * @since Dez 16, 2010
+ * @since 16.12.2010
  */
 public final class TKey<NS, T> implements Comparable<TKey<NS, T>>, Serializable {
 

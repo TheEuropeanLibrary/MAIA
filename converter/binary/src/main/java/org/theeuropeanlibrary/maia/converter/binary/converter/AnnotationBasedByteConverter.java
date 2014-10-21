@@ -14,6 +14,7 @@ import java.util.Map;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
+import java.util.List;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.converter.binary.common.FieldConverter;
@@ -30,8 +31,8 @@ import org.theeuropeanlibrary.maia.converter.binary.common.FieldConverter;
  */
 public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
 
-    private Class<T> theClass;
-    private ArrayList<FieldConverter> idIndexedFieldArray;
+    private final Class<T> theClass;
+    private final List<FieldConverter> idIndexedFieldArray;
 
     /**
      * Creates a new instance of this class.
@@ -43,12 +44,12 @@ public class AnnotationBasedByteConverter<T> implements Converter<byte[], T> {
     public AnnotationBasedByteConverter(Class<T> theClass,
             Map<Integer, FieldConverter> customEncoders) {
         this.theClass = theClass;
-        ArrayList<FieldConverter> fieldsWithAnnotatoins = new ArrayList<FieldConverter>();
-        HashMap<Integer, FieldConverter> idToFieldMap = new HashMap<Integer, FieldConverter>();
+        ArrayList<FieldConverter> fieldsWithAnnotatoins = new ArrayList<>();
+        HashMap<Integer, FieldConverter> idToFieldMap = new HashMap<>();
         int maxFieldId = initFieldsFromClass(theClass, customEncoders, fieldsWithAnnotatoins,
                 idToFieldMap);
 
-        idIndexedFieldArray = new ArrayList<FieldConverter>(maxFieldId + 1);
+        idIndexedFieldArray = new ArrayList<>(maxFieldId + 1);
         for (int i = 0; i <= maxFieldId; i++) {
             idIndexedFieldArray.add(idToFieldMap.get(i));
         }

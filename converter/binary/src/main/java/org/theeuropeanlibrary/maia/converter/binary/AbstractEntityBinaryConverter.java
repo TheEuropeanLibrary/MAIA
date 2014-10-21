@@ -166,6 +166,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
         try {
             bos.close();
         } catch (IOException e) {
+            // ignore
         }
 
         byte[] compressed = bos.toByteArray();
