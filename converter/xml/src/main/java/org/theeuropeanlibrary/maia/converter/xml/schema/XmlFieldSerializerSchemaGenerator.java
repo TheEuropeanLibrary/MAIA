@@ -3,12 +3,12 @@ package org.theeuropeanlibrary.maia.converter.xml.schema;
 
 import java.util.Set;
 
-import org.theeuropeanlibrary.maia.converter.xml.base.BaseTypeXmlSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.base.CollectionXmlFieldSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.base.MultiClassXmlFieldSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.base.ObjectToXmlFieldSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeXmlSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.CollectionXmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.MultiClassXmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.ObjectToXmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldSerializer;
 import org.w3c.dom.Element;
 
 /**

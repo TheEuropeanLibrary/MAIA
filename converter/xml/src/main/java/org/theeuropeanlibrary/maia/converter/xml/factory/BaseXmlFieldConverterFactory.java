@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
-import org.theeuropeanlibrary.maia.converter.xml.base.BaseTypeEncoderBasedXmlSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeEncoderBasedXmlSerializer;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.BooleanEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.DateEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.DoubleEncoder;
@@ -15,8 +15,7 @@ import org.theeuropeanlibrary.maia.converter.xml.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.ShortEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.StringEncoder;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 
 /**
  * This class implements a basic xml converter. It uses the name of the TKey and

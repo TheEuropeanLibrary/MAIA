@@ -1,5 +1,5 @@
 /* FieldRelation.java - created on 18/12/2013, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.xml.common;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import java.util.ArrayList;
 import java.util.List;

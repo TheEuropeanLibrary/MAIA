@@ -1,5 +1,5 @@
 /* FieldBufferSetter.java - created on 5 de Abr de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.binary.annotation;
+package org.theeuropeanlibrary.maia.converter.binary.complex;
 
 import java.lang.reflect.Field;
 

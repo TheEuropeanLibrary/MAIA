@@ -1,12 +1,10 @@
 /* ObjectToXmlFieldSerializer.java - created on 2 de Mai de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.xml.base;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldSerializer;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;

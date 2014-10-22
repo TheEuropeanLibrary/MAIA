@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.xml.common;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import java.lang.reflect.Method;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;

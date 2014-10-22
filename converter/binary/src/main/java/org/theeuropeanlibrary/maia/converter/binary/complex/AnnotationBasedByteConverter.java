@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.annotation;
+package org.theeuropeanlibrary.maia.converter.binary.complex;
 
 import org.theeuropeanlibrary.maia.converter.binary.factory.BaseTypeFieldConverterFactory;
 import java.io.ByteArrayInputStream;

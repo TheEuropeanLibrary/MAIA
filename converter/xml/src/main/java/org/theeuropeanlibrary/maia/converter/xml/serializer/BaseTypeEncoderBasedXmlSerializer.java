@@ -1,9 +1,8 @@
 /* EditionBeanBytesConverter.java - created on 5 de Abr de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.xml.base;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import org.apache.commons.lang.StringUtils;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.BaseTypeEncoder;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
 import org.w3c.dom.Element;
 
 /**

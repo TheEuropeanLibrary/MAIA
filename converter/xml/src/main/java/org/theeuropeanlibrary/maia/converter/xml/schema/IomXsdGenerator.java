@@ -10,7 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;
+import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
 
 import org.theeuropeanlibrary.maia.converter.xml.util.XmlUtil;
 import org.w3c.dom.DOMException;

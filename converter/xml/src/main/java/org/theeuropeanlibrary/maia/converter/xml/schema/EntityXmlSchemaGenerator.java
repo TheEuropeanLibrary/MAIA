@@ -9,8 +9,8 @@ import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
+import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

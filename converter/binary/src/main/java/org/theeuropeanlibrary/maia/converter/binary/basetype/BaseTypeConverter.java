@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
-import org.theeuropeanlibrary.maia.converter.binary.annotation.FieldConverter;
+import org.theeuropeanlibrary.maia.converter.binary.complex.FieldConverter;
 
 /**
  * /** A <code>FieldConverterInterface</code> implementation for base types

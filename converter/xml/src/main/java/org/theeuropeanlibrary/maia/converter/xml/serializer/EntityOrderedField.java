@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.xml.common;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import org.theeuropeanlibrary.maia.common.TKey;
 

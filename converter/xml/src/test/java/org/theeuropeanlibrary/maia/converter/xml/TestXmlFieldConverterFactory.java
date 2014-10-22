@@ -2,7 +2,7 @@ package org.theeuropeanlibrary.maia.converter.xml;
 
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
-import org.theeuropeanlibrary.maia.converter.xml.base.AnnotationBasedXmlConverter;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.AnnotationBasedXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.factory.BaseXmlFieldConverterFactory;
 
 /**
