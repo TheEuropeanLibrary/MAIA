@@ -14,7 +14,7 @@
     <name>MAIA: Common</name>
 
     <dependencies>
-        <dependency>
+<!--        <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>${version.jackson}</version>
@@ -23,7 +23,7 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${version.jackson}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 </project>
