@@ -1,7 +1,7 @@
 package org.theeuropeanlibrary.maia.converter.binary;
 
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.common.BinaryConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.factory.BinaryConverterFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

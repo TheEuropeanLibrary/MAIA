@@ -3,7 +3,6 @@ package org.theeuropeanlibrary.maia.converter.binary.basetype;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
 
 /**
  * A <code>BaseTypeEncoder</code> for <code>Field</code>

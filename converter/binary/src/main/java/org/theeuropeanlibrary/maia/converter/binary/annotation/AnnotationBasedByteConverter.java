@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.converter.binary.converter;
+package org.theeuropeanlibrary.maia.converter.binary.annotation;
 
 import org.theeuropeanlibrary.maia.converter.binary.factory.BaseTypeFieldConverterFactory;
 import java.io.ByteArrayInputStream;
@@ -17,7 +17,6 @@ import com.google.protobuf.WireFormat;
 import java.util.List;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.FieldId;
-import org.theeuropeanlibrary.maia.converter.binary.common.FieldConverter;
 
 /**
  * A <code>Converter</code> that converts objects according to annotations added

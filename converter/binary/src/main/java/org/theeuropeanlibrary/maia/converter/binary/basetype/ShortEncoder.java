@@ -7,7 +7,7 @@ import java.nio.ByteOrder;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 
 /**
  * A <code>BaseTypeEncoder</code> for <code>Integer</code>

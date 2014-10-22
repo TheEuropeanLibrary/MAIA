@@ -1,5 +1,5 @@
 /* EditionBeanBytesConverter.java - created on 5 de Abr de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.binary.converter;
+package org.theeuropeanlibrary.maia.converter.binary.basetype;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 
 /**
  * A converter implementation based on a <code>BaseTypeEncoder</code>

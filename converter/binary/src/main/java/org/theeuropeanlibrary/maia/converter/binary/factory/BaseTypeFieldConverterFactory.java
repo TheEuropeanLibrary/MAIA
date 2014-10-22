@@ -11,9 +11,9 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.FloatEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeConverter;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.converter.BaseTypeEncoderBasedConverter;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeConverter;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoderBasedConverter;
 
 /**
  * Factory to retrieve base type converters.F
