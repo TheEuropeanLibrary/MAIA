@@ -12,7 +12,7 @@ import com.google.protobuf.CodedOutputStream;
  * java primitive types, collections, and complex Objects.
  *
  * @author Nuno Freire (nfreire@gmail.com)
- * @date 5 de Abr de 2011
+ * @since 06.04.2011
  */
 public interface FieldConverter {
 

@@ -11,7 +11,7 @@ import com.google.protobuf.CodedOutputStream;
  * @author Nuno Freire (nfreire@gmail.com)
  * @param <T>
  *            The supported class for encoding/decoding
- * @date 6 de Abr de 2011
+ * @since 06.04.2011
  */
 public interface BaseTypeEncoder<T> {
     /**

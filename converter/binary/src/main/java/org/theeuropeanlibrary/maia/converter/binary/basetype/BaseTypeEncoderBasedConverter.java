@@ -8,13 +8,12 @@ import java.io.IOException;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
-import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 
 /**
  * A converter implementation based on a <code>BaseTypeEncoder</code>
  *
  * @author Nuno Freire (nfreire@gmail.com)
- * @date 5 de Abr de 2011
+ * @since 06.04.2011
  */
 public class BaseTypeEncoderBasedConverter implements Converter<byte[], Object> {
 

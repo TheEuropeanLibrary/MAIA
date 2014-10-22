@@ -11,7 +11,7 @@ import org.theeuropeanlibrary.maia.converter.binary.annotation.FieldConverter;
  * /** A <code>FieldConverterInterface</code> implementation for base types
  *
  * @author Nuno Freire (nfreire@gmail.com)
- * @date 5 de Abr de 2011
+ * @since 06.04.2011
  */
 public class BaseTypeConverter implements FieldConverter {
 
