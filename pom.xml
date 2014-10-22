@@ -90,7 +90,7 @@
         
         <version.jackson>1.9.13</version.jackson>
         <version.commons-lang>2.6</version.commons-lang>
-        <version.protbuf>2.6.0</version.protbuf>
+        <version.protobuf>2.6.0</version.protobuf>
     </properties>
     
     <build>
