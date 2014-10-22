@@ -16,13 +16,13 @@
         <dependency>
             <groupId>org.theeuropeanlibrary</groupId>
             <artifactId>maia-common</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.theeuropeanlibrary</groupId>
             <artifactId>maia-common</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -30,7 +30,6 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
 
     </dependencies>
