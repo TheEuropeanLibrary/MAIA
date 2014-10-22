@@ -296,6 +296,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
 //    private static String getElementName(Class aClass) {
 //        return aClass.getSimpleName() + "Object";
 //    }
+    
     /**
      * Indicates if it is able to convert a given class
      *

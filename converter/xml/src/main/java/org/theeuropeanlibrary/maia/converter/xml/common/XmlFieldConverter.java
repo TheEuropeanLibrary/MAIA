@@ -19,7 +19,7 @@ public interface XmlFieldConverter<T> {
      *
      * @param xmlElement the XML representation of the object
      * @return the converted java object
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     T decode(Element xmlElement) throws ConverterException;
 
@@ -29,7 +29,7 @@ public interface XmlFieldConverter<T> {
      * @param bean the object to Serialize
      * @param xmlParentElement the parent XML element where the object should be
      * serialized
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     void encode(T bean, Element xmlParentElement) throws ConverterException;
 }

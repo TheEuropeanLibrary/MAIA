@@ -16,6 +16,7 @@ public interface XmlFieldConverterFactory {
      * @return name space of this xml
      */
 //    String getNamespace();
+    
     /**
      * Get all classes for which the {@link XmlFieldConverterFactory} has a
      * converter
