@@ -3,6 +3,7 @@ package org.theeuropeanlibrary.maia.converter.json;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.converter.json.factory.BaseJsonConverterFactory;
+import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJsonDeserializer;
 import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJsonSerializer;
 
 /**
@@ -18,8 +19,12 @@ public class TestJsonConverterFactory extends BaseJsonConverterFactory {
     private TestJsonConverterFactory() {
         super(TestEntityRegistry.INSTANCE);
 
-        final AnnotationBasedJsonSerializer<TestKey> testKeyConverter = new AnnotationBasedJsonSerializer<>(
+        final AnnotationBasedJsonSerializer<TestKey> testKeySerializer = new AnnotationBasedJsonSerializer<>(
                 TestKey.class, null);
-        serializers.put(TestKey.class, testKeyConverter);
+        serializers.put(TestKey.class, testKeySerializer);
+
+        final AnnotationBasedJsonDeserializer<TestKey> testKeyDeserializer = new AnnotationBasedJsonDeserializer<>(
+                TestKey.class, null);
+        deserializers.put(TestKey.class, testKeyDeserializer);
     }
 }

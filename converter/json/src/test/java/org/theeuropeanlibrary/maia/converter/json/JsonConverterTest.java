@@ -1,6 +1,9 @@
 package org.theeuropeanlibrary.maia.converter.json;
 
+import java.util.List;
+import junit.framework.Assert;
 import org.junit.Test;
+import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
@@ -28,12 +31,23 @@ public class JsonConverterTest {
         mdr.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
 
         EntityJsonSerializer<Record> serializer = new EntityJsonSerializer<Record>(TestJsonConverterFactory.INSTANCE);
-        EntityJsonDeserializer<Record> deserializer = new EntityJsonDeserializer<Record>(TestJsonConverterFactory.INSTANCE);
+        EntityJsonDeserializer<Record> deserializer = new RecordEntityJsonDeserializer(TestJsonConverterFactory.INSTANCE);
         RecordObjectMapper mapper = new RecordObjectMapper(
                 serializer, deserializer);
         RecordEntityJsonConverter converter = new RecordEntityJsonConverter(mapper);
 
         String enc = converter.encode(mdr);
-        System.out.println(enc);
+//        System.out.println(enc);
+        Record<String> mdrDecoded = converter.decode(enc);
+
+        List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
+        QualifiedValue<String> decodedBase = baseField.get(0);
+
+        List<QualifiedValue<TestKey>> complexField = mdrDecoded.getQualifiedValues(TestEntityConstants.COMPLEX);
+        QualifiedValue<TestKey> decodedComplex = complexField.get(0);
+
+        Assert.assertEquals(id, mdr.getId());
+        Assert.assertEquals(base, decodedBase.getValue());
+        Assert.assertEquals(complex, decodedComplex.getValue());
     }
 }

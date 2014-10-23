@@ -2,10 +2,14 @@ package org.theeuropeanlibrary.maia.converter.json;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import org.theeuropeanlibrary.maia.common.AbstractEntity;
+import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.converter.json.factory.JsonConverterFactory;
 
 /**
@@ -16,7 +20,7 @@ import org.theeuropeanlibrary.maia.converter.json.factory.JsonConverterFactory;
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 22.10.2014
  */
-public class EntityJsonDeserializer<T extends AbstractEntity> extends JsonDeserializer<T> {
+public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends JsonDeserializer<T> {
 
     private final JsonConverterFactory factory;
 
@@ -24,9 +28,51 @@ public class EntityJsonDeserializer<T extends AbstractEntity> extends JsonDeseri
         this.factory = factory;
     }
 
+    protected abstract T createEntity();
+
     @Override
     public T deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        T entity = createEntity();
+        while (true) {
+            JsonToken token = jp.nextValue();
+            if (token == null) {
+                break;
+            }
+            if (token.equals(JsonToken.END_OBJECT)) {
+                continue;
+            }
+
+            String keyName = jp.getCurrentName();
+
+            Set<Enum<?>> qualifiers = new HashSet<>(3);
+            while (true) {
+                token = jp.nextToken();
+                String qualifierName = jp.getCurrentName();
+                Class qualClass = factory.getQualifier(qualifierName);
+                if (qualClass != null) {
+                    token = jp.nextToken();
+                    Enum enumVal = Enum.valueOf(qualClass, jp.getText());
+                    qualifiers.add(enumVal);
+                } else {
+                    break;
+                }
+            }
+
+            TKey<?, ?> key = factory.getKey(keyName);
+            JsonDeserializer<?> deserializer = factory.getDeserializer(key.getType());
+            Object value;
+            if (deserializer != null) {
+                value = deserializer.deserialize(jp, dc);
+                System.out.println();
+            } else {
+                deserializer = factory.getBaseTypeDeserializer(key.getType());
+                token = jp.nextToken();
+                value = deserializer.deserialize(jp, dc);
+            }
+
+            entity.addValue(key, value, qualifiers.toArray(new Enum[qualifiers.size()]));
+        }
+        return entity;
     }
 
 }

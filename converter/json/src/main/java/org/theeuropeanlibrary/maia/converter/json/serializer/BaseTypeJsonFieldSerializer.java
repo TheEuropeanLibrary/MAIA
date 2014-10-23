@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonSerializerFactory;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
 
 /**
  * /** A <code>FieldConverterInterface</code> implementation for base types
@@ -19,8 +19,7 @@ import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonSerialize
 public class BaseTypeJsonFieldSerializer extends JsonFieldSerializer<Object> {
 
     private Method fieldGet;
-    @SuppressWarnings("rawtypes")
-    private final JsonSerializer encoder;
+    private final JsonSerializer serializer;
 
     /**
      * Creates a new instance of this class.
@@ -28,17 +27,17 @@ public class BaseTypeJsonFieldSerializer extends JsonFieldSerializer<Object> {
      * @param theClass
      */
     public BaseTypeJsonFieldSerializer(Class<?> theClass) {
-        this.encoder = BaseTypeJsonSerializerFactory.newFieldEncoderFor(theClass);
+        this.serializer = BaseTypeJsonFactory.newFieldSerializerFor(theClass);
     }
 
     /**
      * Creates a new instance of this class.
      *
-     * @param baseTypeEncoder
+     * @param serializer
      */
     @SuppressWarnings("rawtypes")
-    public BaseTypeJsonFieldSerializer(JsonSerializer baseTypeEncoder) {
-        this.encoder = baseTypeEncoder;
+    public BaseTypeJsonFieldSerializer(JsonSerializer serializer) {
+        this.serializer = serializer;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class BaseTypeJsonFieldSerializer extends JsonFieldSerializer<Object> {
         try {
             Object value = fieldGet.invoke(bean);
             if (value != null) {
-                encoder.serialize(value, jg, sp);
+                serializer.serialize(value, jg, sp);
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IOException e) {
             throw new RuntimeException("Cannot retrieve value from object with reflections!", e);
@@ -63,7 +62,7 @@ public class BaseTypeJsonFieldSerializer extends JsonFieldSerializer<Object> {
      * @return encoder
      */
     @SuppressWarnings("rawtypes")
-    public JsonSerializer getEncoder() {
-        return encoder;
+    public JsonSerializer getSerializer() {
+        return serializer;
     }
 }

@@ -84,7 +84,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
                     }
                     Object fldVal = fieldDef.decode(el);
 
-                    HashSet<Enum<?>> qualifiers = new HashSet<>(3);
+                    Set<Enum<?>> qualifiers = new HashSet<>(3);
                     NamedNodeMap attributes = el.getAttributes();
                     for (int i = 0; i < attributes.getLength(); i++) {
                         Node attribute = attributes.item(i);
