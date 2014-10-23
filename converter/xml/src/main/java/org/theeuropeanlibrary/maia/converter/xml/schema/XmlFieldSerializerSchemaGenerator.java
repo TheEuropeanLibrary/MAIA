@@ -159,6 +159,6 @@ public class XmlFieldSerializerSchemaGenerator {
                 elementEl.setAttribute("maxOccurs", String.valueOf(maxOccurs));
             }
         }
-        baseTypeGenerator.toXmlSchema(serializer.getEncoder(), elementEl);
+        baseTypeGenerator.toXmlSchema(serializer.getEncoder(), elementEl, null);
     }
 }

@@ -17,7 +17,6 @@ public class BaseTypeConverter implements FieldConverter {
 
     private Field field;
     private int id;
-    private String xmlElementName;
     private final BaseTypeEncoder<Object> encoder;
 
     /**
@@ -33,8 +32,6 @@ public class BaseTypeConverter implements FieldConverter {
     public void configure(Field field, int fieldId) {
         this.field = field;
         this.id = fieldId;
-        xmlElementName = Character.toUpperCase(field.getName().charAt(0))
-                + field.getName().substring(1);
     }
 
     @Override

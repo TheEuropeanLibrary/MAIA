@@ -31,7 +31,7 @@ public class XmlConverterTest {
         mdr.addValue(TestEntityConstants.BASE, base, TestQualifier.TYPE_1);
         mdr.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
 
-        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(new TestXmlFieldConverterFactory());
+        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(TestXmlFieldConverterFactory.INSTANCE);
 
         Element mdrEncoded = conv.encode(mdr);
 //        System.out.println(XmlUtil.writeDomToString(mdrEncoded));

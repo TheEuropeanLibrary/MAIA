@@ -130,11 +130,11 @@ public class XmlFieldConverterSchemaGenerator {
             String elementName, int minOccurs, int maxOccurs, Set<Class<?>> parentClasses) {
         boolean isTopElement = parentEl.getChildNodes().getLength() > 0;
         Element elementEl = parentEl.getOwnerDocument().createElement("xs:element");
-        baseTypeGenerator.toXmlSchema(serializer.getEncoder(), elementEl);
+        baseTypeGenerator.toXmlSchema(serializer.getEncoder(), elementEl, elementName);
 
         if (isTopElement) {
             Element simpleTypeEl = (Element) elementEl.getChildNodes().item(0);
-            if (simpleTypeEl != null) {
+            if (simpleTypeEl != null && !simpleTypeEl.getNodeName().equals("xs:complexType")) {
                 parentEl.appendChild(simpleTypeEl);
                 simpleTypeEl.setAttribute("name", elementName + "Type");
                 return simpleTypeEl;

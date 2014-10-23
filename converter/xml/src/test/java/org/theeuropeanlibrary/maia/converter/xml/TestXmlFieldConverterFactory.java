@@ -13,7 +13,9 @@ import org.theeuropeanlibrary.maia.converter.xml.factory.BaseXmlFieldConverterFa
  */
 public class TestXmlFieldConverterFactory extends BaseXmlFieldConverterFactory {
 
-    public TestXmlFieldConverterFactory() {
+    public static TestXmlFieldConverterFactory INSTANCE = new TestXmlFieldConverterFactory();
+
+    private TestXmlFieldConverterFactory() {
         super(TestEntityRegistry.INSTANCE);
 
         final AnnotationBasedXmlConverter<TestKey> testKeyConverter = new AnnotationBasedXmlConverter<>(

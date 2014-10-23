@@ -1,12 +1,6 @@
 package org.theeuropeanlibrary.maia.common.registry;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.theeuropeanlibrary.maia.common.TKey;
 import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.BASE;
 import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.COMPLEX;
 import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.TEST_TYPE;

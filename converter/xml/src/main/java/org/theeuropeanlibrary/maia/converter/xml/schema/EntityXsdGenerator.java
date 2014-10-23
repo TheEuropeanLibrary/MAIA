@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
@@ -23,7 +24,7 @@ import org.w3c.dom.Element;
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 2 de Mai de 2011
  */
-public final class IomXsdGenerator {
+public final class EntityXsdGenerator {
 
     /**
      * @param args
@@ -60,7 +61,7 @@ public final class IomXsdGenerator {
             schemaEl.setAttribute("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
             schemaEl.setAttribute("elementFormDefault", "qualified");
             schemaEl.setAttribute("attributeFormDefault", "unqualified");
-            new EntityXmlSchemaGenerator(registry, factory).toXmlSchema(schemaEl, elementName, 1, 1,
+            new EntityXmlSchemaGenerator(registry, factory, Record.class).toXmlSchema(schemaEl, elementName, 1, 1,
                     new HashSet<Class<?>>());
             return doc;
         } catch (DOMException | ParserConfigurationException e) {

@@ -25,15 +25,17 @@ public class BaseTypeEncoderSchemaGenerator {
      *
      * @param encoder
      * @param parentEl
+     * @param elementName
      */
     @SuppressWarnings("rawtypes")
-    public void toXmlSchema(BaseTypeEncoder encoder, Element parentEl) {
+    public void toXmlSchema(BaseTypeEncoder encoder, Element parentEl, String elementName) {
+        String type = null;
         if (encoder instanceof BooleanEncoder) {
-            parentEl.setAttribute("type", "xs:boolean");
+            type = "xs:boolean";
         } else if (encoder instanceof DateEncoder) {
-            parentEl.setAttribute("type", "xs:string");
+            type = "xs:string";
         } else if (encoder instanceof DoubleEncoder) {
-            parentEl.setAttribute("type", "xs:double");
+            type = "xs:double";
         } else if (encoder instanceof EnumEncoder) {
             Element simpleTypeEl = parentEl.getOwnerDocument().createElement("xs:simpleType");
             parentEl.appendChild(simpleTypeEl);
@@ -47,15 +49,32 @@ public class BaseTypeEncoderSchemaGenerator {
                 enumEl.setAttribute("value", e.toString());
             }
         } else if (encoder instanceof FloatEncoder) {
-            parentEl.setAttribute("type", "xs:float");
+            type = "xs:float";
         } else if (encoder instanceof IntegerEncoder) {
-            parentEl.setAttribute("type", "xs:integer");
+            type = "xs:integer";
         } else if (encoder instanceof LongEncoder) {
-            parentEl.setAttribute("type", "xs:long");
+            type = "xs:long";
         } else if (encoder instanceof ShortEncoder) {
-            parentEl.setAttribute("type", "xs:short");
+            type = "xs:short";
         } else if (encoder instanceof StringEncoder) {
-            parentEl.setAttribute("type", "xs:string");
+            type = "xs:string";
+        }
+
+        if (type != null) {
+            if (elementName == null || type.contains(elementName.toLowerCase())) {
+                parentEl.setAttribute("type", type);
+            } else {
+                Element complexTypeEl = parentEl.getOwnerDocument().createElement("xs:complexType");
+                parentEl.appendChild(complexTypeEl);
+
+                Element simpleContentEl = parentEl.getOwnerDocument().createElement("xs:simpleContent");
+                complexTypeEl.appendChild(simpleContentEl);
+
+                Element extensionContentEl = parentEl.getOwnerDocument().createElement("xs:extension");
+                simpleContentEl.appendChild(extensionContentEl);
+
+                extensionContentEl.setAttribute("base", type);
+            }
         }
     }
 }
