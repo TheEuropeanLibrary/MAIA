@@ -2,17 +2,15 @@ package org.theeuropeanlibrary.maia.converter.json.converter;
 
 import java.io.IOException;
 
-import org.theeuropeanlibrary.maia.common.model.DataProvider;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-public class DataProviderSerializer  extends JsonSerializer<DataProvider> {
+public class DataProviderSerializer  extends JsonSerializer<DataProviderDummy> {
 	
 	@Override
-	public void serialize(DataProvider p, JsonGenerator j,
+	public void serialize(DataProviderDummy p, JsonGenerator j,
 			SerializerProvider sP) throws IOException,
 			JsonProcessingException {
 
