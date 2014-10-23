@@ -1,6 +1,6 @@
 package org.theeuropeanlibrary.maia.converter.binary;
 
-import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
+import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
 import org.theeuropeanlibrary.maia.converter.binary.factory.BaseBinaryConverterFactory;
 
 /**
@@ -12,6 +12,6 @@ import org.theeuropeanlibrary.maia.converter.binary.factory.BaseBinaryConverterF
 public class TestBinaryConverterFactory extends BaseBinaryConverterFactory {
 
     public TestBinaryConverterFactory() {
-        super(TestEntityRegistry.class);
+        super(AbstractEntityRegistry.class);
     }
 }

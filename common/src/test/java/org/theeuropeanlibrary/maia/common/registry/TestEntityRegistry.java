@@ -17,17 +17,9 @@ import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.TE
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 17.10.2014
  */
-public final class TestEntityRegistry implements EntityRegistry {
+public final class TestEntityRegistry extends AbstractEntityRegistry {
 
     public static TestEntityRegistry INSTANCE = new TestEntityRegistry();
-
-    private final Set<TKey<?, ?>> keys = new HashSet<>();
-
-    private final Set<Class<? extends Enum<?>>> qualifiers = new HashSet<>();
-
-    private final Map<TKey<?, ?>, Set<Class<? extends Enum<?>>>> validQualifiers = new HashMap<>();
-
-    private final Map<TKey<?, ?>, Map<TKey<?, ?>, List<Class<? extends Enum<?>>>>> validRelations = new HashMap<>();
 
     private TestEntityRegistry() {
         keys.add(BASE);
@@ -46,25 +38,5 @@ public final class TestEntityRegistry implements EntityRegistry {
                 add(TEST_TYPE);
             }
         });
-    }
-
-    @Override
-    public Set<TKey<?, ?>> getAvailableKeys() {
-        return Collections.unmodifiableSet(keys);
-    }
-
-    @Override
-    public Set<Class<? extends Enum<?>>> getAvailableQualifiers() {
-        return Collections.unmodifiableSet(qualifiers);
-    }
-
-    @Override
-    public Set<Class<? extends Enum<?>>> getQualifiers(TKey<?, ?> key) {
-        return validQualifiers.get(key);
-    }
-
-    @Override
-    public Map<TKey<?, ?>, List<Class<? extends Enum<?>>>> getRelationTargets(TKey<?, ?> key) {
-        return validRelations.get(key);
     }
 }
