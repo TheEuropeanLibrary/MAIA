@@ -1,5 +1,7 @@
 package org.theeuropeanlibrary.maia.common.registry;
 
+import org.theeuropeanlibrary.maia.common.FieldId;
+
 /**
  * Test qualifier.
  *
@@ -8,5 +10,6 @@ package org.theeuropeanlibrary.maia.common.registry;
  */
 public enum TestQualifier {
 
+    @FieldId(1)
     TYPE_1;
 }

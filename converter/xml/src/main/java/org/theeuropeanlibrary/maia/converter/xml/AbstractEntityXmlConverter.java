@@ -13,10 +13,10 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedRelation;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.AbstractEntity;
-import org.theeuropeanlibrary.maia.converter.xml.common.EntityOrderedField;
-import org.theeuropeanlibrary.maia.converter.xml.common.FieldRelation;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.EntityOrderedField;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.FieldRelation;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
+import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
 import org.theeuropeanlibrary.maia.converter.xml.util.XmlUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -59,31 +59,24 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
      * Refills an existing entity with the contents from the XML file
      *
      * @param xmlElement the XML representation of the object
-     * @param bean the target
+     * @param entity the target
      * @throws ConverterException
      */
-    public void decode(Element xmlElement, T bean) throws ConverterException {
-        bean.setId(Long.parseLong(xmlElement.getAttribute("ID")));
+    public void decode(Element xmlElement, T entity) throws ConverterException {
+        entity.setId(Long.parseLong(xmlElement.getAttribute("ID")));
         Iterable<Element> childNodes = XmlUtil.elements(xmlElement);
 
-        // deletes every key in the MDR at the moment
-        // can't iterate and delete in one go for concurrency reasons
-        Set<TKey<?, ?>> keysToDelete = new LinkedHashSet<>();
-        keysToDelete.addAll(bean.getAvailableKeys());
-        while (!(keysToDelete.isEmpty())) {
-            TKey<?, ?> key = keysToDelete.iterator().next();
-            bean.deleteValues(key);
-            keysToDelete.remove(key);
-        }
+        truncateEntity(entity);
 
-        ArrayList<EntityOrderedField> mdrFields = new ArrayList<>();
-        ArrayList<EntityOrderedField> mdrFieldsWithoutIndex = new ArrayList<>();
-        ArrayList<FieldRelation> mdrRelations = new ArrayList<>();
+        List<EntityOrderedField> mdrFields = new ArrayList<>();
+        List<EntityOrderedField> mdrFieldsWithoutIndex = new ArrayList<>();
+        List<FieldRelation> mdrRelations = new ArrayList<>();
 
         for (Element el : childNodes) {
             if (!el.getLocalName().equals("FieldRelation")) {
                 String orderIndex = el.getAttribute("OrderIndex");
-//                if (!el.getLocalName().equals("Generic")) {
+
+                if (!el.getLocalName().equals("Generic")) {
                     TKey<?, ?> tkey = converterFactory.getKey(el.getLocalName());
                     XmlFieldConverter fieldDef = converterFactory.getConverter(tkey.getType());
                     if (fieldDef == null) {
@@ -110,55 +103,55 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
                                 qualifiers.toArray(new Enum<?>[qualifiers.size()]),
                                 Double.valueOf(orderIndex)));
                     }
-//                } else {// a Generic element
-//                    TKey tkey;
-//                    HashSet<Enum<?>> qualifiers = new HashSet<>(3);
-//                    NodeList subChildNodes = el.getChildNodes();
-//                    for (int j = 0; j < subChildNodes.getLength(); j++) {
-//                        Node genericItem = subChildNodes.item(j);
-//                        if (genericItem instanceof Element) {
-//                            Element subEl = (Element) genericItem;
-//                            switch (subEl.getLocalName()) {
-//                                case "TKey":
-//                                    try {
-//                                        Class namespace = Class.forName(subEl.getAttribute("Namespace"));
-//                                        tkey = TKey.resolve(namespace, subEl.getAttribute("Name"));
-//                                    } catch (ClassNotFoundException e) {
-//                                        throw new RuntimeException(e.getMessage(), e);
-//                                    }
-//                                    break;
-//                                case "Qualifier":
-//                                    String value = subEl.getTextContent();
-//                                    String className = subEl.getAttribute("ClassName");
-//                                    if (value != null && !value.isEmpty()) {
-//                                        Class qualClass;
-//                                        try {
-//                                            qualClass = Class.forName(className);
-//                                        } catch (ClassNotFoundException e) {
-//                                            throw new RuntimeException(e.getMessage(), e);
-//                                        }
-//                                        Enum enumVal = Enum.valueOf(qualClass, value);
-//                                        qualifiers.add(enumVal);
-//                                    }
-//                                    break;
-//                                default:
-//                                    tkey = converterFactory.getKey(subEl.getLocalName());
-//                                    XmlFieldConverter fieldDef = converterFactory.getBaseTypeConverter(tkey.getType());
-//                                    Object fldVal = fieldDef.decode(subEl);
-//                                    if (orderIndex == null || orderIndex.isEmpty()) {
-//                                        mdrFieldsWithoutIndex.add(new EntityOrderedField(tkey, fldVal,
-//                                                qualifiers.toArray(new Enum<?>[qualifiers.size()]),
-//                                                null));
-//                                    } else {
-//                                        mdrFields.add(new EntityOrderedField(tkey, fldVal,
-//                                                qualifiers.toArray(new Enum<?>[qualifiers.size()]),
-//                                                Double.valueOf(orderIndex)));
-//                                    }
-//                                    break;
-//                            }
-//                        }
-//                    }
-//                }
+                } else {// a Generic element
+                    TKey tkey;
+                    HashSet<Enum<?>> qualifiers = new HashSet<>(3);
+                    NodeList subChildNodes = el.getChildNodes();
+                    for (int j = 0; j < subChildNodes.getLength(); j++) {
+                        Node genericItem = subChildNodes.item(j);
+                        if (genericItem instanceof Element) {
+                            Element subEl = (Element) genericItem;
+                            switch (subEl.getLocalName()) {
+                                case "TKey":
+                                    try {
+                                        Class namespace = Class.forName(subEl.getAttribute("Namespace"));
+                                        tkey = TKey.resolve(namespace, subEl.getAttribute("Name"));
+                                    } catch (ClassNotFoundException e) {
+                                        throw new RuntimeException(e.getMessage(), e);
+                                    }
+                                    break;
+                                case "Qualifier":
+                                    String value = subEl.getTextContent();
+                                    String className = subEl.getAttribute("ClassName");
+                                    if (value != null && !value.isEmpty()) {
+                                        Class qualClass;
+                                        try {
+                                            qualClass = Class.forName(className);
+                                        } catch (ClassNotFoundException e) {
+                                            throw new RuntimeException(e.getMessage(), e);
+                                        }
+                                        Enum enumVal = Enum.valueOf(qualClass, value);
+                                        qualifiers.add(enumVal);
+                                    }
+                                    break;
+                                default:
+                                    tkey = converterFactory.getKey(subEl.getLocalName());
+                                    XmlFieldConverter fieldDef = converterFactory.getBaseTypeConverter(tkey.getType());
+                                    Object fldVal = fieldDef.decode(subEl);
+                                    if (orderIndex == null || orderIndex.isEmpty()) {
+                                        mdrFieldsWithoutIndex.add(new EntityOrderedField(tkey, fldVal,
+                                                qualifiers.toArray(new Enum<?>[qualifiers.size()]),
+                                                null));
+                                    } else {
+                                        mdrFields.add(new EntityOrderedField(tkey, fldVal,
+                                                qualifiers.toArray(new Enum<?>[qualifiers.size()]),
+                                                Double.valueOf(orderIndex)));
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
             } else {
                 int sourceIdx = Integer.parseInt(el.getAttribute("source"));
                 int targetIdx = Integer.parseInt(el.getAttribute("target"));
@@ -190,20 +183,32 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
         Collections.sort(mdrFields);
 
         for (EntityOrderedField f : mdrFields) {
-            QualifiedValue<?> qv = bean.addValue(f.getTkey(), f.getValue(), f.getQualifiers());
+            QualifiedValue<?> qv = entity.addValue(f.getTkey(), f.getValue(), f.getQualifiers());
             fieldRefsByOrder.put(f.getOrderIndex().intValue(), qv);
         }
 
         for (EntityOrderedField f : mdrFieldsWithoutIndex) {
-            bean.addValue(f.getTkey(), f.getValue(), f.getQualifiers());
+            entity.addValue(f.getTkey(), f.getValue(), f.getQualifiers());
         }
 
         for (FieldRelation fr : mdrRelations) {
             QualifiedValue<?> src = fieldRefsByOrder.get(fr.getSourceOrdIndex());
             QualifiedValue<?> trg = fieldRefsByOrder.get(fr.getTargetOrdIndex());
             if (src != null && trg != null) {
-                bean.addRelation(src, trg, fr.getQualifierArray());
+                entity.addRelation(src, trg, fr.getQualifierArray());
             }
+        }
+    }
+
+    private void truncateEntity(T bean) {
+        // deletes every key in the MDR at the moment
+        // can't iterate and delete in one go for concurrency reasons
+        Set<TKey<?, ?>> keysToDelete = new LinkedHashSet<>();
+        keysToDelete.addAll(bean.getAvailableKeys());
+        while (!(keysToDelete.isEmpty())) {
+            TKey<?, ?> key = keysToDelete.iterator().next();
+            bean.deleteValues(key);
+            keysToDelete.remove(key);
         }
     }
 
@@ -212,17 +217,23 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
         xmlParentElement.setAttribute("ID", String.valueOf(mdr.getId()));
         xmlParentElement.setAttribute("xmlns",
                 "http://theeuropeanlibrary.org/internal_object_model");
+
         Set<TKey<?, ?>> keys = mdr.getAvailableKeys();
         if (keys != null && keys.size() > 0) {
             for (TKey<?, ?> key : keys) {
+                XmlFieldConverter fieldDef = converterFactory.getConverter(key.getType());
+                if (fieldDef == null) {
+                    fieldDef = converterFactory.getBaseTypeConverter(key.getType());
+                }
+                final String elementName = converterFactory.getElementName(key);
+
                 List<?> fieldValues = mdr.getQualifiedValues(key);
                 for (Object fieldValue : fieldValues) {
                     QualifiedValue<?> qv = (QualifiedValue<?>) fieldValue;
-                    XmlFieldConverter fieldDef = converterFactory.getConverter(key.getType());
 
                     if (fieldDef != null) {
                         Element xmlEl = xmlParentElement.getOwnerDocument().createElementNS(
-                                XML_NAMESPACE, converterFactory.getElementName(key));
+                                XML_NAMESPACE, elementName);
                         xmlParentElement.appendChild(xmlEl);
                         fieldDef.encode(qv.getValue(), xmlEl);
 
@@ -230,47 +241,30 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
                             xmlEl.setAttribute(q.getClass().getSimpleName(), q.toString());
                         }
                         xmlEl.setAttribute("OrderIndex", String.valueOf(qv.getOrderIndex()));
-                    } 
-                    else {// it is a base type
-                        fieldDef = converterFactory.getBaseTypeConverter(key.getType());
-                        if (fieldDef == null) {
-                            throw new IllegalArgumentException(key.getType()
-                                    + " has no registered converter to xml.");
-                        }
-
-                        Element xmlEl = xmlParentElement.getOwnerDocument().createElementNS(
-                                XML_NAMESPACE, converterFactory.getElementName(key));
-                        xmlParentElement.appendChild(xmlEl);
-                        fieldDef.encode(qv.getValue(), xmlEl);
+                    } else {// it is a base type
+                        Element genericEl = xmlParentElement.getOwnerDocument().createElementNS(
+                                XML_NAMESPACE, "Generic");
+                        xmlParentElement.appendChild(genericEl);
+                        Element tkeyEl = xmlParentElement.getOwnerDocument().createElementNS(
+                                XML_NAMESPACE, "TKey");
+                        genericEl.appendChild(tkeyEl);
+                        tkeyEl.setAttribute("Namespace", key.getNamespace().getName());
+// tkeyEl.setAttribute("Type", key.getType().getName());
+                        tkeyEl.setAttribute("Name", key.getName());
 
                         for (Enum<?> q : qv.getQualifiers()) {
-                            xmlEl.setAttribute(q.getClass().getSimpleName(), q.toString());
+                            Element qualEl = xmlParentElement.getOwnerDocument().createElementNS(
+                                    XML_NAMESPACE, "Qualifier");
+                            genericEl.appendChild(qualEl);
+                            qualEl.setTextContent(q.toString());
+                            qualEl.setAttribute("ClassName", q.getClass().getName());
                         }
-                        xmlEl.setAttribute("OrderIndex", String.valueOf(qv.getOrderIndex()));
-                        
-//                        Element genericEl = xmlParentElement.getOwnerDocument().createElementNS(
-//                                XML_NAMESPACE, "Generic");
-//                        xmlParentElement.appendChild(genericEl);
-//                        Element tkeyEl = xmlParentElement.getOwnerDocument().createElementNS(
-//                                XML_NAMESPACE, "TKey");
-//                        genericEl.appendChild(tkeyEl);
-//                        tkeyEl.setAttribute("Namespace", key.getNamespace().getName());
-//// tkeyEl.setAttribute("Type", key.getType().getName());
-//                        tkeyEl.setAttribute("Name", key.getName());
-//
-//                        for (Enum<?> q : qv.getQualifiers()) {
-//                            Element qualEl = xmlParentElement.getOwnerDocument().createElementNS(
-//                                    XML_NAMESPACE, "Qualifier");
-//                            genericEl.appendChild(qualEl);
-//                            qualEl.setTextContent(q.toString());
-//                            qualEl.setAttribute("ClassName", q.getClass().getName());
-//                        }
-//                        genericEl.setAttribute("OrderIndex", String.valueOf(qv.getOrderIndex()));
-//
-//                        Element valueEl = xmlParentElement.getOwnerDocument().createElementNS(
-//                                XML_NAMESPACE, converterFactory.getElementName(key));
-//                        genericEl.appendChild(valueEl);
-//                        fieldDef.encode(qv.getValue(), valueEl);
+                        genericEl.setAttribute("OrderIndex", String.valueOf(qv.getOrderIndex()));
+
+                        Element valueEl = xmlParentElement.getOwnerDocument().createElementNS(
+                                XML_NAMESPACE, converterFactory.getElementName(key));
+                        genericEl.appendChild(valueEl);
+                        fieldDef.encode(qv.getValue(), valueEl);
                     }
                 }
             }
@@ -302,6 +296,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
 //    private static String getElementName(Class aClass) {
 //        return aClass.getSimpleName() + "Object";
 //    }
+    
     /**
      * Indicates if it is able to convert a given class
      *

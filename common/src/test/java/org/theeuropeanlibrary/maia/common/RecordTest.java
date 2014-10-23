@@ -3,7 +3,6 @@ package org.theeuropeanlibrary.maia.common;
 import junit.framework.Assert;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
-import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 
 /**
  * Basic tests for the record.

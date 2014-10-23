@@ -1,7 +1,7 @@
 package org.theeuropeanlibrary.maia.converter.binary;
 
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
-import org.theeuropeanlibrary.maia.converter.binary.common.BinaryConverterFactory;
+import org.theeuropeanlibrary.maia.converter.binary.factory.BinaryConverterFactory;
 
 /**
  * This class converts pOroviders from and to byte arrays.

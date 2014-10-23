@@ -12,7 +12,7 @@ package org.theeuropeanlibrary.maia.common.converter;
  *
  * @author Andreas Juffinger <andreas.juffinger@kb.nl>
  * @author Markus Muhr (markus.muhr@kb.nl)
- * @since Feb 18, 2011
+ * @since 18.02.2011
  */
 public interface Converter<E, D> {
 

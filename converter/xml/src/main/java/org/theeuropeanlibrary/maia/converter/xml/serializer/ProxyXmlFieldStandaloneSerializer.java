@@ -1,8 +1,7 @@
 /* ProxyXmlFieldSerializer.java - created on 6 de Jul de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.xml.base;
+package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
 import org.w3c.dom.Element;
 
 /**

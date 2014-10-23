@@ -1,5 +1,5 @@
 /* FieldEncoder.java - created on 6 de Abr de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.basetype;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
@@ -11,7 +11,7 @@ import com.google.protobuf.CodedOutputStream;
  * @author Nuno Freire (nfreire@gmail.com)
  * @param <T>
  *            The supported class for encoding/decoding
- * @date 6 de Abr de 2011
+ * @since 06.04.2011
  */
 public interface BaseTypeEncoder<T> {
     /**

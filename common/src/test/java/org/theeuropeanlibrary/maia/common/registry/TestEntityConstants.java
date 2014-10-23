@@ -13,14 +13,14 @@ public class TestEntityConstants {
 
     // Keys
     @FieldId(1)
-    public static final TKey<TestEntityRegistry, String> BASE = TKey.register(
-            TestEntityRegistry.class,
+    public static final TKey<AbstractEntityRegistry, String> BASE = TKey.register(
+            AbstractEntityRegistry.class,
             "Base",
             String.class);
 
     @FieldId(2)
-    public static final TKey<TestEntityRegistry, TestKey> COMPLEX = TKey.register(
-            TestEntityRegistry.class,
+    public static final TKey<AbstractEntityRegistry, TestKey> COMPLEX = TKey.register(
+            AbstractEntityRegistry.class,
             "Complex",
             TestKey.class);
 

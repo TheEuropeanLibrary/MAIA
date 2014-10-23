@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Represents a TEL data provider.
  */
 @XmlRootElement
-public class DataProvider {
+public class Provider {
 
-    public DataProvider() {
+    public Provider() {
     }
 
-    public DataProvider(final String id) {
+    public Provider(final String id) {
         this.id = id;
     }
 
@@ -45,9 +45,8 @@ public class DataProvider {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -59,18 +58,12 @@ public class DataProvider {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DataProvider other = (DataProvider) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+        final Provider other = (Provider) obj;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "DataProvider{" + "id=" + id + ", name=" + name + '}';
     }
 }

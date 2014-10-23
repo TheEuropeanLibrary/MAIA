@@ -1,7 +1,8 @@
-package org.theeuropeanlibrary.maia.converter.xml.common;
+package org.theeuropeanlibrary.maia.converter.xml.factory;
 
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 
 /**
  * A factory that manages the implementations of converters for a set of classes
@@ -16,6 +17,7 @@ public interface XmlFieldConverterFactory {
      * @return name space of this xml
      */
 //    String getNamespace();
+    
     /**
      * Get all classes for which the {@link XmlFieldConverterFactory} has a
      * converter

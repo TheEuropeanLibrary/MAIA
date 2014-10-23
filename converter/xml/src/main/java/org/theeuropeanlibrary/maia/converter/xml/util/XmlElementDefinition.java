@@ -1,7 +1,7 @@
 package org.theeuropeanlibrary.maia.converter.xml.util;
 
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverter;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldSerializer;
 
 /**
  * Holds the definition for the serialization of a data element

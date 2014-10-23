@@ -1,5 +1,5 @@
 /* FieldBufferSetter.java - created on 5 de Abr de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.complex;
 
 import java.lang.reflect.Field;
 
@@ -12,7 +12,7 @@ import com.google.protobuf.CodedOutputStream;
  * java primitive types, collections, and complex Objects.
  *
  * @author Nuno Freire (nfreire@gmail.com)
- * @date 5 de Abr de 2011
+ * @since 06.04.2011
  */
 public interface FieldConverter {
 

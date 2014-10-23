@@ -3,7 +3,7 @@ package org.theeuropeanlibrary.central.convert;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
-import org.theeuropeanlibrary.maia.converter.binary.common.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 
 /**
  * A <code>BaseTypeEncoder</code> for <code>Double</code>

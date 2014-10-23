@@ -2,7 +2,7 @@ package org.theeuropeanlibrary.maia.converter.xml;
 
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.definitions.Dataset;
-import org.theeuropeanlibrary.maia.converter.xml.common.XmlFieldConverterFactory;
+import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
 import org.theeuropeanlibrary.maia.converter.xml.util.XmlUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

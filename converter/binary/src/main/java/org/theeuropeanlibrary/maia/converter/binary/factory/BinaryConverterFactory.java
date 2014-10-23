@@ -1,9 +1,10 @@
 /* ConverterFactory.java - created on 4 de Nov de 2011, Copyright (c) 2011 The European Library, all rights reserved */
-package org.theeuropeanlibrary.maia.converter.binary.common;
+package org.theeuropeanlibrary.maia.converter.binary.factory;
 
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 
 /**
  * A factory that manages the implementations of converters for a set of classes
