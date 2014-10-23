@@ -30,7 +30,7 @@ public interface XmlFieldSerializer {
      *
      * @param bean the bean to set the value into
      * @param xmlElement the XML element containing the XML serialization
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     void decode(Object bean, Element xmlElement) throws ConverterException;
 
@@ -43,7 +43,7 @@ public interface XmlFieldSerializer {
      * @param elementName the name of the XML element
      * @return the created XML element containing the serialized field, or null
      * if field has a null value
-     * @throws org.theeuropeanlibrary.maia.common.ConverterException
+     * @throws ConverterException
      */
     Element encode(Object bean, Element xmlParentElement, String elementName) throws ConverterException;
 }

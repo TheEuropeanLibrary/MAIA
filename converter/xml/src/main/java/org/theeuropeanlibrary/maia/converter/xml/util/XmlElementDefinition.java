@@ -1,13 +1,13 @@
 package org.theeuropeanlibrary.maia.converter.xml.util;
 
-import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldSerializer;
 
 /**
  * Holds the definition for the serialization of a data element
  *
  * @author Nuno Freire (nfreire@gmail.com)
- * @date 29 de Abr de 2011
+ * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
+ * @since 17.10.2014
  */
 public class XmlElementDefinition {
 
