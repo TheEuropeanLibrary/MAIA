@@ -1,6 +1,5 @@
 package org.theeuropeanlibrary.maia.common;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -120,9 +119,7 @@ public interface Entity<ID> {
      * @author Markus Muhr (markus.muhr@kb.nl)
      * @since Mar 21, 2011
      */
-    public class QualifiedValue<T> implements Comparable<QualifiedValue<?>>, Serializable {
-
-        private static final long serialVersionUID = 1L;
+    public class QualifiedValue<T> implements Comparable<QualifiedValue<?>> {
 
         /**
          * generic value
@@ -337,9 +334,7 @@ public interface Entity<ID> {
      * @author Markus Muhr (markus.muhr@kb.nl)
      * @since Aug 13, 2012
      */
-    public class QualifiedRelation<S, T> implements Serializable {
-
-        private static final long serialVersionUID = 1L;
+    public class QualifiedRelation<S, T> {
 
         /**
          * a qualified value determining the start point of the relation
