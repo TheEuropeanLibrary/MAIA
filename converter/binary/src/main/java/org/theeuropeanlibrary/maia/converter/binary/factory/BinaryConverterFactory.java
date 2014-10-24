@@ -15,15 +15,16 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 public interface BinaryConverterFactory {
 
     /**
-     * Get all classes for which the {@link BinaryConverterFactory} has a converter
+     * Get all classes for which the {@link BinaryConverterFactory} has a
+     * converter
      *
      * @return classes supported for conversion
      */
     Set<Class<?>> getSupportedClasses();
 
     /**
-     * Get all classes for which the {@link BinaryConverterFactory} has a base type
-     * encoder
+     * Get all classes for which the {@link BinaryConverterFactory} has a base
+     * type encoder
      *
      * @return classes supported
      */
@@ -55,17 +56,17 @@ public interface BinaryConverterFactory {
      * @param tKey
      * @return integer
      */
-    <NS, T> Integer getKeyId(TKey<NS, T> tKey);
+    <NS, T> Integer getEncodedKey(TKey<NS, T> tKey);
 
     /**
      * Gets a TKey for a given field ID
      *
      * @param <NS> name space
      * @param <T> generic type
-     * @param fieldId
+     * @param encodedKey
      * @return key
      */
-    <NS, T> TKey<NS, T> getKey(Integer fieldId);
+    <NS, T> TKey<NS, T> getDecodedKey(Integer encodedKey);
 
     /**
      * Gets a field ID for a given TKey
@@ -73,13 +74,13 @@ public interface BinaryConverterFactory {
      * @param qualifier
      * @return integer
      */
-    String getQualifierId(String qualifier);
+    String getEncodedQualifier(String qualifier);
 
     /**
      * Gets a TKey for a given field ID
      *
-     * @param fieldId
+     * @param encodedQualifier
      * @return key
      */
-    String getQualifier(String fieldId);
+    String getDecodedQualifier(String encodedQualifier);
 }

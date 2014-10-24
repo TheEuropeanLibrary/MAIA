@@ -26,26 +26,27 @@ import org.theeuropeanlibrary.maia.common.FieldId;
  */
 public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
 
-    private final Class<T> theClass;
+    private final Class<T> deserializeClass;
     private final List<JsonFieldDeserializer> idIndexedFieldArray;
     private final Map<String, Integer> jsonNameToField;
 
     /**
      * Creates a new instance of this class.
      *
-     * @param theClass The class to be Serialized
+     * @param deserializeClass The class to be Serialized
      * @param customSerializers serializers for particular fields of the class
      */
-    public AnnotationBasedJsonDeserializer(Class<T> theClass,
+    public AnnotationBasedJsonDeserializer(Class<T> deserializeClass,
             Map<Integer, JsonFieldDeserializer> customSerializers) {
-        this.theClass = theClass;
-        jsonNameToField = new HashMap<>();
+        this.deserializeClass = deserializeClass;
+
         List<JsonFieldDeserializer> fieldsWithAnnotatoins = new ArrayList<>();
         Map<Integer, JsonFieldDeserializer> idToFieldMap = new HashMap<>();
         Map<Integer, String> nameToFieldMap = new HashMap<>();
-        int maxFieldId = initFieldsFromClass(theClass, customSerializers, fieldsWithAnnotatoins,
+        int maxFieldId = initFieldsFromClass(deserializeClass, customSerializers, fieldsWithAnnotatoins,
                 idToFieldMap, nameToFieldMap);
 
+        jsonNameToField = new HashMap<>();
         idIndexedFieldArray = new ArrayList<>(maxFieldId + 1);
         for (int i = 0; i <= maxFieldId; i++) {
             idIndexedFieldArray.add(idToFieldMap.get(i));
@@ -53,17 +54,17 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
         }
     }
 
-    private int initFieldsFromClass(Class<?> theClass,
+    private int initFieldsFromClass(Class<?> initClass,
             Map<Integer, JsonFieldDeserializer> customEncoders,
             List<JsonFieldDeserializer> fieldsWithAnnotatoins,
             Map<Integer, JsonFieldDeserializer> idToFieldMap, Map<Integer, String> nameToFieldMap) {
         int maxFieldId = 0;
-        if (!theClass.getSuperclass().equals(Object.class)) {
-            maxFieldId = initFieldsFromClass(theClass.getSuperclass(), customEncoders,
+        if (!initClass.getSuperclass().equals(Object.class)) {
+            maxFieldId = initFieldsFromClass(initClass.getSuperclass(), customEncoders,
                     fieldsWithAnnotatoins, idToFieldMap, nameToFieldMap);
         }
 
-        for (Field f : theClass.getDeclaredFields()) {
+        for (Field f : initClass.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
             if (ann != null) {
                 JsonFieldDeserializer fldConv = null;
@@ -72,7 +73,7 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
                         + f.getName().substring(1);
                 Method setMethod;
                 try {
-                    setMethod = theClass.getDeclaredMethod("set" + capFieldName, f.getType());
+                    setMethod = initClass.getDeclaredMethod("set" + capFieldName, f.getType());
                     if (customEncoders != null) {
                         fldConv = customEncoders.get(ann.value());
                     }
@@ -99,7 +100,7 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
     @Override
     public T deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         try {
-            T obj = theClass.newInstance();
+            T obj = deserializeClass.newInstance();
 
             while (true) {
                 JsonToken token = jp.nextValue();
@@ -125,8 +126,8 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
      * @return serialized class
      */
     @SuppressWarnings("rawtypes")
-    public Class getSerializedClass() {
-        return theClass;
+    public Class getDeserializedClass() {
+        return deserializeClass;
     }
 
     /**

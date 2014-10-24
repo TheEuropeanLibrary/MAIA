@@ -13,18 +13,18 @@ import org.theeuropeanlibrary.maia.converter.binary.complex.FieldConverter;
  * @author Nuno Freire (nfreire@gmail.com)
  * @since 06.04.2011
  */
-public class BaseTypeConverter implements FieldConverter {
+public class BaseTypeFieldConverter implements FieldConverter {
 
+    private final BaseTypeEncoder<Object> encoder;
     private Field field;
     private int id;
-    private final BaseTypeEncoder<Object> encoder;
 
     /**
      * Creates a new instance of this class.
      *
      * @param encoder
      */
-    public BaseTypeConverter(BaseTypeEncoder<Object> encoder) {
+    public BaseTypeFieldConverter(BaseTypeEncoder<Object> encoder) {
         this.encoder = encoder;
     }
 

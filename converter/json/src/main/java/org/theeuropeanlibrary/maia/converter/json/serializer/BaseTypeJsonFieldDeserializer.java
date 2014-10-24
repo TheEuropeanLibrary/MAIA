@@ -18,8 +18,8 @@ import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
  */
 public class BaseTypeJsonFieldDeserializer extends JsonFieldDeserializer<Object> {
 
-    private Method fieldSet;
     private final JsonDeserializer deserializer;
+    private Method fieldSet;
 
     /**
      * Creates a new instance of this class.
@@ -49,7 +49,7 @@ public class BaseTypeJsonFieldDeserializer extends JsonFieldDeserializer<Object>
     public Object deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         return deserializer.deserialize(jp, dc);
     }
-    
+
     @Override
     public void deserialize(Object bean, JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         Object val = deserializer.deserialize(jp, dc);

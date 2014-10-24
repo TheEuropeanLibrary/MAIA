@@ -25,26 +25,27 @@ import org.theeuropeanlibrary.maia.common.FieldId;
  */
 public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
 
-    private final Class<T> theClass;
+    private final Class<T> serializeClass;
     private final List<JsonFieldSerializer> idIndexedFieldArray;
     private final List<String> xmlNameToField;
 
     /**
      * Creates a new instance of this class.
      *
-     * @param theClass The class to be Serialized
+     * @param serializeClass The class to be Serialized
      * @param customSerializers serializers for particular fields of the class
      */
-    public AnnotationBasedJsonSerializer(Class<T> theClass,
+    public AnnotationBasedJsonSerializer(Class<T> serializeClass,
             Map<Integer, JsonFieldSerializer> customSerializers) {
-        this.theClass = theClass;
-        xmlNameToField = new ArrayList<>();
+        this.serializeClass = serializeClass;
+
         List<JsonFieldSerializer> fieldsWithAnnotatoins = new ArrayList<>();
         Map<Integer, JsonFieldSerializer> idToFieldMap = new HashMap<>();
         Map<Integer, String> nameToFieldMap = new HashMap<>();
-        int maxFieldId = initFieldsFromClass(theClass, customSerializers, fieldsWithAnnotatoins,
+        int maxFieldId = initFieldsFromClass(serializeClass, customSerializers, fieldsWithAnnotatoins,
                 idToFieldMap, nameToFieldMap);
 
+        xmlNameToField = new ArrayList<>(maxFieldId + 1);
         idIndexedFieldArray = new ArrayList<>(maxFieldId + 1);
         for (int i = 0; i <= maxFieldId; i++) {
             idIndexedFieldArray.add(idToFieldMap.get(i));
@@ -52,17 +53,17 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
         }
     }
 
-    private int initFieldsFromClass(Class<?> theClass,
+    private int initFieldsFromClass(Class<?> initClass,
             Map<Integer, JsonFieldSerializer> customEncoders,
             List<JsonFieldSerializer> fieldsWithAnnotatoins,
             Map<Integer, JsonFieldSerializer> idToFieldMap, Map<Integer, String> nameToFieldMap) {
         int maxFieldId = 0;
-        if (!theClass.getSuperclass().equals(Object.class)) {
-            maxFieldId = initFieldsFromClass(theClass.getSuperclass(), customEncoders,
+        if (!initClass.getSuperclass().equals(Object.class)) {
+            maxFieldId = initFieldsFromClass(initClass.getSuperclass(), customEncoders,
                     fieldsWithAnnotatoins, idToFieldMap, nameToFieldMap);
         }
 
-        for (Field f : theClass.getDeclaredFields()) {
+        for (Field f : initClass.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
             if (ann != null) {
                 JsonFieldSerializer fldConv = null;
@@ -72,9 +73,9 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
                 Method getMethod;
                 try {
                     try {
-                        getMethod = theClass.getDeclaredMethod("get" + capFieldName);
+                        getMethod = initClass.getDeclaredMethod("get" + capFieldName);
                     } catch (NoSuchMethodException e) {
-                        getMethod = theClass.getDeclaredMethod("is" + capFieldName);
+                        getMethod = initClass.getDeclaredMethod("is" + capFieldName);
                     }
                     if (customEncoders != null) {
                         fldConv = customEncoders.get(ann.value());
@@ -101,10 +102,10 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
 
     @Override
     public void serialize(T bean, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
-        if (!bean.getClass().equals(theClass)) {
+        if (!bean.getClass().equals(serializeClass)) {
             throw new IllegalArgumentException("Invalid type. Received: "
                     + bean.getClass().getName() + " Expected: "
-                    + theClass.getName());
+                    + serializeClass.getName());
         }
 
         for (int i = 1; i < idIndexedFieldArray.size(); i++) {
@@ -121,7 +122,7 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
      */
     @SuppressWarnings("rawtypes")
     public Class getSerializedClass() {
-        return theClass;
+        return serializeClass;
     }
 
     /**

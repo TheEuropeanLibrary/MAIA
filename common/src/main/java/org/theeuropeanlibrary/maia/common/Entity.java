@@ -5,8 +5,10 @@ import java.util.Set;
 
 /**
  * This interface defines a highly dynamic model of entities consisting of
- * generic key value pairs. A meta data record represents the fines unit of any
- * kind of data in The European Library sense.
+ * generic key value pairs with optional qualification. An entity represents the
+ * finest unit of any kind of data in The European Library sense. Conceptually,
+ * an entity key could be a Person with instance Person: Markus Muhr with a
+ * qualification that this person is the creator of a work.
  *
  * @param <ID> generic ID
  *

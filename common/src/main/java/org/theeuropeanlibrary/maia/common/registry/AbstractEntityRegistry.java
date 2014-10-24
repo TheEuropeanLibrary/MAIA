@@ -9,7 +9,8 @@ import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 
 /**
- * This class provides registration of keys used for tests.
+ * This abstract class provides the basic implementation for registration of
+ * keys, qualifiers and relations.
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 17.10.2014

@@ -7,6 +7,7 @@ import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
+import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
 
 /**
@@ -19,22 +20,28 @@ public class BinaryConverterTest {
 
     @Test
     public void encodeDecodeRecordTest() throws ConverterException {
-        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new TestBinaryConverterFactory());
-
         String id = "1";
-        String test = "test";
+        String base = "test";
+        TestKey complex = new TestKey("complex");
 
         Record<String> mdr = new Record<>();
         mdr.setId(id);
-        mdr.addValue(TestEntityConstants.BASE, test, TestQualifier.TYPE_1);
+        mdr.addValue(TestEntityConstants.BASE, base, TestQualifier.TYPE_1);
+        mdr.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
+
+        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new TestBinaryConverterFactory());
 
         byte[] mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
-        List<QualifiedValue<String>> field = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
-        QualifiedValue<String> decodedTest = field.get(0);
+        List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
+        QualifiedValue<String> decodedBase = baseField.get(0);
+
+        List<QualifiedValue<TestKey>> complexField = mdrDecoded.getQualifiedValues(TestEntityConstants.COMPLEX);
+        QualifiedValue<TestKey> decodedComplex = complexField.get(0);
 
         Assert.assertEquals(id, mdr.getId());
-        Assert.assertEquals(test, decodedTest.getValue());
+        Assert.assertEquals(base, decodedBase.getValue());
+        Assert.assertEquals(complex, decodedComplex.getValue());
     }
 }

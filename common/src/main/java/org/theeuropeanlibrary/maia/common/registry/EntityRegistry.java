@@ -6,7 +6,7 @@ import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 
 /**
- * A registry holding keys and qualifiers for specific model of an entity.
+ * A registry holding keys and qualifiers for a specific model of an entity.
  *
  * @author Nuno Freire (nuno.freire@theeuropeanlibrary.org)
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)

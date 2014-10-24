@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.theeuropeanlibrary.central.convert.DoubleEncoder;
 import org.theeuropeanlibrary.central.convert.ShortEncoder;
 import org.theeuropeanlibrary.maia.common.converter.Converter;
@@ -20,6 +18,7 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.complex.AnnotationBasedByteConverter;
 
 /**
  * This class defines generic functionality to get specific converters for given
@@ -41,20 +40,14 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     protected final Map<String, String> fieldIdEnum = new HashMap<>();
 
     public BaseBinaryConverterFactory() {
-        baseTypeEncoders.put(String.class, new StringEncoder());
-        baseTypeEncoders.put(Boolean.class, new BooleanEncoder());
-        baseTypeEncoders.put(Date.class, new DateEncoder());
-        baseTypeEncoders.put(Integer.class, new IntegerEncoder());
-        baseTypeEncoders.put(Long.class, new LongEncoder());
-        baseTypeEncoders.put(Short.class, new ShortEncoder());
-        baseTypeEncoders.put(Double.class, new DoubleEncoder());
-        baseTypeEncoders.put(Float.class, new FloatEncoder());
+        setupBaseTypeConverters();
     }
 
     public BaseBinaryConverterFactory(Class<?> registry) {
         this();
         setupKeys(registry);
         setupQualifiers(registry);
+        setupConverters();
     }
 
     private void setupKeys(Class<?> keyRegistry) {
@@ -163,6 +156,25 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
         }
     }
 
+    private void setupBaseTypeConverters() {
+        baseTypeEncoders.put(String.class, new StringEncoder());
+        baseTypeEncoders.put(Boolean.class, new BooleanEncoder());
+        baseTypeEncoders.put(Date.class, new DateEncoder());
+        baseTypeEncoders.put(Integer.class, new IntegerEncoder());
+        baseTypeEncoders.put(Long.class, new LongEncoder());
+        baseTypeEncoders.put(Short.class, new ShortEncoder());
+        baseTypeEncoders.put(Double.class, new DoubleEncoder());
+        baseTypeEncoders.put(Float.class, new FloatEncoder());
+    }
+
+    private void setupConverters() {
+        for (TKey<?, ?> key : tkeyFieldId.keySet()) {
+            if (!baseTypeEncoders.containsKey(key.getType())) {
+                converters.put(key.getType(), new AnnotationBasedByteConverter(key.getType()));
+            }
+        }
+    }
+
     @Override
     public Set<Class<?>> getSupportedClasses() {
         return converters.keySet();
@@ -184,22 +196,22 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
     }
 
     @Override
-    public <NS, T> Integer getKeyId(TKey<NS, T> tKey) {
+    public <NS, T> Integer getEncodedKey(TKey<NS, T> tKey) {
         return tkeyFieldId.get(tKey);
     }
 
     @Override
-    public TKey<?, ?> getKey(Integer fieldId) {
+    public TKey<?, ?> getDecodedKey(Integer fieldId) {
         return fieldIdTkey.get(fieldId);
     }
 
     @Override
-    public String getQualifierId(String qualifier) {
+    public String getEncodedQualifier(String qualifier) {
         return enumFieldId.get(qualifier);
     }
 
     @Override
-    public String getQualifier(String fieldId) {
+    public String getDecodedQualifier(String fieldId) {
         return fieldIdEnum.get(fieldId);
     }
 }

@@ -23,6 +23,15 @@ public abstract class JsonFieldDeserializer<T> extends JsonDeserializer<T> {
      */
     public abstract void configure(Method fieldSet);
 
+    /**
+     * Deserializes a value into the given object.
+     *
+     * @param bean the parent object where to serialize into
+     * @param jp
+     * @param dc
+     * @throws java.io.IOException
+     * @throws com.fasterxml.jackson.core.JsonProcessingException
+     */
     public abstract void deserialize(Object bean, JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException;
 
 }

@@ -203,7 +203,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         CodedOutputStream output = CodedOutputStream.newInstance(bout);
         try {
-            Integer id = converterFactory.getKeyId(key);
+            Integer id = converterFactory.getEncodedKey(key);
             if (id != null) {
                 output.writeString(FIELD_KEY, id.toString());
             } else {
@@ -249,7 +249,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
                         String k = input.readString();
                         try {
                             int id = Integer.parseInt(k);
-                            key = (TKey<NS, T>) converterFactory.getKey(id);
+                            key = (TKey<NS, T>) converterFactory.getDecodedKey(id);
                         } catch (NumberFormatException t) {
                             key = (TKey<NS, T>) TKey.fromString(k);
                         }
@@ -402,7 +402,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
             for (Enum<?> qualifier : qualifiers) {
                 String qualifierEncoded = qualifier.getClass().getName() + "@" + qualifier.name();
 
-                String id = converterFactory.getQualifierId(qualifierEncoded);
+                String id = converterFactory.getEncodedQualifier(qualifierEncoded);
                 if (id != null) {
                     qualifierEncoded = id;
                 }
@@ -459,9 +459,9 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
                     case FIELD_ENTRY_QUALIFIER:
                         String encoded = input.readString();
 
-                        String val = converterFactory.getQualifier(encoded);
+                        String val = converterFactory.getDecodedQualifier(encoded);
                         if (val != null) {
-                            encoded = converterFactory.getQualifier(encoded);
+                            encoded = converterFactory.getDecodedQualifier(encoded);
                         }
 
                         String[] split = encoded.split("@");

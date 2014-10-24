@@ -14,8 +14,10 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedRelation;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 
 /**
- * In-memory implementation of {@link Entity}. It is supposed to be the core
- * special requirements of the storage backend.
+ * In-memory implementation of {@link Entity}. It is supposed to be the base
+ * class for all data modeling like provider, dataset or record. The
+ * implementation is using maps and list. It is not thread-safe. The ID is
+ * generic.
  *
  * @param <ID> unique ID
  *

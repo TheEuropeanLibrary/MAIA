@@ -11,7 +11,7 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.FloatEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeConverter;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeFieldConverter;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoderBasedConverter;
 
@@ -32,8 +32,8 @@ public class BaseTypeFieldConverterFactory {
      * given type
      */
     @SuppressWarnings("unchecked")
-    public static BaseTypeConverter newInstanceFor(Class<?> type) {
-        return new BaseTypeConverter(newFieldEncoderFor(type));
+    public static BaseTypeFieldConverter newInstanceFor(Class<?> type) {
+        return new BaseTypeFieldConverter(newFieldEncoderFor(type));
     }
 
     /**

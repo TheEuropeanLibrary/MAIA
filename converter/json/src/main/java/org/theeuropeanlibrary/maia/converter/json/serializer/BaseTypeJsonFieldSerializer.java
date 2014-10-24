@@ -18,8 +18,8 @@ import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
  */
 public class BaseTypeJsonFieldSerializer extends JsonFieldSerializer<Object> {
 
-    private Method fieldGet;
     private final JsonSerializer serializer;
+    private Method fieldGet;
 
     /**
      * Creates a new instance of this class.
