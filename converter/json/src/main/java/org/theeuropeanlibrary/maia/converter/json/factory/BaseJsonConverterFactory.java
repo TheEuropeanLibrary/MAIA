@@ -9,6 +9,8 @@ import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringDeserializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringSerializer;
+import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJsonDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJsonSerializer;
 
 /**
  * This class implements a basic json converter. It uses the name of the TKey
@@ -37,6 +39,10 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
         Set<TKey<?, ?>> keys = registry.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
             elementNames.put(key.getName(), key);
+            if (!baseTypeSerializers.containsKey(key.getType())) {
+                serializers.put(key.getType(), new AnnotationBasedJsonSerializer(key.getType()));
+                deserializers.put(key.getType(), new AnnotationBasedJsonDeserializer(key.getType()));
+            }
         }
 
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();

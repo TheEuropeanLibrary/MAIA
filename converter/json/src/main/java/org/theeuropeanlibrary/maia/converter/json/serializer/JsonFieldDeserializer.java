@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -13,25 +14,44 @@ import java.lang.reflect.Method;
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 22.10.2014
  */
-public abstract class JsonFieldDeserializer<T> extends JsonDeserializer<T> {
+public class JsonFieldDeserializer extends JsonDeserializer {
+
+    private final JsonDeserializer deserializer;
+    private Method fieldSet;
 
     /**
-     * Initializes the field serializer
+     * Creates a new instance of this class.
      *
-     * @param fieldSet the method to invoke in order to set the decoded value
-     * into the object
+     * @param deserializer
      */
-    public abstract void configure(Method fieldSet);
+    @SuppressWarnings("rawtypes")
+    public JsonFieldDeserializer(JsonDeserializer deserializer) {
+        this.deserializer = deserializer;
+    }
+
+    public void configure(Method fieldSet) {
+        this.fieldSet = fieldSet;
+    }
+
+    @Override
+    public Object deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
+        return deserializer.deserialize(jp, dc);
+    }
+
+    public void deserialize(Object bean, JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
+        Object val = deserializer.deserialize(jp, dc);
+        try {
+            fieldSet.invoke(bean, val);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new RuntimeException("Exception during serialization", e);
+        }
+    }
 
     /**
-     * Deserializes a value into the given object.
-     *
-     * @param bean the parent object where to serialize into
-     * @param jp
-     * @param dc
-     * @throws java.io.IOException
-     * @throws com.fasterxml.jackson.core.JsonProcessingException
+     * @return encoder
      */
-    public abstract void deserialize(Object bean, JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException;
-
+    @SuppressWarnings("rawtypes")
+    public JsonDeserializer getDeserializer() {
+        return deserializer;
+    }
 }

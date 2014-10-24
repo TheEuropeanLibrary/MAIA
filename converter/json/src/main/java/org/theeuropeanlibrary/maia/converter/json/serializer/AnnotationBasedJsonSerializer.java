@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
 
 /**
  * Performs XML serialization of object in the Object Model, using java
@@ -28,6 +29,16 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
     private final Class<T> serializeClass;
     private final List<JsonFieldSerializer> idIndexedFieldArray;
     private final List<String> xmlNameToField;
+
+    /**
+     * Creates a new instance of this class.
+     *
+     * @param serializeClass The class to be Serialized
+     * @param customSerializers serializers for particular fields of the class
+     */
+    public AnnotationBasedJsonSerializer(Class<T> serializeClass) {
+        this(serializeClass, null);
+    }
 
     /**
      * Creates a new instance of this class.
@@ -81,7 +92,11 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
                         fldConv = customEncoders.get(ann.value());
                     }
                     if (fldConv == null) {
-                        fldConv = new BaseTypeJsonFieldSerializer(f.getType());
+                        JsonSerializer serializer = BaseTypeJsonFactory.newFieldSerializerFor(f.getType());
+                        if (serializer == null) {
+                            serializer = new AnnotationBasedJsonSerializer(f.getType());
+                        }
+                        fldConv = new JsonFieldSerializer(serializer);
                     }
                     fldConv.configure(getMethod);
                 } catch (SecurityException e) {

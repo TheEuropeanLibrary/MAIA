@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
 
 /**
  * Performs XML serialization of object in the Object Model, using java
@@ -34,16 +35,26 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
      * Creates a new instance of this class.
      *
      * @param deserializeClass The class to be Serialized
-     * @param customSerializers serializers for particular fields of the class
+     */
+    public AnnotationBasedJsonDeserializer(Class<T> deserializeClass) {
+        this(deserializeClass, null);
+    }
+
+    /**
+     * Creates a new instance of this class.
+     *
+     * @param deserializeClass The class to be Serialized
+     * @param customDeserializers desserializers for particular fields of the
+     * class
      */
     public AnnotationBasedJsonDeserializer(Class<T> deserializeClass,
-            Map<Integer, JsonFieldDeserializer> customSerializers) {
+            Map<Integer, JsonFieldDeserializer> customDeserializers) {
         this.deserializeClass = deserializeClass;
 
         List<JsonFieldDeserializer> fieldsWithAnnotatoins = new ArrayList<>();
         Map<Integer, JsonFieldDeserializer> idToFieldMap = new HashMap<>();
         Map<Integer, String> nameToFieldMap = new HashMap<>();
-        int maxFieldId = initFieldsFromClass(deserializeClass, customSerializers, fieldsWithAnnotatoins,
+        int maxFieldId = initFieldsFromClass(deserializeClass, customDeserializers, fieldsWithAnnotatoins,
                 idToFieldMap, nameToFieldMap);
 
         jsonNameToField = new HashMap<>();
@@ -78,7 +89,11 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
                         fldConv = customEncoders.get(ann.value());
                     }
                     if (fldConv == null) {
-                        fldConv = new BaseTypeJsonFieldDeserializer(f.getType());
+                        JsonDeserializer deserializer = BaseTypeJsonFactory.newFieldDeserializerFor(f.getType());
+                        if (deserializer == null) {
+                            deserializer = new AnnotationBasedJsonDeserializer(f.getType());
+                        }
+                        fldConv = new JsonFieldDeserializer(deserializer);
                     }
                     fldConv.configure(setMethod);
                 } catch (SecurityException e) {

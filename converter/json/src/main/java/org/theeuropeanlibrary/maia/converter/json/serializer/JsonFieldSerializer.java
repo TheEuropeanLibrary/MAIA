@@ -1,6 +1,11 @@
 package org.theeuropeanlibrary.maia.converter.json.serializer;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -9,13 +14,40 @@ import java.lang.reflect.Method;
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 22.10.2014
  */
-public abstract class JsonFieldSerializer<T> extends JsonSerializer<T> {
+public class JsonFieldSerializer extends JsonSerializer {
+
+    private final JsonSerializer serializer;
+    private Method fieldGet;
 
     /**
-     * Initializes the field serializer
+     * Creates a new instance of this class.
      *
-     * @param fieldGet the method to invoke in order to get, from the object,
-     * the value to be encoded
+     * @param serializer
      */
-    public abstract void configure(Method fieldGet);
+    public JsonFieldSerializer(JsonSerializer serializer) {
+        this.serializer = serializer;
+    }
+
+    public void configure(Method fieldGet) {
+        this.fieldGet = fieldGet;
+    }
+
+    @Override
+    public void serialize(Object bean, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
+        try {
+            Object value = fieldGet.invoke(bean);
+            if (value != null) {
+                serializer.serialize(value, jg, sp);
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IOException e) {
+            throw new RuntimeException("Cannot retrieve value from object with reflections!", e);
+        }
+    }
+
+    /**
+     * @return encoder
+     */
+    public JsonSerializer getSerializer() {
+        return serializer;
+    }
 }
