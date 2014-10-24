@@ -9,6 +9,7 @@ import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
+import org.theeuropeanlibrary.maia.converter.xml.util.XmlUtil;
 import org.w3c.dom.Element;
 
 /**
@@ -34,7 +35,7 @@ public class XmlConverterTest {
         RecordEntityXmlConverter conv = new RecordEntityXmlConverter(TestXmlFieldConverterFactory.INSTANCE);
 
         Element mdrEncoded = conv.encode(mdr);
-//        System.out.println(XmlUtil.writeDomToString(mdrEncoded));
+        System.out.println(XmlUtil.writeDomToString(mdrEncoded));
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
         List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);

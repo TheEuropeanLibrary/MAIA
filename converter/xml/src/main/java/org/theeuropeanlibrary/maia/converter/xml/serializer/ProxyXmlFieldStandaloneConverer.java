@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
  * @param <T> Serialized type
  * @date 6 de Jul de 2011
  */
-public class ProxyXmlFieldStandaloneSerializer<T> implements XmlFieldConverter<T> {
+public class ProxyXmlFieldStandaloneConverer<T> implements XmlFieldConverter<T> {
 
     private XmlFieldConverter<T> actualSerializer;
 

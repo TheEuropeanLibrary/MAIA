@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.converter.xml.basetype.BaseTypeEncoder;
+import org.theeuropeanlibrary.maia.converter.xml.basetype.BaseTypeEncoderFactory;
 import org.theeuropeanlibrary.maia.converter.xml.util.XmlElementDefinition;
 
 import org.w3c.dom.Element;
@@ -26,23 +28,33 @@ import org.w3c.dom.NodeList;
  */
 public class AnnotationBasedXmlConverter<T> implements XmlFieldConverter<T> {
 
-    private final Class<T> theClass;
+    private final Class<T> converteClass;
     private final List<XmlElementDefinition> idIndexedFieldArray;
     private final Map<String, XmlElementDefinition> xmlNameToField;
 
     /**
      * Creates a new instance of this class.
      *
-     * @param theClass The class to be Serialized
+     * @param converteClass The class to be Serialized
+     */
+    public AnnotationBasedXmlConverter(Class<T> converteClass) {
+        this(converteClass, null);
+    }
+
+    /**
+     * Creates a new instance of this class.
+     *
+     * @param converteClass The class to be Serialized
      * @param customSerializers Serializers for particular fields of the class
      */
-    public AnnotationBasedXmlConverter(Class<T> theClass,
+    public AnnotationBasedXmlConverter(Class<T> converteClass,
             Map<Integer, XmlFieldSerializer> customSerializers) {
-        this.theClass = theClass;
+        this.converteClass = converteClass;
+
         xmlNameToField = new HashMap<>();
         ArrayList<XmlElementDefinition> fieldsWithAnnotatoins = new ArrayList<>();
         HashMap<Integer, XmlElementDefinition> idToFieldMap = new HashMap<>();
-        int maxFieldId = initFieldsFromClass(theClass, customSerializers, fieldsWithAnnotatoins,
+        int maxFieldId = initFieldsFromClass(converteClass, customSerializers, fieldsWithAnnotatoins,
                 idToFieldMap);
 
         idIndexedFieldArray = new ArrayList<>(maxFieldId + 1);
@@ -81,7 +93,13 @@ public class AnnotationBasedXmlConverter<T> implements XmlFieldConverter<T> {
                         fldConv = customEncoders.get(ann.value());
                     }
                     if (fldConv == null) {
-                        fldConv = new BaseTypeXmlSerializer(f.getType());
+                        BaseTypeEncoder encoder = BaseTypeEncoderFactory.newFieldEncoderFor(f.getType());
+                        if (encoder != null) {
+                            fldConv = new BaseTypeXmlSerializer(f.getType());
+                        }
+                    }
+                    if (fldConv == null) {
+                        fldConv = new GenericXmlFieldSerializer(new AnnotationBasedXmlConverter(f.getType()));
                     }
                     fldConv.configure(setMethod, getMethod);
                 } catch (SecurityException e) {
@@ -104,7 +122,7 @@ public class AnnotationBasedXmlConverter<T> implements XmlFieldConverter<T> {
     @Override
     public T decode(Element xmlElement) throws ConverterException {
         try {
-            T obj = theClass.newInstance();
+            T obj = converteClass.newInstance();
             NodeList childNodes = xmlElement.getChildNodes();
             for (int i = 0; i < childNodes.getLength(); i++) {
                 Node item = childNodes.item(i);
@@ -125,10 +143,10 @@ public class AnnotationBasedXmlConverter<T> implements XmlFieldConverter<T> {
 
     @Override
     public void encode(Object bean, Element xmlParentElement) throws ConverterException {
-        if (!bean.getClass().equals(theClass)) {
+        if (!bean.getClass().equals(converteClass)) {
             throw new IllegalArgumentException("Invalid type. Received: "
                     + bean.getClass().getName() + " Expected: "
-                    + theClass.getName());
+                    + converteClass.getName());
         }
 
         for (int i = 1; i < idIndexedFieldArray.size(); i++) {
@@ -144,7 +162,7 @@ public class AnnotationBasedXmlConverter<T> implements XmlFieldConverter<T> {
      */
     @SuppressWarnings("rawtypes")
     public Class getSerializedClass() {
-        return theClass;
+        return converteClass;
     }
 
     /**

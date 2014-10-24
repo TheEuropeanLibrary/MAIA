@@ -4,8 +4,8 @@ package org.theeuropeanlibrary.maia.converter.xml.schema;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.AnnotationBasedXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeEncoderBasedXmlSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.serializer.MetadataXmlFieldSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.serializer.ProxyXmlFieldStandaloneSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.MetadataXmlFieldConverter;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.ProxyXmlFieldStandaloneConverer;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.util.XmlElementDefinition;
 import org.w3c.dom.Element;
@@ -52,12 +52,12 @@ public class XmlFieldConverterSchemaGenerator {
             return toXmlSchema((BaseTypeEncoderBasedXmlSerializer) serializer, schemaEl,
                     elementName, minOccurs, maxOccurs, parentClasses);
         }
-        if (serializer instanceof MetadataXmlFieldSerializer) {
-            return toXmlSchema((MetadataXmlFieldSerializer) serializer, schemaEl, elementName,
+        if (serializer instanceof MetadataXmlFieldConverter) {
+            return toXmlSchema((MetadataXmlFieldConverter) serializer, schemaEl, elementName,
                     minOccurs, maxOccurs, parentClasses);
         }
-        if (serializer instanceof ProxyXmlFieldStandaloneSerializer) {
-            return toXmlSchema((ProxyXmlFieldStandaloneSerializer) serializer, schemaEl,
+        if (serializer instanceof ProxyXmlFieldStandaloneConverer) {
+            return toXmlSchema((ProxyXmlFieldStandaloneConverer) serializer, schemaEl,
                     elementName, minOccurs, maxOccurs, parentClasses);
         } else {
             throw new IllegalArgumentException("serializer implementation not supported: "
@@ -162,7 +162,7 @@ public class XmlFieldConverterSchemaGenerator {
      * @param parentClasses parent class for limiting recursions
      * @return The XML Element with the schema definition for this element
      */
-    private Element toXmlSchema(ProxyXmlFieldStandaloneSerializer serializer, Element schemaEl,
+    private Element toXmlSchema(ProxyXmlFieldStandaloneConverer serializer, Element schemaEl,
             String elementName, int minOccurs, int maxOccurs, Set<Class<?>> parentClasses) {
         return toXmlSchema(serializer.getProxiedSerializer(), schemaEl, elementName, minOccurs,
                 maxOccurs, parentClasses);
@@ -179,7 +179,7 @@ public class XmlFieldConverterSchemaGenerator {
      * @param parentClasses parent class for limiting recursions
      * @return The XML Element with the schema definition for this element
      */
-    private Element toXmlSchema(MetadataXmlFieldSerializer serializer, Element schemaEl,
+    private Element toXmlSchema(MetadataXmlFieldConverter serializer, Element schemaEl,
             String elementName, int minOccurs, int maxOccurs, Set<Class<?>> parentClasses) {
         Element originalEl = schemaEl.getOwnerDocument().createElement("xs:element");
         originalEl.setAttribute("name", elementName);

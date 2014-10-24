@@ -6,7 +6,7 @@ import java.util.Set;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeXmlSerializer;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.CollectionXmlFieldSerializer;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.MultiClassXmlFieldSerializer;
-import org.theeuropeanlibrary.maia.converter.xml.serializer.ObjectToXmlFieldSerializer;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.GenericXmlFieldSerializer;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldSerializer;
 import org.w3c.dom.Element;
@@ -50,8 +50,8 @@ public class XmlFieldSerializerSchemaGenerator {
      */
     public void toXmlSchema(XmlFieldSerializer serializer, Element schemaEl,
             String elementName, int minOccurs, int maxOccurs, Set<Class<?>> parentClasses) {
-        if (serializer instanceof ObjectToXmlFieldSerializer) {
-            toXmlSchema((ObjectToXmlFieldSerializer) serializer, schemaEl, elementName, minOccurs,
+        if (serializer instanceof GenericXmlFieldSerializer) {
+            toXmlSchema((GenericXmlFieldSerializer) serializer, schemaEl, elementName, minOccurs,
                     maxOccurs, parentClasses);
         } else if (serializer instanceof MultiClassXmlFieldSerializer) {
             toXmlSchema((MultiClassXmlFieldSerializer) serializer, schemaEl, elementName, minOccurs,
@@ -76,7 +76,7 @@ public class XmlFieldSerializerSchemaGenerator {
      * @param maxOccurs
      * @param parentClasses
      */
-    public void toXmlSchema(ObjectToXmlFieldSerializer serializer, Element schemaEl,
+    public void toXmlSchema(GenericXmlFieldSerializer serializer, Element schemaEl,
             String elementName, int minOccurs, int maxOccurs, Set<Class<?>> parentClasses) {
         fieldSchemaGenerator.toXmlSchema(serializer.getObjectSerializer(), schemaEl, elementName,
                 minOccurs, maxOccurs, parentClasses);

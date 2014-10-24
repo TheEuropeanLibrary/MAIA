@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
  * @author Nuno Freire (nfreire@gmail.com)
  * @date 2 de Mai de 2011
  */
-public class MetadataXmlFieldSerializer implements XmlFieldConverter<String> {
+public class MetadataXmlFieldConverter implements XmlFieldConverter<String> {
 
     private DocumentBuilderFactory domfactory;
     private DocumentBuilder documentBuilder;
@@ -32,7 +32,7 @@ public class MetadataXmlFieldSerializer implements XmlFieldConverter<String> {
     /**
      * Creates a new instance of this class.
      */
-    public MetadataXmlFieldSerializer() {
+    public MetadataXmlFieldConverter() {
         super();
 
         domfactory = DocumentBuilderFactory.newInstance();

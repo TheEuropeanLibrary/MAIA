@@ -15,6 +15,7 @@ import org.theeuropeanlibrary.maia.converter.xml.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.LongEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.ShortEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.StringEncoder;
+import org.theeuropeanlibrary.maia.converter.xml.serializer.AnnotationBasedXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 
 /**
@@ -56,6 +57,9 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
         Set<TKey<?, ?>> keys = registry.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
             elementNames.put(key.getName(), key);
+            if (!baseTypeConverters.containsKey(key.getType()) && !converters.containsKey(key.getType())) {
+                converters.put(key.getType(), new AnnotationBasedXmlConverter(key.getType()));
+            }
         }
 
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();

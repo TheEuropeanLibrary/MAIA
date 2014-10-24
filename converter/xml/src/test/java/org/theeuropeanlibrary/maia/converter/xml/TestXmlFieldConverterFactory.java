@@ -1,8 +1,6 @@
 package org.theeuropeanlibrary.maia.converter.xml;
 
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
-import org.theeuropeanlibrary.maia.common.registry.TestKey;
-import org.theeuropeanlibrary.maia.converter.xml.serializer.AnnotationBasedXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.factory.BaseXmlFieldConverterFactory;
 
 /**
@@ -17,9 +15,5 @@ public class TestXmlFieldConverterFactory extends BaseXmlFieldConverterFactory {
 
     private TestXmlFieldConverterFactory() {
         super(TestEntityRegistry.INSTANCE);
-
-        final AnnotationBasedXmlConverter<TestKey> testKeyConverter = new AnnotationBasedXmlConverter<>(
-                TestKey.class, null);
-        converters.put(TestKey.class, testKeyConverter);
     }
 }

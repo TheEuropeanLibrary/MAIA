@@ -1,4 +1,4 @@
-/* ObjectToXmlFieldSerializer.java - created on 2 de Mai de 2011, Copyright (c) 2011 The European Library, all rights reserved */
+/* GenericXmlFieldSerializer.java - created on 2 de Mai de 2011, Copyright (c) 2011 The European Library, all rights reserved */
 package org.theeuropeanlibrary.maia.converter.xml.serializer;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,13 +14,14 @@ import org.w3c.dom.Element;
  * <code>XmlFieldSerializer</code> for use in the serialization of nested in
  * other objects.
  *
- * @author Nuno Freire (nfreire@gmail.com)
- * @date 2 de Mai de 2011
+ * @author Nuno Freire (nuno.freire@theeuropeanlibrary.org)
+ * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
+ * @since 22.10.2014
  */
-public class ObjectToXmlFieldSerializer implements XmlFieldSerializer {
+public class GenericXmlFieldSerializer implements XmlFieldSerializer {
 
-    @SuppressWarnings("rawtypes")
-    private XmlFieldConverter objectSerializer;
+    private final XmlFieldConverter objectSerializer;
+
     private Method fieldSet;
     private Method fieldGet;
 
@@ -30,7 +31,7 @@ public class ObjectToXmlFieldSerializer implements XmlFieldSerializer {
      * @param objectSerializer
      */
     @SuppressWarnings("rawtypes")
-    public ObjectToXmlFieldSerializer(XmlFieldConverter objectSerializer) {
+    public GenericXmlFieldSerializer(XmlFieldConverter objectSerializer) {
         super();
         this.objectSerializer = objectSerializer;
     }
