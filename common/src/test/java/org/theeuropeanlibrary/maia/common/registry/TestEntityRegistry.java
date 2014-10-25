@@ -6,7 +6,7 @@ import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.CO
 import static org.theeuropeanlibrary.maia.common.registry.TestEntityConstants.TEST_TYPE;
 
 /**
- * This class provides registration of keys used for tests.
+ * This class provides registration of keys, qualifiers and relations used for tests.
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 17.10.2014

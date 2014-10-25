@@ -5,7 +5,7 @@ import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 
 /**
- * Basic tests for the record.
+ * Basic tests for a record and implicitly test the abstract entity.
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 20.10.2014
@@ -19,7 +19,7 @@ public class RecordTest {
         String id = "ID";
         String base = "base";
 
-        Record record = new Record();
+        Record<String> record = new Record<>();
         record.setId(id);
         record.addValue(TestEntityConstants.BASE, base);
 

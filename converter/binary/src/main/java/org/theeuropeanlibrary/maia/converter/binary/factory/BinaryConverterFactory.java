@@ -15,6 +15,14 @@ import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 public interface BinaryConverterFactory {
 
     /**
+     * Gets a BaseTypeEncoder used for the identifier
+     *
+     * @param <T> generic type of class
+     * @return encoder
+     */
+    <T> BaseTypeEncoder<T> getIdEncoder();    
+    
+    /**
      * Get all classes for which the {@link BinaryConverterFactory} has a
      * converter
      *

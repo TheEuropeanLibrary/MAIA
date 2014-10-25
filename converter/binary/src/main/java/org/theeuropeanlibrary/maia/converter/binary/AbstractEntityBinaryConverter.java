@@ -61,7 +61,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         CodedOutputStream output = CodedOutputStream.newInstance(bout);
         try {
-            output.writeString(ID, (String) bean.getId());
+            converterFactory.getIdEncoder().encode(ID, bean.getId(), output);
 
             Map<QualifiedValue<?>, TKey<?, ?>> reverseLookup = new HashMap<>();
 
@@ -88,7 +88,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
             }
 
             output.flush();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ConverterException("Could not write entity '" + bean.getId()
                     + "' to byte array!", e);
         } finally {
@@ -123,7 +123,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
                 int field = WireFormat.getTagFieldNumber(tag);
                 switch (field) {
                     case ID:
-                        entity.setId(input.readString());
+                        entity.setId(converterFactory.getIdEncoder().decode(input));
                         break;
                     case FIELD:
                         ByteString bf = input.readBytes();
@@ -137,7 +137,7 @@ public abstract class AbstractEntityBinaryConverter<T extends AbstractEntity> ex
                         break;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new ConverterException("Could not read entity from byte array!", e);
         } finally {
             try {

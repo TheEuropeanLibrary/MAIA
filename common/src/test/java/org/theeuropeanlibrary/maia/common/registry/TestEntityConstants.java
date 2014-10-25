@@ -4,7 +4,8 @@ import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 
 /**
- * This class holds all the keys and qualifiers.
+ * This class holds all the keys and qualifiers for the model of a record used
+ * for testing.
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  * @since 20.10.2014

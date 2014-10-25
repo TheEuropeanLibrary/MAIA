@@ -30,6 +30,8 @@ import org.theeuropeanlibrary.maia.converter.binary.complex.AnnotationBasedByteC
 @SuppressWarnings({"rawtypes", "cast", "unchecked"})
 public class BaseBinaryConverterFactory implements BinaryConverterFactory {
 
+    protected BaseTypeEncoder idEncoder = new StringEncoder();
+
     protected final Map<Class<?>, Converter> converters = new HashMap<>();
     protected final Map<Class<?>, BaseTypeEncoder> baseTypeEncoders = new HashMap<>();
 
@@ -173,6 +175,11 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
                 converters.put(key.getType(), new AnnotationBasedByteConverter(key.getType()));
             }
         }
+    }
+
+    @Override
+    public <T> BaseTypeEncoder<T> getIdEncoder() {
+        return idEncoder;
     }
 
     @Override

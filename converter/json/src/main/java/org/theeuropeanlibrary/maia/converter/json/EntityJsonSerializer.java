@@ -13,7 +13,7 @@ import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.converter.json.factory.JsonConverterFactory;
 
 /**
- * Handles the json serialization of Entity to xml and back.
+ * Handles the json serialization of Entity to JSON..
  *
  * @param <T> generic type of entity
  * @author Nuno Freire (nuno.freire@theeuropeanlibrary.org)
@@ -68,7 +68,6 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
                     }
                 }
             }
-
         }
         jg.writeEndObject();
     }

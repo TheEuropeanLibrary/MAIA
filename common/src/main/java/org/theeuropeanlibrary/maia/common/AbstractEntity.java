@@ -25,7 +25,7 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
  * @since 22.03.2011
  */
 @SuppressWarnings("unchecked")
-public class AbstractEntity<ID> implements Entity<ID> {
+public abstract class AbstractEntity<ID> implements Entity<ID> {
 
     /**
      * unique ID as Long
