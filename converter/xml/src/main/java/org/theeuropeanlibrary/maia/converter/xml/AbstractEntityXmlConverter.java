@@ -63,7 +63,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
      * @throws ConverterException
      */
     public void decode(Element xmlElement, T entity) throws ConverterException {
-        entity.setId(Long.parseLong(xmlElement.getAttribute("ID")));
+        entity.setId(xmlElement.getAttribute("ID"));
         Iterable<Element> childNodes = XmlUtil.elements(xmlElement);
 
         truncateEntity(entity);
@@ -214,7 +214,7 @@ public abstract class AbstractEntityXmlConverter<T extends AbstractEntity> imple
 
     @Override
     public void encode(T mdr, Element xmlParentElement) throws ConverterException {
-        xmlParentElement.setAttribute("ID", String.valueOf(mdr.getId()));
+        xmlParentElement.setAttribute("ID", mdr.getId().toString());
         xmlParentElement.setAttribute("xmlns",
                 "http://theeuropeanlibrary.org/internal_object_model");
 

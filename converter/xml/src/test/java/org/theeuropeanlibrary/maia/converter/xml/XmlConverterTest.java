@@ -35,7 +35,7 @@ public class XmlConverterTest {
         RecordEntityXmlConverter conv = new RecordEntityXmlConverter(TestXmlFieldConverterFactory.INSTANCE);
 
         Element mdrEncoded = conv.encode(mdr);
-        System.out.println(XmlUtil.writeDomToString(mdrEncoded));
+//        System.out.println(XmlUtil.writeDomToString(mdrEncoded));
         Record<String> mdrDecoded = conv.decode(mdrEncoded);
 
         List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
