@@ -10,7 +10,6 @@ import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
-import org.theeuropeanlibrary.maia.converter.json.factory.BaseJsonConverterFactory;
 
 /**
  * This class tests conversion from and to xml representations of a simple test
@@ -32,10 +31,7 @@ public class JsonConverterTest {
         mdr.addValue(TestEntityConstants.BASE, base, TestQualifier.TYPE_1);
         mdr.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
 
-        EntityJsonSerializer<Record> serializer = new EntityJsonSerializer<>(new BaseJsonConverterFactory(TestEntityRegistry.INSTANCE));
-        EntityJsonDeserializer<Record> deserializer = new RecordEntityJsonDeserializer(new BaseJsonConverterFactory(TestEntityRegistry.INSTANCE));
-        RecordObjectMapper mapper = new RecordObjectMapper(
-                serializer, deserializer);
+        EntityObjectMapper mapper = new EntityObjectMapper(null, null, TestEntityRegistry.INSTANCE);
         RecordEntityJsonConverter converter = new RecordEntityJsonConverter(mapper);
 
         String enc = converter.encode(mdr);
