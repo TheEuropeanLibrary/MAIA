@@ -2,11 +2,9 @@ package org.theeuropeanlibrary.maia.converter.json.factory;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringDeserializer;
@@ -24,6 +22,8 @@ import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJson
  */
 public class BaseJsonConverterFactory implements JsonConverterFactory {
 
+    protected final EntityRegistry registry;
+    
     protected final Map<Class<?>, JsonSerializer> serializers = new HashMap<>();
     protected final Map<Class<?>, JsonDeserializer> deserializers = new HashMap<>();
 
@@ -35,9 +35,10 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
     protected final Map<String, Class<? extends Enum<?>>> attributeNames = new HashMap<>();
 
     public BaseJsonConverterFactory(EntityRegistry registry) {
+        this.registry = registry;
         setupBaseTypes();
-        setupKeys(registry);
-        setupQualifiers(registry);
+        setupKeys();
+        setupQualifiers();
     }
 
     private void setupBaseTypes() {
@@ -45,7 +46,7 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
         baseTypeDeserializers.put(String.class, new StringDeserializer());
     }
 
-    private void setupKeys(EntityRegistry registry) {
+    private void setupKeys() {
 //        for (Field f : keyRegistry.getDeclaredFields()) {
 //            FieldId ann = f.getAnnotation(FieldId.class);
 //            if (ann != null) {
@@ -79,7 +80,7 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
         }
     }
 
-    private void setupQualifiers(EntityRegistry registry) {
+    private void setupQualifiers() {
 //        for (Field f : qualifierRegistry.getDeclaredFields()) {
 //            FieldId fann = f.getAnnotation(FieldId.class);
 //            if (fann == null) {
@@ -160,6 +161,11 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
     @Override
     public Class<? extends Enum<?>> getQualifier(String attributeName) {
         return attributeNames.get(attributeName);
+    }
+
+    @Override
+    public EntityRegistry getRegistry() {
+        return registry;
     }
 
 }

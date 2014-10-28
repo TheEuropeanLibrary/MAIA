@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 
 /**
  * A factory that manages the implementations of converters for a set of classes
@@ -98,4 +99,6 @@ public interface JsonConverterFactory {
      * @return key
      */
     Class<? extends Enum<?>> getQualifier(String attrName);
+    
+    EntityRegistry getRegistry();
 }

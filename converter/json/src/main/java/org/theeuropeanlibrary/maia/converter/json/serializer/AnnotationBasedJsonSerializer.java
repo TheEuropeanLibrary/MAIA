@@ -3,11 +3,17 @@ package org.theeuropeanlibrary.maia.converter.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsonschema.SchemaAware;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +30,7 @@ import org.theeuropeanlibrary.maia.converter.json.basetype.BaseTypeJsonFactory;
  * @author Nuno Freire (nfreire@gmail.com)
  * @since 9 de Mai de 2011
  */
-public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
+public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> implements SchemaAware {
 
     private final Class<T> serializeClass;
     private final List<JsonFieldSerializer> idIndexedFieldArray;
@@ -34,7 +40,6 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
      * Creates a new instance of this class.
      *
      * @param serializeClass The class to be Serialized
-     * @param customSerializers serializers for particular fields of the class
      */
     public AnnotationBasedJsonSerializer(Class<T> serializeClass) {
         this(serializeClass, null);
@@ -145,5 +150,37 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> {
      */
     public List<JsonFieldSerializer> getElements() {
         return idIndexedFieldArray;
+    }
+
+    @Override
+    public JsonNode getSchema(SerializerProvider provider, Type typeHint) throws JsonMappingException {
+        ObjectNode props = JsonNodeFactory.instance.objectNode();
+
+        for (int i = 1; i < idIndexedFieldArray.size(); i++) {
+            JsonFieldSerializer conv = idIndexedFieldArray.get(i);
+            if (conv != null) {
+                ObjectNode node = (ObjectNode)((SchemaAware) conv).getSchema(provider, typeHint);
+                JsonNode type = node.get("type");
+                if (type != null && type.asText().equals("object")) {
+                    ObjectNode parent = JsonNodeFactory.instance.objectNode();
+                    parent.put("type", "object");
+                    parent.put(xmlNameToField.get(i), node);
+                    props.put(xmlNameToField.get(i), parent);
+                } else {
+                    props.put(xmlNameToField.get(i), node);
+                }
+            }
+        }
+
+        return props;
+    }
+
+    @Override
+    public JsonNode getSchema(SerializerProvider provider, Type typeHint, boolean isOptional) throws JsonMappingException {
+        ObjectNode schema = (ObjectNode) getSchema(provider, typeHint);
+        if (!isOptional) {
+            schema.put("required", !isOptional);
+        }
+        return schema;
     }
 }

@@ -43,7 +43,7 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
             }
 
             String keyName = jp.getCurrentName();
-            if (keyName.equals("ID")) {
+            if (keyName.equals("id")) {
                 String id = jp.getText();
                 entity.setId(id);
                 continue;

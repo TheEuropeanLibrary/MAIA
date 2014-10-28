@@ -8,7 +8,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
-import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.AbstractEntityXmlConverter;
 import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;
