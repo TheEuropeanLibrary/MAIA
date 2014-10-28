@@ -50,8 +50,8 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
         setupConverters();
     }
 
-    private void setupKeys(Class<?> keyRegistry) {
-        for (Field f : keyRegistry.getDeclaredFields()) {
+    private void setupKeys(Class<?> registry) {
+        for (Field f : registry.getDeclaredFields()) {
             FieldId ann = f.getAnnotation(FieldId.class);
             if (ann != null) {
                 Object key;
@@ -74,8 +74,8 @@ public class BaseBinaryConverterFactory implements BinaryConverterFactory {
         }
     }
 
-    private void setupQualifiers(Class<?> qualifierRegistry) {
-        for (Field f : qualifierRegistry.getDeclaredFields()) {
+    private void setupQualifiers(Class<?> registry) {
+        for (Field f : registry.getDeclaredFields()) {
             FieldId fann = f.getAnnotation(FieldId.class);
             if (fann == null) {
                 continue;

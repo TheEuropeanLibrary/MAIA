@@ -16,6 +16,7 @@ import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityRegistry;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
+import org.theeuropeanlibrary.maia.converter.xml.factory.BaseXmlFieldConverterFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -41,7 +42,7 @@ public class XsdTest {
      */
     public XsdTest() throws Exception {
         SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-        Document schemaDom = EntityXsdGenerator.generateSchema(TestEntityRegistry.INSTANCE, TestXmlFieldConverterFactory.INSTANCE, "Test");
+        Document schemaDom = EntityXsdGenerator.generateSchema(TestEntityRegistry.INSTANCE, new BaseXmlFieldConverterFactory(TestEntityRegistry.INSTANCE), "Test");
 
         // this writing and reading to/from string fixes some namespace issues on the generated dom
         String schema = XmlUtil.writeDomToString(schemaDom);
@@ -67,13 +68,13 @@ public class XsdTest {
         record.addValue(TestEntityConstants.BASE, base, TestQualifier.TYPE_1);
         record.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
 
-        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(TestXmlFieldConverterFactory.INSTANCE);
+        RecordEntityXmlConverter conv = new RecordEntityXmlConverter(new BaseXmlFieldConverterFactory(TestEntityRegistry.INSTANCE));
 
         Element element = conv.encode(record);
         String xml = XmlUtil.writeDomToString(element);
 //        System.out.println(xml);
         Document doc = XmlUtil.parseDom(new StringReader(xml));
-        
+
         try {
             objModelSchema.newValidator().validate(new DOMSource(doc));
         } catch (SAXException e) {

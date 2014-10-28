@@ -1,9 +1,11 @@
 package org.theeuropeanlibrary.maia.converter.xml.factory;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeEncoderBasedXmlSerializer;
@@ -37,6 +39,12 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
     protected final Map<String, Class<? extends Enum<?>>> attributeNames = new HashMap<>();
 
     public BaseXmlFieldConverterFactory(EntityRegistry registry) {
+        setupBaseTypes();
+        setupKeys(registry);
+        setupQualifiers(registry);
+    }
+
+    private void setupBaseTypes() {
         baseTypeConverters.put(Boolean.class, new BaseTypeEncoderBasedXmlSerializer<Boolean>(
                 new BooleanEncoder()));
         baseTypeConverters.put(Date.class, new BaseTypeEncoderBasedXmlSerializer<Date>(
@@ -53,6 +61,30 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
                 new ShortEncoder()));
         baseTypeConverters.put(String.class, new BaseTypeEncoderBasedXmlSerializer<String>(
                 new StringEncoder()));
+    }
+
+    private void setupKeys(EntityRegistry registry) {
+//        for (Field f : keyRegistry.getDeclaredFields()) {
+//            FieldId ann = f.getAnnotation(FieldId.class);
+//            if (ann != null) {
+//                Object okey;
+//                try {
+//                    okey = f.get(TKey.class);
+//                } catch (IllegalAccessException | IllegalArgumentException ex) {
+//                    okey = null;
+//                }
+//                if (okey == null || !(okey instanceof TKey)) {
+//                    continue;
+//                }
+//
+//                TKey key = (TKey) okey;
+//
+//                elementNames.put(key.getName(), key);
+//                if (!baseTypeConverters.containsKey(key.getType()) && !converters.containsKey(key.getType())) {
+//                    converters.put(key.getType(), new AnnotationBasedXmlConverter(key.getType()));
+//                }
+//            }
+//        }
 
         Set<TKey<?, ?>> keys = registry.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
@@ -61,7 +93,35 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
                 converters.put(key.getType(), new AnnotationBasedXmlConverter(key.getType()));
             }
         }
+    }
 
+    private void setupQualifiers(EntityRegistry registry) {
+//        for (Field f : qualifierRegistry.getDeclaredFields()) {
+//            FieldId fann = f.getAnnotation(FieldId.class);
+//            if (fann == null) {
+//                continue;
+//            }
+//            Object key;
+//            try {
+//                key = f.get(TKey.class);
+//            } catch (IllegalAccessException | IllegalArgumentException ex) {
+//                key = null;
+//            }
+//            if (key == null || (key instanceof TKey)) {
+//                continue;
+//            }
+//
+//            Class<? extends Enum<?>> qualifier;
+//            try {
+//                qualifier = (Class<? extends Enum<?>>) f.get(Enum.class);
+//            } catch (IllegalAccessException | IllegalArgumentException e) {
+//                throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
+//// continue;
+//            }
+//
+//            attributeNames.put(qualifier.getSimpleName(), qualifier);
+//        }
+        
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();
         for (Class<? extends Enum<?>> qualifier : qualifiers) {
             attributeNames.put(qualifier.getSimpleName(), qualifier);

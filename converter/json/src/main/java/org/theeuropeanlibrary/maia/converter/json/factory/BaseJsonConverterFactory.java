@@ -2,9 +2,11 @@ package org.theeuropeanlibrary.maia.converter.json.factory;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringDeserializer;
@@ -33,8 +35,39 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
     protected final Map<String, Class<? extends Enum<?>>> attributeNames = new HashMap<>();
 
     public BaseJsonConverterFactory(EntityRegistry registry) {
+        setupBaseTypes();
+        setupKeys(registry);
+        setupQualifiers(registry);
+    }
+
+    private void setupBaseTypes() {
         baseTypeSerializers.put(String.class, new StringSerializer());
         baseTypeDeserializers.put(String.class, new StringDeserializer());
+    }
+
+    private void setupKeys(EntityRegistry registry) {
+//        for (Field f : keyRegistry.getDeclaredFields()) {
+//            FieldId ann = f.getAnnotation(FieldId.class);
+//            if (ann != null) {
+//                Object okey;
+//                try {
+//                    okey = f.get(TKey.class);
+//                } catch (IllegalAccessException | IllegalArgumentException ex) {
+//                    okey = null;
+//                }
+//                if (okey == null || !(okey instanceof TKey)) {
+//                    continue;
+//                }
+//                
+//                TKey key = (TKey) okey;
+//                
+//                elementNames.put(key.getName(), key);
+//                if (!baseTypeSerializers.containsKey(key.getType())) {
+//                    serializers.put(key.getType(), new AnnotationBasedJsonSerializer(key.getType()));
+//                    deserializers.put(key.getType(), new AnnotationBasedJsonDeserializer(key.getType()));
+//                }
+//            }
+//        }
 
         Set<TKey<?, ?>> keys = registry.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
@@ -44,7 +77,35 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
                 deserializers.put(key.getType(), new AnnotationBasedJsonDeserializer(key.getType()));
             }
         }
+    }
 
+    private void setupQualifiers(EntityRegistry registry) {
+//        for (Field f : qualifierRegistry.getDeclaredFields()) {
+//            FieldId fann = f.getAnnotation(FieldId.class);
+//            if (fann == null) {
+//                continue;
+//            }
+//            Object key;
+//            try {
+//                key = f.get(TKey.class);
+//            } catch (IllegalAccessException | IllegalArgumentException ex) {
+//                key = null;
+//            }
+//            if (key == null || (key instanceof TKey)) {
+//                continue;
+//            }
+//
+//            Class<? extends Enum<?>> qualifier;
+//            try {
+//                qualifier = (Class<? extends Enum<?>>) f.get(Enum.class);
+//            } catch (IllegalAccessException | IllegalArgumentException e) {
+//                throw new RuntimeException("Field '" + f + "' cannot be accessed!", e);
+//// continue;
+//            }
+//
+//            attributeNames.put(qualifier.getSimpleName(), qualifier);
+//        }
+        
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();
         for (Class<? extends Enum<?>> qualifier : qualifiers) {
             attributeNames.put(qualifier.getSimpleName(), qualifier);
