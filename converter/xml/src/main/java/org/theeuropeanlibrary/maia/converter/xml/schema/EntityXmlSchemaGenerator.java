@@ -55,10 +55,12 @@ public class EntityXmlSchemaGenerator {
         try {
             Set<TKey> complexKeys = new HashSet<>();
             Set<TKey> baseKeys = new HashSet<>();
-            HashSet<Class<? extends Enum<?>>> allQualifiers = new HashSet<>();
+            Set<Class<? extends Enum<?>>> allQualifiers = new HashSet<>();
             for (TKey key : registry.getAvailableKeys()) {
                 Set<Class<? extends Enum<?>>> validEnums = registry.getQualifiers(key);
-                allQualifiers.addAll(validEnums);
+                if (validEnums != null) {
+                    allQualifiers.addAll(validEnums);
+                }
                 if (factory.getConverter(key.getType()) != null) {
                     complexKeys.add(key);
                 } else {
@@ -320,11 +322,13 @@ public class EntityXmlSchemaGenerator {
 
             Set<Class<? extends Enum<?>>> validEnums = registry.getQualifiers(key);
             Node typeEl = elementEl.getChildNodes().item(0).getChildNodes().item(0).getChildNodes().item(0);
-            for (Class<? extends Enum<?>> qualClass : validEnums) {
-                Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
-                typeEl.appendChild(attrEl);
-                attrEl.setAttribute("name", qualClass.getSimpleName());
-                attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+            if (validEnums != null) {
+                for (Class<? extends Enum<?>> qualClass : validEnums) {
+                    Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
+                    typeEl.appendChild(attrEl);
+                    attrEl.setAttribute("name", qualClass.getSimpleName());
+                    attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                }
             }
             Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
             typeEl.appendChild(attrEl);
@@ -360,11 +364,13 @@ public class EntityXmlSchemaGenerator {
                 Element extensionEl = schemaEl.getOwnerDocument().createElement("xs:extension");
                 simpleContentEl.appendChild(extensionEl);
                 extensionEl.setAttribute("base", factory.getElementName(key) + "Type");
-                for (Class<? extends Enum<?>> qualClass : validEnums) {
-                    Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
-                    extensionEl.appendChild(attrEl);
-                    attrEl.setAttribute("name", qualClass.getSimpleName());
-                    attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                if (validEnums != null) {
+                    for (Class<? extends Enum<?>> qualClass : validEnums) {
+                        Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
+                        extensionEl.appendChild(attrEl);
+                        attrEl.setAttribute("name", qualClass.getSimpleName());
+                        attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                    }
                 }
                 Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
                 extensionEl.appendChild(attrEl);

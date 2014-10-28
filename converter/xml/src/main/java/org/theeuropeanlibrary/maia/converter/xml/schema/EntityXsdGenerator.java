@@ -31,7 +31,7 @@ public final class EntityXsdGenerator {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        Document doc = generateSchema((EntityRegistry) Class.forName(args[0]).newInstance(), (XmlFieldConverterFactory) Class.forName(args[1]).newInstance(), args[2]);
+        Document doc = generateSchema((EntityRegistry) Class.forName(args[0]).newInstance(), (XmlFieldConverterFactory) Class.forName(args[1]).newInstance(), Class.forName(args[2]));
 
         Properties xmlOutputProperties = new Properties();
         xmlOutputProperties.setProperty(OutputKeys.INDENT, "yes");
@@ -46,10 +46,10 @@ public final class EntityXsdGenerator {
      *
      * @param registry
      * @param factory
-     * @param elementName
+     * @param entity
      * @return A DOM with the XML schema
      */
-    public static Document generateSchema(EntityRegistry registry, XmlFieldConverterFactory factory, String elementName) {
+    public static Document generateSchema(EntityRegistry registry, XmlFieldConverterFactory factory, Class<?> entity) {
         try {
             DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
@@ -61,7 +61,7 @@ public final class EntityXsdGenerator {
             schemaEl.setAttribute("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
             schemaEl.setAttribute("elementFormDefault", "qualified");
             schemaEl.setAttribute("attributeFormDefault", "unqualified");
-            new EntityXmlSchemaGenerator(registry, factory, Record.class).toXmlSchema(schemaEl, elementName, 1, 1,
+            new EntityXmlSchemaGenerator(registry, factory, entity).toXmlSchema(schemaEl, entity.getSimpleName(), 1, 1,
                     new HashSet<Class<?>>());
             return doc;
         } catch (DOMException | ParserConfigurationException e) {

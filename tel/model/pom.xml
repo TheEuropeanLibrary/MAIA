@@ -27,6 +27,28 @@
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.theeuropeanlibrary</groupId>
+            <artifactId>maia-converter-binary</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.theeuropeanlibrary</groupId>
+            <artifactId>maia-converter-json</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.theeuropeanlibrary</groupId>
+            <artifactId>maia-converter-xml</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
     </dependencies>
 
 </project>

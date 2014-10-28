@@ -31,6 +31,7 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
     @Override
     public void serialize(T t, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
         jg.writeStartObject();
+        jg.writeStringField("ID", t.getId().toString());
         Set<TKey<?, ?>> keys = t.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
             JsonSerializer serializer = factory.getSerializer(key.getType());

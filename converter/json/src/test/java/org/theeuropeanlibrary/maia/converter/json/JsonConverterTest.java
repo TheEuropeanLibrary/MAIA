@@ -39,7 +39,7 @@ public class JsonConverterTest {
         RecordEntityJsonConverter converter = new RecordEntityJsonConverter(mapper);
 
         String enc = converter.encode(mdr);
-//        System.out.println(enc);
+        System.out.println(enc);
         Record<String> mdrDecoded = converter.decode(enc);
 
         List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);

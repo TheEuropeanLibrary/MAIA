@@ -43,18 +43,25 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
             }
 
             String keyName = jp.getCurrentName();
+            if (keyName.equals("ID")) {
+                String id = jp.getText();
+                entity.setId(id);
+                continue;
+            }
 
             Set<Enum<?>> qualifiers = new HashSet<>(3);
-            while (true) {
-                token = jp.nextToken();
-                String qualifierName = jp.getCurrentName();
-                Class qualClass = factory.getQualifier(qualifierName);
-                if (qualClass != null) {
+            if (jp.getText() == null || jp.getText().equals("{")) {
+                while (true) {
                     token = jp.nextToken();
-                    Enum enumVal = Enum.valueOf(qualClass, jp.getText());
-                    qualifiers.add(enumVal);
-                } else {
-                    break;
+                    String qualifierName = jp.getCurrentName();
+                    Class qualClass = factory.getQualifier(qualifierName);
+                    if (qualClass != null) {
+                        token = jp.nextToken();
+                        Enum enumVal = Enum.valueOf(qualClass, jp.getText());
+                        qualifiers.add(enumVal);
+                    } else {
+                        break;
+                    }
                 }
             }
 
@@ -63,10 +70,11 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
             Object value;
             if (deserializer != null) {
                 value = deserializer.deserialize(jp, dc);
-                System.out.println();
             } else {
                 deserializer = factory.getBaseTypeDeserializer(key.getType());
-                token = jp.nextToken();
+                if (jp.getText() == null || jp.getText().equals("{") || jp.getText().equals(jp.getCurrentName())) {
+                    token = jp.nextToken();
+                }
                 value = deserializer.deserialize(jp, dc);
             }
 
