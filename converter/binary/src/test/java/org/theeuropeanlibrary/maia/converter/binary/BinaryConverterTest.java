@@ -9,6 +9,7 @@ import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 import org.theeuropeanlibrary.maia.common.registry.TestKey;
 import org.theeuropeanlibrary.maia.common.registry.TestQualifier;
+import org.theeuropeanlibrary.maia.converter.binary.factory.BaseBinaryConverterFactory;
 
 /**
  * This class tests conversion from and to binary format.
@@ -29,7 +30,7 @@ public class BinaryConverterTest {
         mdr.addValue(TestEntityConstants.BASE, base, TestQualifier.TYPE_1);
         mdr.addValue(TestEntityConstants.COMPLEX, complex, TestQualifier.TYPE_1);
 
-        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new TestBinaryConverterFactory());
+        RecordEntityBinaryConverter conv = new RecordEntityBinaryConverter(new BaseBinaryConverterFactory(TestEntityConstants.class));
 
         byte[] mdrEncoded = conv.encode(mdr);
         Record<String> mdrDecoded = conv.decode(mdrEncoded);

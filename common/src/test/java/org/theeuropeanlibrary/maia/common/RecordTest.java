@@ -1,6 +1,7 @@
 package org.theeuropeanlibrary.maia.common;
 
 import junit.framework.Assert;
+import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.TestEntityConstants;
 
@@ -15,6 +16,7 @@ public class RecordTest {
     /**
      * Tests reading and writing of simple key value pairs onto a record object.
      */
+    @Test
     public void readWriteTest() {
         String id = "ID";
         String base = "base";

@@ -1,6 +1,5 @@
 package org.theeuropeanlibrary.maia.common;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,24 +13,20 @@ import java.util.Map;
  * @author Markus Muhr <markus.muhr@theeuropeanlibrary.org>
  * @since 16.12.2010
  */
-public final class TKey<NS, T> implements Comparable<TKey<NS, T>>, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public final class TKey<NS, T> implements Comparable<TKey<NS, T>> {
 
     /**
      * separator between namespace and name representing full name
      */
     public static String FULL_NAMSPACE_NAME_SEPARATOR = "/";
 
-    private final Class<T> type;
-    private final String name;
-    private final String full;
-
     private static final Map<TKey<?, ?>, TKey<?, ?>> registry = new HashMap<>();
-
     private static final Map<String, TKey<?, ?>> lookup = new HashMap<>();
 
     private final Class<NS> namespace;
+    private final String name;
+    private final Class<T> type;
+    private final String full;
 
     /**
      * Private constructor to implement singleton.
@@ -39,7 +34,6 @@ public final class TKey<NS, T> implements Comparable<TKey<NS, T>>, Serializable 
      * @param namespace the namespace of the field
      * @param name the name of the field
      * @param type the runtime type of the field
-     *
      */
     private TKey(Class<NS> namespace, String name, Class<T> type) {
         if (namespace == null) {

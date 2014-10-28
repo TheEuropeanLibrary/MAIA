@@ -16,7 +16,7 @@ public class BaseTypeJsonFactory {
         JsonSerializer encoder = null;
         if (type.equals(String.class)) {
             encoder = new StringSerializer();
-        }
+//        }
 //        else if (type.equals(Integer.class) || type.equals(int.class)) {
 //            encoder = new IntegerEncoder();
 //        } else if (type.equals(Long.class) || type.equals(long.class)) {
@@ -29,9 +29,9 @@ public class BaseTypeJsonFactory {
 //            encoder = new DoubleEncoder();
 //        } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
 //            encoder = new BooleanEncoder();
-//        } else if (type.isEnum() || type.equals(Enum.class)) {
-//            encoder = new EnumEncoder((Class<? extends Enum>)type);
-//        }
+        } else if (type.isEnum() || type.equals(Enum.class)) {
+            encoder = new EnumSerializer((Class<? extends Enum>)type);
+        }
         if (encoder == null) {
             throw new IllegalArgumentException(
                     "Class contains fields not supported for serialization (and no converter was provided): "
@@ -44,7 +44,7 @@ public class BaseTypeJsonFactory {
         JsonDeserializer encoder = null;
         if (type.equals(String.class)) {
             encoder = new StringDeserializer();
-        }
+//        }
 //        else if (type.equals(Integer.class) || type.equals(int.class)) {
 //            encoder = new IntegerEncoder();
 //        } else if (type.equals(Long.class) || type.equals(long.class)) {
@@ -57,9 +57,9 @@ public class BaseTypeJsonFactory {
 //            encoder = new DoubleEncoder();
 //        } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
 //            encoder = new BooleanEncoder();
-//        } else if (type.isEnum() || type.equals(Enum.class)) {
-//            encoder = new EnumEncoder((Class<? extends Enum>)type);
-//        }
+        } else if (type.isEnum() || type.equals(Enum.class)) {
+            encoder = new EnumDeserializer((Class<? extends Enum>)type);
+        }
         if (encoder == null) {
             throw new IllegalArgumentException(
                     "Class contains fields not supported for serialization (and no converter was provided): "
