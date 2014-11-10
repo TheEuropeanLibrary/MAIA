@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
-import org.theeuropeanlibrary.maia.common.definitions.Record;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.XmlFieldConverter;
 import org.theeuropeanlibrary.maia.converter.xml.factory.XmlFieldConverterFactory;

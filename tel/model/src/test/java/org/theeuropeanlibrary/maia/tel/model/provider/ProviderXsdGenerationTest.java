@@ -9,6 +9,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import junit.framework.Assert;
+import org.junit.Ignore;
 
 import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
@@ -54,6 +55,7 @@ public class ProviderXsdGenerationTest {
      *
      * @throws Exception
      */
+    @Ignore
     @Test
     public void testValidation() throws Exception {
         String id = "prov_0";
