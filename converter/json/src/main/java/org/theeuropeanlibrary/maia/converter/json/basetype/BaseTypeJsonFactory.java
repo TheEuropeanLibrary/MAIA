@@ -2,6 +2,8 @@ package org.theeuropeanlibrary.maia.converter.json.basetype;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+import java.util.Date;
 
 /**
  * A <code>BaseTypeEncoder</code> for <code>Field</code>
@@ -23,10 +25,10 @@ public class BaseTypeJsonFactory {
 //            encoder = new LongEncoder();
 //        } else if (type.equals(Float.class) || type.equals(float.class)) {
 //            encoder = new FloatEncoder();
-//        } else if (type.equals(Date.class)) {
-//            encoder = new DateEncoder();
-//        } else if (type.equals(Double.class) || type.equals(double.class)) {
-//            encoder = new DoubleEncoder();
+        } else if (type.equals(Date.class)) {
+            encoder = new DateSerializer();
+        } else if (type.equals(Double.class) || type.equals(double.class)) {
+            encoder = new DoubleSerializer();
 //        } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
 //            encoder = new BooleanEncoder();
         } else if (type.isEnum() || type.equals(Enum.class)) {
@@ -51,10 +53,10 @@ public class BaseTypeJsonFactory {
 //            encoder = new LongEncoder();
 //        } else if (type.equals(Float.class) || type.equals(float.class)) {
 //            encoder = new FloatEncoder();
-//        } else if (type.equals(Date.class)) {
-//            encoder = new DateEncoder();
-//        } else if (type.equals(Double.class) || type.equals(double.class)) {
-//            encoder = new DoubleEncoder();
+        } else if (type.equals(Date.class)) {
+            encoder = new DateDeserializer();
+        } else if (type.equals(Double.class) || type.equals(double.class)) {
+            encoder = new DoubleDeserializer();
 //        } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
 //            encoder = new BooleanEncoder();
         } else if (type.isEnum() || type.equals(Enum.class)) {
