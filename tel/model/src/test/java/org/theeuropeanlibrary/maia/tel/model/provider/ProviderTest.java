@@ -22,9 +22,9 @@ public class ProviderTest {
 
         Provider<String> record = new Provider();
         record.setId(id);
-        record.addValue(ProviderConstants.NAME, name);
+        record.addValue(ProviderKeys.NAME, name);
 
         Assert.assertEquals(id, record.getId());
-        Assert.assertEquals(name, record.getFirstValue(ProviderConstants.NAME));
+        Assert.assertEquals(name, record.getFirstValue(ProviderKeys.NAME));
     }
 }

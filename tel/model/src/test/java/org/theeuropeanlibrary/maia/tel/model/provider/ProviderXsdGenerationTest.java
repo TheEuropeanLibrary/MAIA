@@ -61,7 +61,7 @@ public class ProviderXsdGenerationTest {
 
         Provider<String> provider = new Provider<>();
         provider.setId(id);
-        provider.addValue(ProviderConstants.NAME, name);
+        provider.addValue(ProviderKeys.NAME, name);
 
         ProviderEntityXmlConverter conv = new ProviderEntityXmlConverter(new BaseXmlFieldConverterFactory(ProviderRegistry.INSTANCE));
 

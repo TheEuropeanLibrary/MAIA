@@ -25,7 +25,7 @@ public class ProviderJsonConverterTest {
 
         Provider<String> provider = new Provider<>();
         provider.setId(id);
-        provider.addValue(ProviderConstants.NAME, name);
+        provider.addValue(ProviderKeys.NAME, name);
 
         EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.INSTANCE, null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
@@ -34,7 +34,7 @@ public class ProviderJsonConverterTest {
 //        System.out.println(enc);
         Provider<String> providerDecoded = converter.decode(enc);
 
-        List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderConstants.NAME);
+        List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderKeys.NAME);
         QualifiedValue<String> decodedBase = nameField.get(0);
 
         Assert.assertEquals(id, provider.getId());

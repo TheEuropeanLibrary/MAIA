@@ -25,14 +25,14 @@ public class ProviderBinaryConverterTest {
 
         Provider<String> provider = new Provider<>();
         provider.setId(id);
-        provider.addValue(ProviderConstants.NAME, name);
+        provider.addValue(ProviderKeys.NAME, name);
 
-        ProviderEntityBinaryConverter conv = new ProviderEntityBinaryConverter(new BaseBinaryConverterFactory(ProviderConstants.class));
+        ProviderEntityBinaryConverter conv = new ProviderEntityBinaryConverter(new BaseBinaryConverterFactory(ProviderKeys.class));
 
         byte[] mdrEncoded = conv.encode(provider);
         Provider<String> providerDecoded = conv.decode(mdrEncoded);
 
-        List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderConstants.NAME);
+        List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderKeys.NAME);
         QualifiedValue<String> decodedBase = nameField.get(0);
 
         Assert.assertEquals(id, provider.getId());
