@@ -2,11 +2,20 @@ package org.theeuropeanlibrary.maia.converter.json.factory;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BinaryDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BinarySerializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BooleanDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.BooleanSerializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.DateDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.DateSerializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.DoubleDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.DoubleSerializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.EnumDeserializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.EnumSerializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringDeserializer;
@@ -44,6 +53,14 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
     }
 
     private void setupBaseTypes() {
+        baseTypeSerializers.put(byte[].class, new BinarySerializer());
+        baseTypeDeserializers.put(byte[].class, new BinaryDeserializer());
+        baseTypeSerializers.put(Boolean.class, new BooleanSerializer());
+        baseTypeDeserializers.put(Boolean.class, new BooleanDeserializer());
+        baseTypeSerializers.put(Date.class, new DateSerializer());
+        baseTypeDeserializers.put(Date.class, new DateDeserializer());
+        baseTypeSerializers.put(Double.class, new DoubleSerializer());
+        baseTypeDeserializers.put(Double.class, new DoubleDeserializer());
         baseTypeSerializers.put(String.class, new StringSerializer());
         baseTypeDeserializers.put(String.class, new StringDeserializer());
     }

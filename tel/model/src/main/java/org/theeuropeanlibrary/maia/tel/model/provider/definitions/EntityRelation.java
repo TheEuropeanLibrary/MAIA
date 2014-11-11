@@ -1,5 +1,7 @@
 package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
 
+import org.theeuropeanlibrary.maia.common.FieldId;
+
 /**
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
@@ -7,28 +9,31 @@ package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
  */
 public class EntityRelation {
 
-    private String relationId;
-    private String relationName;
+    @FieldId(1)
+    private String id;
 
-    public EntityRelation(String relationId, String relationName) {
-        this.relationId = relationId;
-        this.relationName = relationName;
+    @FieldId(2)
+    private String name;
+
+    public EntityRelation(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public String getRelationId() {
-        return relationId;
+    public String getId() {
+        return id;
     }
 
-    public void setRelationId(String relationId) {
-        this.relationId = relationId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getRelationName() {
-        return relationName;
+    public String getName() {
+        return name;
     }
 
-    public void setRelationName(String relationName) {
-        this.relationName = relationName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

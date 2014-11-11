@@ -101,7 +101,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     private Set<TKey<?, ?>> setupMembershipKeys() {
         Set<TKey<?, ?>> membershipKeys = new HashSet<>();
         membershipKeys.add(ProviderKeys.MEMBER);
-        membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
+//        membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
         return membershipKeys;
     }
 
