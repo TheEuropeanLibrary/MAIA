@@ -60,10 +60,13 @@ public class EntityXmlSchemaGenerator {
                 if (validEnums != null) {
                     allQualifiers.addAll(validEnums);
                 }
-                if (factory.getConverter(key.getType()) != null) {
-                    complexKeys.add(key);
-                } else {
+                if (Enum.class.isAssignableFrom(key.getType())) {
+                    allQualifiers.add(key.getType());
+                }
+                if (factory.getBaseTypeConverter(key.getType()) != null) {
                     baseKeys.add(key);
+                } else {
+                    complexKeys.add(key);
                 }
             }
             List<Class<? extends Enum<?>>> allQualifiersSorted = new ArrayList<>(
@@ -304,10 +307,14 @@ public class EntityXmlSchemaGenerator {
 
             Element choiceEl = schemaEl.getOwnerDocument().createElement("xs:choice");
             sequenceEl.appendChild(choiceEl);
+            Set<String> uniques = new HashSet<>();
             for (TKey key : baseKeys) {
+                uniques.add(key.getType().getSimpleName());
+            }
+            for (String unique : uniques) {
                 Element subElementEl = schemaEl.getOwnerDocument().createElement("xs:element");
                 choiceEl.appendChild(subElementEl);
-                subElementEl.setAttribute("ref", key.getType().getSimpleName());
+                subElementEl.setAttribute("ref", unique);
             }
         }
     }
@@ -326,7 +333,7 @@ public class EntityXmlSchemaGenerator {
                     Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
                     typeEl.appendChild(attrEl);
                     attrEl.setAttribute("name", qualClass.getSimpleName());
-                    attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                    attrEl.setAttribute("type", qualClass.getSimpleName() + "Enum");
                 }
             }
             Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
@@ -345,9 +352,6 @@ public class EntityXmlSchemaGenerator {
 
     private void addComplexKeys(Set<TKey> complexKeys, Element schemaEl, Set<Class<?>> parentClasses) throws DOMException {
         for (TKey key : complexKeys) {
-            XmlFieldConverter serializer = factory.getConverter(key.getType());
-            Element elementEl = fieldStandaloneGenerator.toXmlSchema(serializer, schemaEl,
-                    factory.getElementName(key), 1, 1, parentClasses);
             Set<Class<? extends Enum<?>>> validEnums = registry.getQualifiers(key);
 
             if (key.getType().isEnum()) {
@@ -362,13 +366,13 @@ public class EntityXmlSchemaGenerator {
                 complexTypeEl.appendChild(simpleContentEl);
                 Element extensionEl = schemaEl.getOwnerDocument().createElement("xs:extension");
                 simpleContentEl.appendChild(extensionEl);
-                extensionEl.setAttribute("base", factory.getElementName(key) + "Type");
+                extensionEl.setAttribute("base", factory.getElementName(key) + "Enum");
                 if (validEnums != null) {
                     for (Class<? extends Enum<?>> qualClass : validEnums) {
                         Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
                         extensionEl.appendChild(attrEl);
                         attrEl.setAttribute("name", qualClass.getSimpleName());
-                        attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                        attrEl.setAttribute("type", qualClass.getSimpleName() + "Enum");
                     }
                 }
                 Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
@@ -386,12 +390,18 @@ public class EntityXmlSchemaGenerator {
                 // </xs:simpleContent>
                 // </xs:complexType>
             } else {
+                XmlFieldConverter serializer = factory.getConverter(key.getType());
+                Element elementEl = fieldStandaloneGenerator.toXmlSchema(serializer, schemaEl,
+                        factory.getElementName(key), 1, 1, parentClasses);
+
                 Node typeEl = elementEl.getChildNodes().item(0);
-                for (Class<? extends Enum<?>> qualClass : validEnums) {
-                    Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
-                    typeEl.appendChild(attrEl);
-                    attrEl.setAttribute("name", qualClass.getSimpleName());
-                    attrEl.setAttribute("type", qualClass.getSimpleName() + "Qualifier");
+                if (validEnums != null) {
+                    for (Class<? extends Enum<?>> qualClass : validEnums) {
+                        Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
+                        typeEl.appendChild(attrEl);
+                        attrEl.setAttribute("name", qualClass.getSimpleName());
+                        attrEl.setAttribute("type", qualClass.getSimpleName() + "Enum");
+                    }
                 }
                 Element attrEl = schemaEl.getOwnerDocument().createElement("xs:attribute");
                 typeEl.appendChild(attrEl);
@@ -405,7 +415,7 @@ public class EntityXmlSchemaGenerator {
         for (Class<? extends Enum<?>> qualClass : allQualifiersSorted) {
             Element simpleTypeEl = schemaEl.getOwnerDocument().createElement("xs:simpleType");
             schemaEl.appendChild(simpleTypeEl);
-            simpleTypeEl.setAttribute("name", qualClass.getSimpleName() + "Qualifier");
+            simpleTypeEl.setAttribute("name", qualClass.getSimpleName() + "Enum");
             Element restrictionEl = schemaEl.getOwnerDocument().createElement("xs:restriction");
             simpleTypeEl.appendChild(restrictionEl);
             restrictionEl.setAttribute("base", "xs:string");

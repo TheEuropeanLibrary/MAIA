@@ -1,17 +1,16 @@
 package org.theeuropeanlibrary.maia.converter.xml.factory;
 
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
 import org.theeuropeanlibrary.maia.converter.xml.serializer.BaseTypeEncoderBasedXmlSerializer;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.BooleanEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.DateEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.DoubleEncoder;
+import org.theeuropeanlibrary.maia.converter.xml.basetype.EnumEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.FloatEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.xml.basetype.LongEncoder;
@@ -90,7 +89,11 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
         for (TKey<?, ?> key : keys) {
             elementNames.put(key.getName(), key);
             if (!baseTypeConverters.containsKey(key.getType()) && !converters.containsKey(key.getType())) {
-                converters.put(key.getType(), new AnnotationBasedXmlConverter(key.getType()));
+//                if (Enum.class.isAssignableFrom(key.getType())) {
+//                    converters.put(key.getType(), new BaseTypeEncoderBasedXmlSerializer<String>(new EnumEncoder((Class<? extends Enum>) key.getType())));
+//                } else {
+                    converters.put(key.getType(), new AnnotationBasedXmlConverter(key.getType()));
+//                }
             }
         }
     }
@@ -121,7 +124,7 @@ public class BaseXmlFieldConverterFactory implements XmlFieldConverterFactory {
 //
 //            attributeNames.put(qualifier.getSimpleName(), qualifier);
 //        }
-        
+
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();
         for (Class<? extends Enum<?>> qualifier : qualifiers) {
             attributeNames.put(qualifier.getSimpleName(), qualifier);

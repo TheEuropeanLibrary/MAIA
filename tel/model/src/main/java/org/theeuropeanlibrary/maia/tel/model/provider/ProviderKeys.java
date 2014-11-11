@@ -10,7 +10,7 @@ import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LibraryOrganization;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderMembershipType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.MembershipType;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -72,25 +72,25 @@ public final class ProviderKeys {
     @FieldId(54)
     public static final TKey<ProviderKeys, Boolean> DEA = TKey.register(
             ProviderKeys.class,
-            "DEA Signed",
+            "DEA",
             Boolean.class);
 
     @FieldId(55)
     public static final TKey<ProviderKeys, Boolean> EOD = TKey.register(
             ProviderKeys.class,
-            "EOD Partner",
+            "EOD",
             Boolean.class);
 
     @FieldId(56)
     public static final TKey<ProviderKeys, LibraryOrganization> LIBRARY_ORGANIZATION = TKey.register(
             ProviderKeys.class,
-            "Library Organization",
+            "LibraryOrganization",
             LibraryOrganization.class);
 
     @FieldId(57)
     public static final TKey<ProviderKeys, ConsortiumType> CONSORTIUM_TYPE = TKey.register(
             ProviderKeys.class,
-            "Consortium Type",
+            "ConsortiumType",
             ConsortiumType.class);
 
     @FieldId(58)
@@ -107,16 +107,16 @@ public final class ProviderKeys {
             Boolean.class);
 
     @FieldId(102)
-    public static final TKey<ProviderKeys, ProviderMembershipType> MEMBERSHIP_TYPE = TKey.register(
+    public static final TKey<ProviderKeys, MembershipType> MEMBERSHIP_TYPE = TKey.register(
             ProviderKeys.class,
-            "Membership Type",
-            ProviderMembershipType.class);
+            "MembershipType",
+            MembershipType.class);
 
     // Portal
     @FieldId(151)
     public static final TKey<ProviderKeys, PortalStatus> PORTAL_STATUS = TKey.register(
             ProviderKeys.class,
-            "Portal Status",
+            "PortalStatus",
             PortalStatus.class);
 
     @FieldId(152)
@@ -135,7 +135,7 @@ public final class ProviderKeys {
     @FieldId(201)
     public static final TKey<ProviderKeys, EntityRelation> PROVIDER = TKey.register(
             ProviderKeys.class,
-            "Provider",
+            "OProvider",
             EntityRelation.class);
 
     @FieldId(202)

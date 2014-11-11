@@ -4,9 +4,10 @@ package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
  *
  * @author Markus Muhr (markus.muhr@theeuropeanlibrary.org)
  */
-public enum ProviderNameType {
-    NATIVE,
-    MAIN,
-    INTERNAL,
-    ACRONYM
+public enum LinkType {
+    LOGO,
+    WEBSITE,
+    CONTACTS,
+    OPENING,
+    WIKIPEDIA
 }
