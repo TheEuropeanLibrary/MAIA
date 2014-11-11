@@ -35,7 +35,7 @@ public class JsonConverterTest {
 
         EntityObjectMapper mapper = new EntityObjectMapper(null, null, TestEntityRegistry.INSTANCE);
         RecordEntityJsonConverter converter = new RecordEntityJsonConverter(mapper);
-//
+
 //        JsonSchema jsonSchema = mapper.generateJsonSchema(Record.class);
 //        String schemaStr = jsonSchema.toString();
 //        System.out.println(schemaStr);

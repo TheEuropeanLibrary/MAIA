@@ -98,7 +98,7 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
             JsonSerializer baseSerializer = factory.getBaseTypeSerializer(key.getType());
             Set<Class<? extends Enum<?>>> qualifiers = factory.getRegistry().getQualifiers(key);
 
-            if (baseSerializer != null && (qualifiers == null || qualifiers.size() == 0)) {
+            if (baseSerializer != null && (qualifiers == null || qualifiers.isEmpty())) {
                 SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
                 JsonNode node = schemaSerializer.getSchema(provider, typeHint);
                 properties.put(factory.getElementName(key), node);
@@ -135,13 +135,10 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
     private void addQualifierSchemaNodes(Set<Class<? extends Enum<?>>> qualifiers, ObjectNode props) {
         for (Class<? extends Enum<?>> qualifier : qualifiers) {
             ObjectNode inner = JsonNodeFactory.instance.objectNode();
-            inner.put("type", "string");
-
+//            inner.put("type", "string");
             props.put(factory.getAttributeName(qualifier), inner);
-
             ArrayNode array = JsonNodeFactory.instance.arrayNode();
             inner.put("enum", array);
-
             Object[] vals = qualifier.getEnumConstants();
             for (Object val : vals) {
                 array.add(val.toString());

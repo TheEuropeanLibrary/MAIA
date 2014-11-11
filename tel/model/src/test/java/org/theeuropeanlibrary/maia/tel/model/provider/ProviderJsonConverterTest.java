@@ -1,10 +1,10 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import java.util.List;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
-import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
 import org.theeuropeanlibrary.maia.converter.json.EntityObjectMapper;
 import org.theeuropeanlibrary.maia.converter.json.ProviderEntityJsonConverter;
@@ -19,16 +19,20 @@ import org.theeuropeanlibrary.maia.converter.json.ProviderEntityJsonConverter;
 public class ProviderJsonConverterTest {
 
     @Test
-    public void encodeDecodeProviderTest() throws ConverterException {
+    public void encodeDecodeProviderTest() throws Exception {
+        EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.INSTANCE, null, null);
+        ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
+
+        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
+        String schemaStr = jsonSchema.toString();
+        System.out.println(schemaStr);
+
         String id = "prov_0";
         String name = "TEL";
 
         Provider<String> provider = new Provider<>();
         provider.setId(id);
         provider.addValue(ProviderKeys.NAME, name);
-
-        EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.INSTANCE, null, null);
-        ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);

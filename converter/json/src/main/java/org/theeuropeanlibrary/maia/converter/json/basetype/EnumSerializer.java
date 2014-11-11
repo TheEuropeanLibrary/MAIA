@@ -45,12 +45,12 @@ public class EnumSerializer extends JsonSerializer<Enum> implements SchemaAware 
     @Override
     public JsonNode getSchema(SerializerProvider provider, Type typeHint) throws JsonMappingException {
         ObjectNode node = JsonNodeFactory.instance.objectNode();
-        node.put("type", "string");
-
+//        node.put("type", "string");
         ArrayNode vals = JsonNodeFactory.instance.arrayNode();
-
         node.put("enum", vals);
-        
+        for (Enum e : type.getEnumConstants()) {
+            vals.add(e.toString());
+        }
         return node;
     }
 

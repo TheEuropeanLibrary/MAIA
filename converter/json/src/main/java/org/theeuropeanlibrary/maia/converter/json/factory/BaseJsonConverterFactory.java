@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.registry.EntityRegistry;
+import org.theeuropeanlibrary.maia.converter.json.basetype.EnumDeserializer;
+import org.theeuropeanlibrary.maia.converter.json.basetype.EnumSerializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringDeserializer;
 import org.theeuropeanlibrary.maia.converter.json.basetype.StringSerializer;
 import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJsonDeserializer;
@@ -23,7 +25,7 @@ import org.theeuropeanlibrary.maia.converter.json.serializer.AnnotationBasedJson
 public class BaseJsonConverterFactory implements JsonConverterFactory {
 
     protected final EntityRegistry registry;
-    
+
     protected final Map<Class<?>, JsonSerializer> serializers = new HashMap<>();
     protected final Map<Class<?>, JsonDeserializer> deserializers = new HashMap<>();
 
@@ -74,8 +76,13 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
         for (TKey<?, ?> key : keys) {
             elementNames.put(key.getName(), key);
             if (!baseTypeSerializers.containsKey(key.getType())) {
-                serializers.put(key.getType(), new AnnotationBasedJsonSerializer(key.getType()));
-                deserializers.put(key.getType(), new AnnotationBasedJsonDeserializer(key.getType()));
+                if (Enum.class.isAssignableFrom(key.getType())) {
+                    baseTypeSerializers.put(key.getType(), new EnumSerializer((Class<? extends Enum>) key.getType()));
+                    baseTypeDeserializers.put(key.getType(), new EnumDeserializer((Class<? extends Enum>) key.getType()));
+                } else {
+                    serializers.put(key.getType(), new AnnotationBasedJsonSerializer(key.getType()));
+                    deserializers.put(key.getType(), new AnnotationBasedJsonDeserializer(key.getType()));
+                }
             }
         }
     }
@@ -106,7 +113,7 @@ public class BaseJsonConverterFactory implements JsonConverterFactory {
 //
 //            attributeNames.put(qualifier.getSimpleName(), qualifier);
 //        }
-        
+
         Set<Class<? extends Enum<?>>> qualifiers = registry.getAvailableQualifiers();
         for (Class<? extends Enum<?>> qualifier : qualifiers) {
             attributeNames.put(qualifier.getSimpleName(), qualifier);
