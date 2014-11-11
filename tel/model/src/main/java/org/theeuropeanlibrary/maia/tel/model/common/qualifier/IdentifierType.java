@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
+package org.theeuropeanlibrary.maia.tel.model.common.qualifier;
 
 /**
  *

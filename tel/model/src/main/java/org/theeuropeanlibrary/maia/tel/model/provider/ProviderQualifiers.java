@@ -2,10 +2,10 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.RelationType;
 import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.tel.model.common.qualifier.IdentifierType;
+import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.IdentifierType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.NameType;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
