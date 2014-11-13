@@ -1,6 +1,5 @@
 package org.theeuropeanlibrary.maia.converter.binary.complex;
 
-import org.theeuropeanlibrary.maia.converter.binary.factory.BaseTypeFieldConverterFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,18 +7,19 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.theeuropeanlibrary.maia.common.FieldId;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
+import org.theeuropeanlibrary.maia.common.converter.ConverterException;
+import org.theeuropeanlibrary.maia.converter.binary.factory.BaseTypeFieldConverterFactory;
 
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
-import java.util.Collection;
-import java.util.List;
-import org.theeuropeanlibrary.central.convert.CollectionFieldConverter;
-import org.theeuropeanlibrary.maia.common.converter.Converter;
-import org.theeuropeanlibrary.maia.common.FieldId;
-import org.theeuropeanlibrary.maia.common.converter.ConverterException;
 
 /**
  * A <code>Converter</code> that converts objects according to annotations added

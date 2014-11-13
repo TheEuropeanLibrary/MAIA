@@ -6,18 +6,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.theeuropeanlibrary.central.convert.DoubleEncoder;
-import org.theeuropeanlibrary.central.convert.ShortEncoder;
-import org.theeuropeanlibrary.maia.common.converter.Converter;
+
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.common.converter.Converter;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.BooleanEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.DateEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.DoubleEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.FloatEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.IntegerEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.LongEncoder;
+import org.theeuropeanlibrary.maia.converter.binary.basetype.ShortEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.basetype.StringEncoder;
-import org.theeuropeanlibrary.maia.converter.binary.basetype.BaseTypeEncoder;
 import org.theeuropeanlibrary.maia.converter.binary.complex.AnnotationBasedByteConverter;
 
 /**

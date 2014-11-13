@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.central.convert;
+package org.theeuropeanlibrary.maia.converter.binary.complex;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
