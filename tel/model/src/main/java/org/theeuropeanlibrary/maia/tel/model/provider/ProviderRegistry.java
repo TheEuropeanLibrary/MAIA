@@ -28,6 +28,8 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     }
 
     private ProviderRegistry(EntityFilterFactory<String, Provider<String>> filterFactory) {
+        INSTANCE = this;
+        
         this.filterFactory = filterFactory;
 
         Set<TKey<?, ?>> generalKeys = setupGeneralKeys();
@@ -150,7 +152,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
     public static synchronized ProviderRegistry getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ProviderRegistry();
+           new ProviderRegistry();
         }
         return INSTANCE;
     }
