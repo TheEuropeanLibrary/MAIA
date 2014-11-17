@@ -8,7 +8,6 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DatasetType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DigitisedType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Status;
-import org.theeuropeanlibrary.maia.tel.model.provider.ProviderKeys;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -79,14 +78,14 @@ public final class DatasetKeys {
             Discipline.class);
 
     @FieldId(54)
-    public static final TKey<ProviderKeys, String> NOTE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> NOTE = TKey.register(
+            DatasetKeys.class,
             "Note",
             String.class);
 
     @FieldId(55)
-    public static final TKey<ProviderKeys, String> LINK = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> LINK = TKey.register(
+            DatasetKeys.class,
             "Link",
             String.class);
 
