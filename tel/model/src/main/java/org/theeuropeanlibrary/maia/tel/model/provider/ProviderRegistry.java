@@ -19,17 +19,17 @@ import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
  */
 public final class ProviderRegistry extends AbstractEntityRegistry {
 
-    public final static ProviderRegistry INSTANCE = new ProviderRegistry();
+    private static ProviderRegistry INSTANCE;
 
     private final EntityFilterFactory<String, Provider<String>> filterFactory;
 
     private ProviderRegistry() {
         this(new BaseEntityFilterFactory());
     }
-    
+
     private ProviderRegistry(EntityFilterFactory<String, Provider<String>> filterFactory) {
         this.filterFactory = filterFactory;
-        
+
         Set<TKey<?, ?>> generalKeys = setupGeneralKeys();
         EntityFilter generalFilter = new BaseEntityFilter(generalKeys);
         filterFactory.registerFilter("general", generalFilter);
@@ -146,5 +146,12 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
     public EntityFilterFactory<String, Provider<String>> getFilterFactory() {
         return filterFactory;
+    }
+
+    public static synchronized ProviderRegistry getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ProviderRegistry();
+        }
+        return INSTANCE;
     }
 }

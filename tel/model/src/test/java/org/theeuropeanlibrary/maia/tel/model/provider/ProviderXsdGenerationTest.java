@@ -39,7 +39,7 @@ public class ProviderXsdGenerationTest {
      */
     public ProviderXsdGenerationTest() throws Exception {
         SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-        Document schemaDom = EntityXsdGenerator.generateSchema(ProviderRegistry.INSTANCE, new BaseXmlFieldConverterFactory(ProviderRegistry.INSTANCE), Provider.class);
+        Document schemaDom = EntityXsdGenerator.generateSchema(ProviderRegistry.getInstance(), new BaseXmlFieldConverterFactory(ProviderRegistry.getInstance()), Provider.class);
 
         // this writing and reading to/from string fixes some namespace issues on the generated dom
         String schema = XmlUtil.writeDomToString(schemaDom);
@@ -63,7 +63,7 @@ public class ProviderXsdGenerationTest {
         provider.setId(id);
         provider.addValue(ProviderKeys.NAME, name);
 
-        ProviderEntityXmlConverter conv = new ProviderEntityXmlConverter(new BaseXmlFieldConverterFactory(ProviderRegistry.INSTANCE));
+        ProviderEntityXmlConverter conv = new ProviderEntityXmlConverter(new BaseXmlFieldConverterFactory(ProviderRegistry.getInstance()));
 
         Element element = conv.encode(provider);
         String xml = XmlUtil.writeDomToString(element);

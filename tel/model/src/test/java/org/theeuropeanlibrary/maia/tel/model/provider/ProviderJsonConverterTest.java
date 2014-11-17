@@ -19,7 +19,7 @@ public class ProviderJsonConverterTest {
     
     @Test
     public void encodeDecodeProviderTest() throws Exception {
-        EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.INSTANCE, null, null);
+        EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.getInstance(), null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
         
 //        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);

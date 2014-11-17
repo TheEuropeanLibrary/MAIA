@@ -28,7 +28,7 @@ public class ProviderXmlConverterTest {
         provider.setId(id);
         provider.addValue(ProviderKeys.NAME, name);
 
-        ProviderEntityXmlConverter conv = new ProviderEntityXmlConverter(new BaseXmlFieldConverterFactory(ProviderRegistry.INSTANCE));
+        ProviderEntityXmlConverter conv = new ProviderEntityXmlConverter(new BaseXmlFieldConverterFactory(ProviderRegistry.getInstance()));
 
         Element mdrEncoded = conv.encode(provider);
 //        System.out.println(XmlUtil.writeDomToString(mdrEncoded));
