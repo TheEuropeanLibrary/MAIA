@@ -3,8 +3,11 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 import java.util.HashSet;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.common.definitions.Provider;
 import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilter;
+import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.filter.EntityFilter;
+import org.theeuropeanlibrary.maia.common.filter.EntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
 
 /**
@@ -16,31 +19,31 @@ import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
  */
 public final class ProviderRegistry extends AbstractEntityRegistry {
 
-    public static ProviderRegistry INSTANCE = new ProviderRegistry();
+    public final static ProviderRegistry INSTANCE = new ProviderRegistry();
 
-    private final EntityFilter generalFilter;
-    private final EntityFilter additionalFilter;
-    private final EntityFilter membershipFilter;
-    private final EntityFilter portalFilter;
-    private final EntityFilter relationFilter;
-    private final EntityFilter providerUserFilter;
-    private final EntityFilter officeUserFilter;
+    private final EntityFilterFactory<String, Provider<String>> filterFactory;
 
     private ProviderRegistry() {
+        filterFactory = new BaseEntityFilterFactory<>();
         Set<TKey<?, ?>> generalKeys = setupGeneralKeys();
-        generalFilter = new BaseEntityFilter(generalKeys);
+        EntityFilter generalFilter = new BaseEntityFilter(generalKeys);
+        filterFactory.registerFilter("general", generalFilter);
 
         Set<TKey<?, ?>> additionalKeys = setupAdditionalKeys();
-        additionalFilter = new BaseEntityFilter(additionalKeys);
+        EntityFilter additionalFilter = new BaseEntityFilter(additionalKeys);
+        filterFactory.registerFilter("additional", additionalFilter);
 
         Set<TKey<?, ?>> membershipKeys = setupMembershipKeys();
-        membershipFilter = new BaseEntityFilter(membershipKeys);
+        EntityFilter membershipFilter = new BaseEntityFilter(membershipKeys);
+        filterFactory.registerFilter("membership", membershipFilter);
 
         Set<TKey<?, ?>> portalKeys = setupPortalKeys();
-        portalFilter = new BaseEntityFilter(portalKeys);
+        EntityFilter portalFilter = new BaseEntityFilter(portalKeys);
+        filterFactory.registerFilter("portal", portalFilter);
 
         Set<TKey<?, ?>> relationKeys = setupRelationshipKeys();
-        relationFilter = new BaseEntityFilter(relationKeys);
+        EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
+        filterFactory.registerFilter("relation", relationFilter);
 
         keys.addAll(generalKeys);
         keys.addAll(additionalKeys);
@@ -54,7 +57,8 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         providerUserKeys.addAll(membershipKeys);
         providerUserKeys.addAll(portalKeys);
         providerUserKeys.addAll(relationKeys);
-        providerUserFilter = new BaseEntityFilter(providerUserKeys);
+        EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
+        filterFactory.registerFilter("provider", providerUserFilter);
 
         Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
         officeUserKeys.addAll(generalKeys);
@@ -62,7 +66,8 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         officeUserKeys.addAll(membershipKeys);
         officeUserKeys.addAll(portalKeys);
         officeUserKeys.addAll(relationKeys);
-        officeUserFilter = new BaseEntityFilter(officeUserKeys);
+        EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
+        filterFactory.registerFilter("office", officeUserFilter);
     }
 
     private Set<TKey<?, ?>> setupGeneralKeys() {
@@ -134,32 +139,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         return relationKeys;
     }
 
-    public EntityFilter getGeneralFilter() {
-        return generalFilter;
+    public EntityFilterFactory<String, Provider<String>> getFilterFactory() {
+        return filterFactory;
     }
-
-    public EntityFilter getAdditionalFilter() {
-        return additionalFilter;
-    }
-
-    public EntityFilter getMembershipFilter() {
-        return membershipFilter;
-    }
-
-    public EntityFilter getPortalFilter() {
-        return portalFilter;
-    }
-
-    public EntityFilter getRelationFilter() {
-        return relationFilter;
-    }
-
-    public EntityFilter getProviderUserFilter() {
-        return providerUserFilter;
-    }
-
-    public EntityFilter getOfficeUserFilter() {
-        return officeUserFilter;
-    }
-
 }
