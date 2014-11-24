@@ -1,7 +1,10 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import java.io.File;
 import java.util.List;
 import junit.framework.Assert;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;

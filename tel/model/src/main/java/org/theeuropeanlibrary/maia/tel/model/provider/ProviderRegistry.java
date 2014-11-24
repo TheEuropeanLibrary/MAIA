@@ -79,10 +79,11 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
     private Set<TKey<?, ?>> setupGeneralKeys() {
         Set<TKey<?, ?>> generalKeys = new HashSet<>();
-        generalKeys.add(ProviderKeys.NAME);
+        generalKeys.add(ProviderKeys.ORGANIZATION_TYPE);
+        generalKeys.add(ProviderKeys.COUNTRY);
         generalKeys.add(ProviderKeys.IDENTIFIER);
         generalKeys.add(ProviderKeys.LANGUAGE);
-        generalKeys.add(ProviderKeys.COUNTRY);
+        generalKeys.add(ProviderKeys.NAME);
         validQualifiers.put(ProviderKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
             {
                 add(ProviderQualifiers.NAME_TYPE);
@@ -113,7 +114,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     private Set<TKey<?, ?>> setupMembershipKeys() {
         Set<TKey<?, ?>> membershipKeys = new HashSet<>();
         membershipKeys.add(ProviderKeys.MEMBER);
-//        membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
+        membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
         return membershipKeys;
     }
 

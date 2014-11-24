@@ -11,6 +11,7 @@ import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LibraryOrganization;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.MembershipType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderType;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -49,6 +50,12 @@ public final class ProviderKeys {
             ProviderKeys.class,
             "Country",
             Country.class);
+
+    @FieldId(5)
+    public static final TKey<ProviderKeys, ProviderType> ORGANIZATION_TYPE = TKey.register(
+            ProviderKeys.class,
+            "Organization Type",
+            ProviderType.class);
 
     // Additional Information
     @FieldId(51)
