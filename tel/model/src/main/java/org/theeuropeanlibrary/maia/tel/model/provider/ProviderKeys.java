@@ -54,7 +54,7 @@ public final class ProviderKeys {
     @FieldId(5)
     public static final TKey<ProviderKeys, ProviderType> ORGANIZATION_TYPE = TKey.register(
             ProviderKeys.class,
-            "Organization Type",
+            "OrganizationType",
             ProviderType.class);
 
     // Additional Information
