@@ -6,6 +6,7 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.IdentifierType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderType;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -25,9 +26,11 @@ public final class ProviderQualifiers {
 
 //    @FieldId(2)
 //    public static final Class<IdentifierType> IDENTIFIER_TYPE = IdentifierType.class;
+    @FieldId(2)
+    public static final Class<NameType> NAME_TYPE = NameType.class;
 
     @FieldId(3)
-    public static final Class<NameType> NAME_TYPE = NameType.class;
+    public static final Class<ProviderType> PROVIDER_TYPE = ProviderType.class;
 
     @FieldId(4)
     public static final Class<LinkType> LINK_TYPE = LinkType.class;

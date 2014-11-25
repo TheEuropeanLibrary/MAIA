@@ -80,7 +80,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     private Set<TKey<?, ?>> setupGeneralKeys() {
         Set<TKey<?, ?>> generalKeys = new LinkedHashSet<>();
 
-        generalKeys.add(ProviderKeys.ORGANIZATION_TYPE);
+        generalKeys.add(ProviderKeys.PROVIDER_TYPE);
         generalKeys.add(ProviderKeys.COUNTRY);
         generalKeys.add(ProviderKeys.IDENTIFIER);
         generalKeys.add(ProviderKeys.LANGUAGE);
@@ -96,7 +96,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         qualifiers.add(ProviderQualifiers.NAME_TYPE);
         qualifiers.add(ProviderQualifiers.LANGUAGE);
 
-        uniqueKeys.add(ProviderKeys.ORGANIZATION_TYPE);
+        uniqueKeys.add(ProviderKeys.PROVIDER_TYPE);
         uniqueKeys.add(ProviderKeys.COUNTRY);
         uniqueKeys.add(ProviderKeys.IDENTIFIER);
         
