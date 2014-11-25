@@ -39,7 +39,9 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
     public void serialize(T t, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
         jg.writeStartObject();
 
-        jg.writeStringField("id", t.getId().toString());
+        if (t.getId() != null) {
+            jg.writeStringField("id", t.getId().toString());
+        }
 
         Set<TKey<?, ?>> keys = t.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
