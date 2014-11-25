@@ -2,10 +2,10 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
 import org.theeuropeanlibrary.maia.tel.model.common.Coordinate;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
-import org.theeuropeanlibrary.maia.tel.model.common.Link;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ContactRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.DatasetRelation;
@@ -129,10 +129,10 @@ public final class ProviderKeys {
             PortalStatus.class);
 
     @FieldId(152)
-    public static final TKey<ProviderKeys, Link> LINK = TKey.register(
+    public static final TKey<ProviderKeys, BasicLink> LINK = TKey.register(
             ProviderKeys.class,
             "Link",
-            Link.class);
+            BasicLink.class);
 
     @FieldId(153)
     public static final TKey<ProviderKeys, Coordinate> COORDINATE = TKey.register(

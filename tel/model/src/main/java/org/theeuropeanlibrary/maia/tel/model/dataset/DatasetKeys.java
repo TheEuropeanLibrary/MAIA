@@ -2,6 +2,7 @@ package org.theeuropeanlibrary.maia.tel.model.dataset;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Discipline;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
@@ -84,9 +85,9 @@ public final class DatasetKeys {
             String.class);
 
     @FieldId(55)
-    public static final TKey<DatasetKeys, String> LINK = TKey.register(
+    public static final TKey<DatasetKeys, BasicLink> LINK = TKey.register(
             DatasetKeys.class,
             "Link",
-            String.class);
+            BasicLink.class);
 
 }
