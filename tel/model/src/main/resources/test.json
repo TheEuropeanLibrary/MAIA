@@ -1,5 +1,7 @@
 {
     "id": "prov_0",
+    "Phone": ["555-12345678"],
+    "Identifier": "prov_0",
     "OProvider": [{
             "Value": {
                 "Id": "TEL",
@@ -12,6 +14,22 @@
                 "Name": "Europeana"
             }
         }],
+    "Contact": [{
+            "Value": {
+                "Id": "40d5f913-f902-4b8b-8d0b-3d640546f510",
+                "Name": "Markus Muhr",
+                "Role": "Manager"
+            }
+        }],
+    "Name": [{
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "TEL"
+        }, {
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "Europeana"
+        }],
     "Link": [{
             "LinkType": "LOGO",
             "Value": {
@@ -23,18 +41,7 @@
                 "Url": "http://test2.html"
             }
         }],
+    "E-Mail": ["markus.muhr@kb.nl"],
     "ConsortiumType": "PURCHASING",
-    "Identifier": "prov_0",
-    "Name": [{
-            "Language": "ENG",
-            "NameType": "ACRONYM",
-            "Value": "TEL"
-        }, {
-            "Language": "ENG",
-            "NameType": "ACRONYM",
-            "Value": "Europeana"
-        }],
-    "Country": "SE",
-    "Phone": ["555-12345678"],
-    "E-Mail": ["markus.muhr@kb.nl"]
+    "Country": "SE"
 }

@@ -131,8 +131,10 @@ public class AnnotationBasedJsonSerializer<T> extends JsonSerializer<T> implemen
         for (int i = 1; i < idIndexedFieldArray.size(); i++) {
             JsonFieldSerializer conv = idIndexedFieldArray.get(i);
             if (conv != null) {
-                jg.writeFieldName(xmlNameToField.get(i));
-                conv.serialize(bean, jg, sp);
+                if (conv.existValue(bean)) {
+                    jg.writeFieldName(xmlNameToField.get(i));
+                    conv.serialize(bean, jg, sp);
+                }
             }
         }
     }

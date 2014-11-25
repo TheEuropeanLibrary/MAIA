@@ -64,4 +64,17 @@ public class JsonFieldSerializer extends JsonSerializer implements SchemaAware {
     public JsonNode getSchema(SerializerProvider provider, Type typeHint, boolean isOptional) throws JsonMappingException {
         return ((SchemaAware) serializer).getSchema(provider, typeHint, isOptional);
     }
+
+    public boolean existValue(Object bean) {
+        try {
+            Object value = fieldGet.invoke(bean);
+            if (value != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new RuntimeException("Cannot retrieve value from object with reflections!", e);
+        }
+    }
 }

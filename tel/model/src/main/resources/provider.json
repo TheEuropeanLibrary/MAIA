@@ -4,7 +4,7 @@
         "id": {
             "type": "string"
         },
-        "OrganizationType": {
+        "ProviderType": {
             "enum": ["NATIONAL_LIBRARY", "RESEARCH_LIBRARY"]
         },
         "Country": {
