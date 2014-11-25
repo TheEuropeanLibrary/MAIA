@@ -8,8 +8,10 @@ import org.theeuropeanlibrary.maia.common.definitions.Provider;
 import org.theeuropeanlibrary.maia.converter.json.EntityObjectMapper;
 import org.theeuropeanlibrary.maia.converter.json.ProviderEntityJsonConverter;
 import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
+import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderRelationType;
@@ -46,6 +48,10 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.IDENTIFIER, id);
         provider.addValue(ProviderKeys.NAME, name, NameType.ACRONYM, Language.ENG);
         provider.addValue(ProviderKeys.NAME, otherName, NameType.ACRONYM, Language.ENG);
+        provider.addValue(ProviderKeys.COUNTRY, Country.SE);
+    	provider.addValue(ProviderKeys.PHONE, "555-12345678");
+    	provider.addValue(ProviderKeys.EMAIL, "markus.muhr@kb.nl");
+    	provider.addValue(ProviderKeys.CONSORTIUM_TYPE, ConsortiumType.PURCHASING);
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);

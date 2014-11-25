@@ -1,1 +1,40 @@
-{"id":"prov_0","Identifier":"prov_0","OProvider":[{"Value":{"Id":"TEL","Name":"The European Library"}},{"ProviderRelationType":"AGGREGATOR","Value":{"Id":"EU","Name":"Europeana"}}],"Link":[{"LinkType":"LOGO","Value":{"Url":"http://test.html"}},{"LinkType":"OPENING","Value":{"Url":"http://test2.html"}}],"Name":[{"Language":"ENG","NameType":"ACRONYM","Value":"TEL"},{"Language":"ENG","NameType":"ACRONYM","Value":"Europeana"}]}
+{
+    "id": "prov_0",
+    "OProvider": [{
+            "Value": {
+                "Id": "TEL",
+                "Name": "The European Library"
+            }
+        }, {
+            "ProviderRelationType": "AGGREGATOR",
+            "Value": {
+                "Id": "EU",
+                "Name": "Europeana"
+            }
+        }],
+    "Link": [{
+            "LinkType": "LOGO",
+            "Value": {
+                "Url": "http://test.html"
+            }
+        }, {
+            "LinkType": "OPENING",
+            "Value": {
+                "Url": "http://test2.html"
+            }
+        }],
+    "ConsortiumType": "PURCHASING",
+    "Identifier": "prov_0",
+    "Name": [{
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "TEL"
+        }, {
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "Europeana"
+        }],
+    "Country": "SE",
+    "Phone": ["555-12345678"],
+    "E-Mail": ["markus.muhr@kb.nl"]
+}
