@@ -2,6 +2,7 @@ package org.theeuropeanlibrary.maia.converter.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import java.util.List;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -36,12 +37,12 @@ public class JsonConverterTest {
         EntityObjectMapper mapper = new EntityObjectMapper(null, null, TestEntityRegistry.INSTANCE);
         RecordEntityJsonConverter converter = new RecordEntityJsonConverter(mapper);
 
-//        JsonSchema jsonSchema = mapper.generateJsonSchema(Record.class);
-//        String schemaStr = jsonSchema.toString();
-//        System.out.println(schemaStr);
+        JsonSchema jsonSchema = mapper.generateJsonSchema(Record.class);
+        String schemaStr = jsonSchema.toString();
+        System.out.println(schemaStr);
 
         String enc = converter.encode(record);
-//        System.out.println(enc);
+        System.out.println(enc);
         Record<String> mdrDecoded = converter.decode(enc);
 
         List<QualifiedValue<String>> baseField = mdrDecoded.getQualifiedValues(TestEntityConstants.BASE);
