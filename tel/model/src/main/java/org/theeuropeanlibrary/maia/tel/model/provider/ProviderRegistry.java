@@ -48,22 +48,64 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         EntityFilter portalFilter = new BaseEntityFilter(portalKeys);
         filterFactory.registerFilter("portal", portalFilter);
 
-        Set<TKey<?, ?>> relationKeys = setupRelationshipKeys();
-        EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
-        filterFactory.registerFilter("relation", relationFilter);
+        Set<TKey<?, ?>> relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.PROVIDER);
+        filterFactory.registerFilter("provider", new BaseEntityFilter(relKeys));
+        validQualifiers.put(ProviderKeys.PROVIDER, new LinkedHashSet<Class<? extends Enum<?>>>() {
+            {
+                add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
+            }
+        });
+        qualifiers.add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
+
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.DATASET);
+        filterFactory.registerFilter("dataset", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.CONTACT);
+        filterFactory.registerFilter("contact", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.PROJECT);
+        filterFactory.registerFilter("project", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.CASE);
+        filterFactory.registerFilter("case", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.TICKET);
+        filterFactory.registerFilter("ticket", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.TASK);
+        filterFactory.registerFilter("task", new BaseEntityFilter(relKeys));
 
         keys.addAll(generalKeys);
         keys.addAll(additionalKeys);
         keys.addAll(membershipKeys);
         keys.addAll(portalKeys);
-        keys.addAll(relationKeys);
+        keys.add(ProviderKeys.PROVIDER);
+        keys.add(ProviderKeys.DATASET);
+        keys.add(ProviderKeys.CONTACT);
+        keys.add(ProviderKeys.PROJECT);
+        keys.add(ProviderKeys.CASE);
+        keys.add(ProviderKeys.TICKET);
+        keys.add(ProviderKeys.TASK);
 
         Set<TKey<?, ?>> providerUserKeys = new LinkedHashSet<>();
         providerUserKeys.addAll(generalKeys);
         providerUserKeys.addAll(additionalKeys);
         providerUserKeys.addAll(membershipKeys);
         providerUserKeys.addAll(portalKeys);
-        providerUserKeys.addAll(relationKeys);
+        providerUserKeys.add(ProviderKeys.PROVIDER);
+        providerUserKeys.add(ProviderKeys.DATASET);
+        providerUserKeys.add(ProviderKeys.CONTACT);
+        providerUserKeys.add(ProviderKeys.PROJECT);
+        providerUserKeys.add(ProviderKeys.CASE);
+        providerUserKeys.add(ProviderKeys.TICKET);
+        providerUserKeys.add(ProviderKeys.TASK);
         EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
         filterFactory.registerFilter("provider", providerUserFilter);
 
@@ -72,7 +114,13 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         officeUserKeys.addAll(additionalKeys);
         officeUserKeys.addAll(membershipKeys);
         officeUserKeys.addAll(portalKeys);
-        officeUserKeys.addAll(relationKeys);
+        officeUserKeys.add(ProviderKeys.PROVIDER);
+        officeUserKeys.add(ProviderKeys.DATASET);
+        officeUserKeys.add(ProviderKeys.CONTACT);
+        officeUserKeys.add(ProviderKeys.PROJECT);
+        officeUserKeys.add(ProviderKeys.CASE);
+        officeUserKeys.add(ProviderKeys.TICKET);
+        officeUserKeys.add(ProviderKeys.TASK);
         EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
         filterFactory.registerFilter("office", officeUserFilter);
     }
@@ -99,7 +147,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         uniqueKeys.add(ProviderKeys.PROVIDER_TYPE);
         uniqueKeys.add(ProviderKeys.COUNTRY);
         uniqueKeys.add(ProviderKeys.IDENTIFIER);
-        
+
         return generalKeys;
     }
 
@@ -151,30 +199,8 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
         uniqueKeys.add(ProviderKeys.PORTAL_STATUS);
         uniqueKeys.add(ProviderKeys.COORDINATE);
-        
+
         return portalKeys;
-    }
-
-    private Set<TKey<?, ?>> setupRelationshipKeys() {
-        Set<TKey<?, ?>> relationKeys = new LinkedHashSet<>();
-
-        relationKeys.add(ProviderKeys.PROVIDER);
-        relationKeys.add(ProviderKeys.DATASET);
-        relationKeys.add(ProviderKeys.CONTACT);
-        relationKeys.add(ProviderKeys.PROJECT);
-        relationKeys.add(ProviderKeys.CASE);
-        relationKeys.add(ProviderKeys.TICKET);
-        relationKeys.add(ProviderKeys.TASK);
-        
-        validQualifiers.put(ProviderKeys.PROVIDER, new LinkedHashSet<Class<? extends Enum<?>>>() {
-            {
-                add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
-            }
-        });
-        
-        qualifiers.add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
-        
-        return relationKeys;
     }
 
     public EntityFilterFactory<String, Provider<String>> getFilterFactory() {
