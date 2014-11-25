@@ -1,6 +1,6 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.RelationType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderRelationType;
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.IdentifierType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
@@ -33,5 +33,5 @@ public final class ProviderQualifiers {
     public static final Class<LinkType> LINK_TYPE = LinkType.class;
 
     @FieldId(5)
-    public static final Class<RelationType> PROVIDER_RELATIONSHIP_TYPE = RelationType.class;
+    public static final Class<ProviderRelationType> PROVIDER_RELATIONSHIP_TYPE = ProviderRelationType.class;
 }

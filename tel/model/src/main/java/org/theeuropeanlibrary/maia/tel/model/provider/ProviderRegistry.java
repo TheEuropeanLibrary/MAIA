@@ -1,6 +1,6 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
@@ -29,7 +29,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
     private ProviderRegistry(EntityFilterFactory<String, Provider<String>> filterFactory) {
         INSTANCE = this;
-        
+
         this.filterFactory = filterFactory;
 
         Set<TKey<?, ?>> generalKeys = setupGeneralKeys();
@@ -58,7 +58,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         keys.addAll(portalKeys);
         keys.addAll(relationKeys);
 
-        Set<TKey<?, ?>> providerUserKeys = new HashSet<>();
+        Set<TKey<?, ?>> providerUserKeys = new LinkedHashSet<>();
         providerUserKeys.addAll(generalKeys);
         providerUserKeys.addAll(additionalKeys);
         providerUserKeys.addAll(membershipKeys);
@@ -67,7 +67,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
         filterFactory.registerFilter("provider", providerUserFilter);
 
-        Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
+        Set<TKey<?, ?>> officeUserKeys = new LinkedHashSet<>();
         officeUserKeys.addAll(generalKeys);
         officeUserKeys.addAll(additionalKeys);
         officeUserKeys.addAll(membershipKeys);
@@ -78,28 +78,34 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     }
 
     private Set<TKey<?, ?>> setupGeneralKeys() {
-        Set<TKey<?, ?>> generalKeys = new HashSet<>();
+        Set<TKey<?, ?>> generalKeys = new LinkedHashSet<>();
+
         generalKeys.add(ProviderKeys.ORGANIZATION_TYPE);
         generalKeys.add(ProviderKeys.COUNTRY);
         generalKeys.add(ProviderKeys.IDENTIFIER);
         generalKeys.add(ProviderKeys.LANGUAGE);
         generalKeys.add(ProviderKeys.NAME);
-        validQualifiers.put(ProviderKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
+
+        validQualifiers.put(ProviderKeys.NAME, new LinkedHashSet<Class<? extends Enum<?>>>() {
             {
                 add(ProviderQualifiers.NAME_TYPE);
                 add(ProviderQualifiers.LANGUAGE);
             }
         });
-//        validQualifiers.put(ProviderKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(ProviderQualifiers.IDENTIFIER_TYPE);
-//            }
-//        });
+
+        qualifiers.add(ProviderQualifiers.NAME_TYPE);
+        qualifiers.add(ProviderQualifiers.LANGUAGE);
+
+        uniqueKeys.add(ProviderKeys.ORGANIZATION_TYPE);
+        uniqueKeys.add(ProviderKeys.COUNTRY);
+        uniqueKeys.add(ProviderKeys.IDENTIFIER);
+        
         return generalKeys;
     }
 
     private Set<TKey<?, ?>> setupAdditionalKeys() {
-        Set<TKey<?, ?>> additionalKeys = new HashSet<>();
+        Set<TKey<?, ?>> additionalKeys = new LinkedHashSet<>();
+
         additionalKeys.add(ProviderKeys.PHONE);
         additionalKeys.add(ProviderKeys.FAX);
         additionalKeys.add(ProviderKeys.EMAIL);
@@ -108,31 +114,50 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         additionalKeys.add(ProviderKeys.LIBRARY_ORGANIZATION);
         additionalKeys.add(ProviderKeys.CONSORTIUM_TYPE);
         additionalKeys.add(ProviderKeys.NOTE);
+
+        uniqueKeys.add(ProviderKeys.DEA);
+        uniqueKeys.add(ProviderKeys.EOD);
+        uniqueKeys.add(ProviderKeys.CONSORTIUM_TYPE);
+
         return additionalKeys;
     }
 
     private Set<TKey<?, ?>> setupMembershipKeys() {
-        Set<TKey<?, ?>> membershipKeys = new HashSet<>();
+        Set<TKey<?, ?>> membershipKeys = new LinkedHashSet<>();
+
         membershipKeys.add(ProviderKeys.MEMBER);
         membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
+
+        uniqueKeys.add(ProviderKeys.MEMBER);
+        uniqueKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
+
         return membershipKeys;
     }
 
     private Set<TKey<?, ?>> setupPortalKeys() {
-        Set<TKey<?, ?>> portalKeys = new HashSet<>();
+        Set<TKey<?, ?>> portalKeys = new LinkedHashSet<>();
+
         portalKeys.add(ProviderKeys.PORTAL_STATUS);
-        portalKeys.add(ProviderKeys.LINK);
         portalKeys.add(ProviderKeys.COORDINATE);
-        validQualifiers.put(ProviderKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
+        portalKeys.add(ProviderKeys.LINK);
+
+        validQualifiers.put(ProviderKeys.LINK, new LinkedHashSet<Class<? extends Enum<?>>>() {
             {
                 add(ProviderQualifiers.LINK_TYPE);
             }
         });
+
+        qualifiers.add(ProviderQualifiers.LINK_TYPE);
+
+        uniqueKeys.add(ProviderKeys.PORTAL_STATUS);
+        uniqueKeys.add(ProviderKeys.COORDINATE);
+        
         return portalKeys;
     }
 
     private Set<TKey<?, ?>> setupRelationshipKeys() {
-        Set<TKey<?, ?>> relationKeys = new HashSet<>();
+        Set<TKey<?, ?>> relationKeys = new LinkedHashSet<>();
+
         relationKeys.add(ProviderKeys.PROVIDER);
         relationKeys.add(ProviderKeys.DATASET);
         relationKeys.add(ProviderKeys.CONTACT);
@@ -140,11 +165,15 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         relationKeys.add(ProviderKeys.CASE);
         relationKeys.add(ProviderKeys.TICKET);
         relationKeys.add(ProviderKeys.TASK);
-        validQualifiers.put(ProviderKeys.PROVIDER, new HashSet<Class<? extends Enum<?>>>() {
+        
+        validQualifiers.put(ProviderKeys.PROVIDER, new LinkedHashSet<Class<? extends Enum<?>>>() {
             {
                 add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
             }
         });
+        
+        qualifiers.add(ProviderQualifiers.PROVIDER_RELATIONSHIP_TYPE);
+        
         return relationKeys;
     }
 
@@ -154,7 +183,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
     public static synchronized ProviderRegistry getInstance() {
         if (INSTANCE == null) {
-           new ProviderRegistry();
+            new ProviderRegistry();
         }
         return INSTANCE;
     }

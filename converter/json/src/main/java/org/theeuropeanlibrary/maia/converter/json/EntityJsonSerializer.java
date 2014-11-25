@@ -38,46 +38,104 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
     @Override
     public void serialize(T t, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
         jg.writeStartObject();
+
         jg.writeStringField("id", t.getId().toString());
+
         Set<TKey<?, ?>> keys = t.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
-            JsonSerializer serializer = factory.getSerializer(key.getType());
-            if (serializer != null) {
-                List<QualifiedValue<?>> values = t.getQualifiedValues(key);
-                for (QualifiedValue<?> value : values) {
-                    jg.writeFieldName(factory.getElementName(key));
-                    jg.writeStartObject();
-                    Set<Enum<?>> qualifiers = value.getQualifiers();
-                    for (Enum<?> q : qualifiers) {
-                        jg.writeStringField(q.getClass().getSimpleName(), q.toString());
-                    }
-                    serializer.serialize(value.getValue(), jg, sp);
-                    jg.writeEndObject();
-                }
+            List<QualifiedValue<?>> values = t.getQualifiedValues(key);
+            if (factory.getRegistry().isUniqueValueKey(key)) {
+                serializeUniqueNode(jg, key, values, sp);
             } else {
-                serializer = factory.getBaseTypeSerializer(key.getType());
-                if (serializer != null) {
-                    List<QualifiedValue<?>> values = t.getQualifiedValues(key);
-                    for (QualifiedValue<?> value : values) {
-                        Set<Enum<?>> qualifiers = value.getQualifiers();
-                        if (qualifiers.isEmpty()) {
-                            jg.writeFieldName(factory.getElementName(key));
-                            serializer.serialize(value.getValue(), jg, sp);
-                        } else {
-                            jg.writeFieldName(factory.getElementName(key));
-                            jg.writeStartObject();
-                            for (Enum<?> q : qualifiers) {
-                                jg.writeStringField(q.getClass().getSimpleName(), q.toString());
-                            }
-                            jg.writeFieldName("Value");
-                            serializer.serialize(value.getValue(), jg, sp);
-                            jg.writeEndObject();
+                serializeArrayNode(jg, key, values, sp);
+            }
+        }
+
+        jg.writeEndObject();
+    }
+
+    private void serializeUniqueNode(JsonGenerator jg, TKey<?, ?> key, List<QualifiedValue<?>> values, SerializerProvider sp) throws IOException {
+        JsonSerializer serializer = factory.getSerializer(key.getType());
+        if (serializer != null) {
+            for (QualifiedValue<?> value : values) {
+                jg.writeFieldName(factory.getElementName(key));
+                jg.writeStartObject();
+                Set<Enum<?>> qualifiers = value.getQualifiers();
+                for (Enum<?> q : qualifiers) {
+                    jg.writeStringField(q.getClass().getSimpleName(), q.toString());
+                }
+                serializer.serialize(value.getValue(), jg, sp);
+                jg.writeEndObject();
+            }
+        } else {
+            serializer = factory.getBaseTypeSerializer(key.getType());
+            if (serializer != null) {
+                for (QualifiedValue<?> value : values) {
+                    Set<Enum<?>> qualifiers = value.getQualifiers();
+                    if (qualifiers.isEmpty()) {
+                        jg.writeFieldName(factory.getElementName(key));
+                        serializer.serialize(value.getValue(), jg, sp);
+                    } else {
+                        jg.writeFieldName(factory.getElementName(key));
+                        jg.writeStartObject();
+                        for (Enum<?> q : qualifiers) {
+                            jg.writeStringField(q.getClass().getSimpleName(), q.toString());
                         }
+                        jg.writeFieldName("Value");
+                        serializer.serialize(value.getValue(), jg, sp);
+                        jg.writeEndObject();
                     }
                 }
             }
         }
-        jg.writeEndObject();
+    }
+
+    private void serializeArrayNode(JsonGenerator jg, TKey<?, ?> key, List<QualifiedValue<?>> values, SerializerProvider sp) throws IOException {
+        jg.writeFieldName(factory.getElementName(key));
+        jg.writeStartArray();
+
+        JsonSerializer serializer = factory.getSerializer(key.getType());
+        if (serializer != null) {
+            for (QualifiedValue<?> value : values) {
+                jg.writeStartObject();
+                
+                Set<Enum<?>> qualifiers = value.getQualifiers();
+                for (Enum<?> q : qualifiers) {
+                    jg.writeStringField(q.getClass().getSimpleName(), q.toString());
+                }
+                
+                jg.writeFieldName("Value");
+                jg.writeStartObject();
+                serializer.serialize(value.getValue(), jg, sp);
+                jg.writeEndObject();
+                
+                jg.writeEndObject();
+            }
+        } else {
+            serializer = factory.getBaseTypeSerializer(key.getType());
+            if (serializer != null) {
+                for (QualifiedValue<?> value : values) {
+                    if (factory.getRegistry().getQualifiers(key) == null
+                            || factory.getRegistry().getQualifiers(key).isEmpty()) {
+                        serializer.serialize(value.getValue(), jg, sp);
+                    } else {
+                        jg.writeStartObject();
+                        
+                        Set<Enum<?>> qualifiers = value.getQualifiers();
+                        for (Enum<?> q : qualifiers) {
+                            jg.writeStringField(q.getClass().getSimpleName(), q.toString());
+                        }
+                        
+                        jg.writeFieldName("Value");
+                        serializer.serialize(value.getValue(), jg, sp);
+                        
+                        jg.writeEndObject();
+                    }
+                }
+            }
+        }
+
+        jg.writeEndArray();
     }
 
     @Override
@@ -95,41 +153,97 @@ public class EntityJsonSerializer<T extends AbstractEntity> extends JsonSerializ
 
         Set<TKey<?, ?>> keys = factory.getRegistry().getAvailableKeys();
         for (TKey<?, ?> key : keys) {
-            JsonSerializer baseSerializer = factory.getBaseTypeSerializer(key.getType());
-            Set<Class<? extends Enum<?>>> qualifiers = factory.getRegistry().getQualifiers(key);
-
-            if (baseSerializer != null && (qualifiers == null || qualifiers.isEmpty())) {
-                SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
-                JsonNode node = schemaSerializer.getSchema(provider, typeHint);
-                properties.put(factory.getElementName(key), node);
+            if (factory.getRegistry().isUniqueValueKey(key)) {
+                addUniqueSchemaNode(key, provider, typeHint, properties);
             } else {
-                ObjectNode node = JsonNodeFactory.instance.objectNode();
-                node.put("type", "object");
-
-                ObjectNode props;
-                if (baseSerializer != null) {
-                    props = JsonNodeFactory.instance.objectNode();
-                } else {
-                    SchemaAware schemaSerializer = (SchemaAware) factory.getSerializer(key.getType());
-                    props = (ObjectNode) schemaSerializer.getSchema(provider, typeHint);
-                }
-                node.put("properties", props);
-
-                if (qualifiers != null && qualifiers.size() > 0) {
-                    addQualifierSchemaNodes(qualifiers, props);
-                }
-
-                if (baseSerializer != null) {
-                    SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
-                    JsonNode val = schemaSerializer.getSchema(provider, typeHint);
-                    props.put("value", val);
-                }
-
-                properties.put(factory.getElementName(key), node);
+                addArraySchemaNode(key, provider, typeHint, properties);
             }
         }
 
         return root;
+    }
+
+    private void addUniqueSchemaNode(TKey<?, ?> key, SerializerProvider provider, Type typeHint, ObjectNode properties) throws JsonMappingException {
+        JsonSerializer baseSerializer = factory.getBaseTypeSerializer(key.getType());
+        Set<Class<? extends Enum<?>>> qualifiers = factory.getRegistry().getQualifiers(key);
+
+        if (baseSerializer != null && (qualifiers == null || qualifiers.isEmpty())) {
+            SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
+            JsonNode node = schemaSerializer.getSchema(provider, typeHint);
+            properties.put(factory.getElementName(key), node);
+        } else {
+            ObjectNode node = JsonNodeFactory.instance.objectNode();
+            node.put("type", "object");
+
+            ObjectNode props;
+            if (baseSerializer != null) {
+                props = JsonNodeFactory.instance.objectNode();
+            } else {
+                SchemaAware schemaSerializer = (SchemaAware) factory.getSerializer(key.getType());
+                props = (ObjectNode) schemaSerializer.getSchema(provider, typeHint);
+            }
+            node.put("properties", props);
+
+            if (qualifiers != null && qualifiers.size() > 0) {
+                addQualifierSchemaNodes(qualifiers, props);
+            }
+
+            if (baseSerializer != null) {
+                SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
+                JsonNode val = schemaSerializer.getSchema(provider, typeHint);
+                props.put("Value", val);
+            }
+
+            properties.put(factory.getElementName(key), node);
+        }
+    }
+
+    private void addArraySchemaNode(TKey<?, ?> key, SerializerProvider provider, Type typeHint, ObjectNode properties) throws JsonMappingException {
+        ObjectNode array = JsonNodeFactory.instance.objectNode();
+        array.put("type", "array");
+
+        JsonSerializer baseSerializer = factory.getBaseTypeSerializer(key.getType());
+        Set<Class<? extends Enum<?>>> qualifiers = factory.getRegistry().getQualifiers(key);
+
+        if (baseSerializer != null && (qualifiers == null || qualifiers.isEmpty())) {
+            SchemaAware schemaSerializer = (SchemaAware) baseSerializer;
+            JsonNode node = schemaSerializer.getSchema(provider, typeHint);
+            array.put("items", node);
+        } else {
+            ObjectNode node = JsonNodeFactory.instance.objectNode();
+//                node.put("type", "object");
+
+//                ObjectNode props;
+//                if (baseSerializer != null) {
+//                    props = JsonNodeFactory.instance.objectNode();
+//                } else {
+//                    SchemaAware schemaSerializer = (SchemaAware) factory.getSerializer(key.getType());
+//                    props = (ObjectNode) schemaSerializer.getSchema(provider, typeHint);
+//                }
+//                node.put("properties", props);
+            if (qualifiers != null && qualifiers.size() > 0) {
+                addQualifierSchemaNodes(qualifiers, node);
+            }
+
+            SchemaAware schemaSerializer;
+            if (baseSerializer != null) {
+                schemaSerializer = (SchemaAware) baseSerializer;
+            } else {
+                schemaSerializer = (SchemaAware) factory.getSerializer(key.getType());
+            }
+            JsonNode val = schemaSerializer.getSchema(provider, typeHint);
+
+            node.put("Value", val);
+
+//            Iterator<Map.Entry<String, JsonNode>> fields = val.fields();
+//            while (fields.hasNext()) {
+//                Map.Entry<String, JsonNode> entry = fields.next();
+//                node.put(entry.getKey(), entry.getValue());
+//            }
+            array.put("items", node);
+        }
+
+        properties.put(factory.getElementName(key), array);
     }
 
     private void addQualifierSchemaNodes(Set<Class<? extends Enum<?>>> qualifiers, ObjectNode props) {

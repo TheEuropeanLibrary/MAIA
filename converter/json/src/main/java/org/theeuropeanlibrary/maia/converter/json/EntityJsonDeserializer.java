@@ -39,7 +39,7 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
                 break;
             }
             if (token.equals(JsonToken.END_OBJECT)) {
-                continue;
+                break;
             }
 
             String keyName = jp.getCurrentName();
@@ -49,38 +49,104 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
                 continue;
             }
 
+            if (token.equals(JsonToken.START_ARRAY)) {
+                deserializeArrayNode(jp, keyName, dc, entity);
+            } else {
+                deserializeUniqueNode(jp, keyName, dc, entity);
+            }
+        }
+        return entity;
+    }
+
+    private void deserializeArrayNode(JsonParser jp, String keyName, DeserializationContext dc, T entity) throws IOException {
+        TKey<?, ?> key = factory.getKey(keyName);
+
+        JsonToken token = jp.nextValue();
+        while (true) {
+            if (token.equals(JsonToken.END_ARRAY)) {
+                break;
+            }
+
             Set<Enum<?>> qualifiers = new HashSet<>(3);
+            Object value = null;
+
             if (jp.getText() == null || jp.getText().equals("{")) {
                 while (true) {
                     token = jp.nextToken();
-                    String qualifierName = jp.getCurrentName();
-                    Class qualClass = factory.getQualifier(qualifierName);
+                    if (token.equals(JsonToken.END_OBJECT)) {
+                        break;
+                    }
+
+                    String name = jp.getCurrentName();
+
+                    Class qualClass = factory.getQualifier(name);
                     if (qualClass != null) {
                         token = jp.nextToken();
                         Enum enumVal = Enum.valueOf(qualClass, jp.getText());
                         qualifiers.add(enumVal);
                     } else {
-                        break;
+                        JsonDeserializer<?> deserializer = factory.getDeserializer(key.getType());
+                        if (deserializer != null) {
+                            value = deserializer.deserialize(jp, dc);
+                        } else {
+                            deserializer = factory.getBaseTypeDeserializer(key.getType());
+                            if (jp.getText() == null || jp.getText().equals("{") || jp.getText().equals(jp.getCurrentName())) {
+                                token = jp.nextToken();
+                            }
+                            value = deserializer.deserialize(jp, dc);
+                        }
                     }
                 }
             }
 
-            TKey<?, ?> key = factory.getKey(keyName);
-            JsonDeserializer<?> deserializer = factory.getDeserializer(key.getType());
-            Object value;
-            if (deserializer != null) {
-                value = deserializer.deserialize(jp, dc);
-            } else {
-                deserializer = factory.getBaseTypeDeserializer(key.getType());
-                if (jp.getText() == null || jp.getText().equals("{") || jp.getText().equals(jp.getCurrentName())) {
-                    token = jp.nextToken();
-                }
-                value = deserializer.deserialize(jp, dc);
-            }
-
             entity.addValue(key, value, qualifiers.toArray(new Enum[qualifiers.size()]));
+
+            token = jp.nextValue();
+
+            if (token.equals(JsonToken.END_ARRAY)) {
+                break;
+            }
         }
-        return entity;
+    }
+
+    private void deserializeUniqueNode(JsonParser jp, String keyName, DeserializationContext dc, T entity) throws IOException {
+        TKey<?, ?> key = factory.getKey(keyName);
+        Object value = null;
+        Set<Enum<?>> qualifiers = new HashSet<>(3);
+
+        if (jp.getText() == null || jp.getText().equals("{")) {
+            while (true) {
+                JsonToken token = jp.nextToken();
+                if (token.equals(JsonToken.END_OBJECT)) {
+                    break;
+                }
+
+                String qualifierName = jp.getCurrentName();
+                Class qualClass = factory.getQualifier(qualifierName);
+                if (qualClass != null) {
+                    jp.nextToken();
+                    Enum enumVal = Enum.valueOf(qualClass, jp.getText());
+                    qualifiers.add(enumVal);
+                } else {
+                    JsonDeserializer<?> deserializer = factory.getDeserializer(key.getType());
+
+                    if (deserializer != null) {
+                        value = deserializer.deserialize(jp, dc);
+                    } else {
+                        deserializer = factory.getBaseTypeDeserializer(key.getType());
+                        if (jp.getText() == null || jp.getText().equals("{") || jp.getText().equals(jp.getCurrentName())) {
+                            jp.nextToken();
+                        }
+                        value = deserializer.deserialize(jp, dc);
+                    }
+                }
+            } 
+        } else {
+            JsonDeserializer<?> deserializer = factory.getBaseTypeDeserializer(key.getType());
+            value = deserializer.deserialize(jp, dc);
+        }
+
+        entity.addValue(key, value, qualifiers.toArray(new Enum[qualifiers.size()]));
     }
 
 }

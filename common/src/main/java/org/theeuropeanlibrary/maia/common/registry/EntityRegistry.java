@@ -47,4 +47,12 @@ public interface EntityRegistry {
      * @return valid keys with enums for the given key or null
      */
     Map<TKey<?, ?>, List<Class<? extends Enum<?>>>> getRelationTargets(TKey<?, ?> key);
+
+    /**
+     * Returns true, if the key should be unique valued!
+     *
+     * @param key key to be tested if unique
+     * @return true, if key is unique valued
+     */
+    boolean isUniqueValueKey(TKey<?, ?> key);
 }

@@ -119,6 +119,9 @@ public class AnnotationBasedJsonDeserializer<T> extends JsonDeserializer<T> {
 
             while (true) {
                 JsonToken token = jp.nextValue();
+                if (token.equals(JsonToken.START_OBJECT)) {
+                    continue;
+                }
 
                 String name = jp.getCurrentName();
                 Integer val = jsonNameToField.get(name);
