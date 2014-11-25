@@ -97,6 +97,12 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
                         }
                     }
                 }
+            } else {
+                JsonDeserializer<?> deserializer = factory.getBaseTypeDeserializer(key.getType());
+                if (jp.getText() == null || jp.getText().equals("{") || jp.getText().equals(jp.getCurrentName())) {
+                    token = jp.nextToken();
+                }
+                value = deserializer.deserialize(jp, dc);
             }
 
             entity.addValue(key, value, qualifiers.toArray(new Enum[qualifiers.size()]));
@@ -140,7 +146,7 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
                         value = deserializer.deserialize(jp, dc);
                     }
                 }
-            } 
+            }
         } else {
             JsonDeserializer<?> deserializer = factory.getBaseTypeDeserializer(key.getType());
             value = deserializer.deserialize(jp, dc);
