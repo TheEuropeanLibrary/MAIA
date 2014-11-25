@@ -90,11 +90,11 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
                 add(ProviderQualifiers.LANGUAGE);
             }
         });
-        validQualifiers.put(ProviderKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
-            {
-                add(ProviderQualifiers.IDENTIFIER_TYPE);
-            }
-        });
+//        validQualifiers.put(ProviderKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
+//            {
+//                add(ProviderQualifiers.IDENTIFIER_TYPE);
+//            }
+//        });
         return generalKeys;
     }
 
@@ -134,6 +134,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
     private Set<TKey<?, ?>> setupRelationshipKeys() {
         Set<TKey<?, ?>> relationKeys = new HashSet<>();
         relationKeys.add(ProviderKeys.PROVIDER);
+        relationKeys.add(ProviderKeys.DATASET);
         relationKeys.add(ProviderKeys.CONTACT);
         relationKeys.add(ProviderKeys.PROJECT);
         relationKeys.add(ProviderKeys.CASE);

@@ -23,8 +23,8 @@ public final class ProviderQualifiers {
     @FieldId(1)
     public static final Class<Language> LANGUAGE = Language.class;
 
-    @FieldId(2)
-    public static final Class<IdentifierType> IDENTIFIER_TYPE = IdentifierType.class;
+//    @FieldId(2)
+//    public static final Class<IdentifierType> IDENTIFIER_TYPE = IdentifierType.class;
 
     @FieldId(3)
     public static final Class<NameType> NAME_TYPE = NameType.class;

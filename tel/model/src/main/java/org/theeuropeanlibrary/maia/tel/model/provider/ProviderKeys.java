@@ -7,6 +7,8 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.common.Link;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ContactRelation;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.DatasetRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LibraryOrganization;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
@@ -146,30 +148,36 @@ public final class ProviderKeys {
             EntityRelation.class);
 
     @FieldId(202)
-    public static final TKey<ProviderKeys, EntityRelation> CONTACT = TKey.register(
+    public static final TKey<ProviderKeys, DatasetRelation> DATASET = TKey.register(
             ProviderKeys.class,
-            "Contact",
-            EntityRelation.class);
+            "Dataset",
+            DatasetRelation.class);
 
     @FieldId(203)
-    public static final TKey<ProviderKeys, EntityRelation> PROJECT = TKey.register(
+    public static final TKey<ProviderKeys, ContactRelation> CONTACT = TKey.register(
             ProviderKeys.class,
             "Contact",
-            EntityRelation.class);
+            ContactRelation.class);
 
     @FieldId(204)
+    public static final TKey<ProviderKeys, EntityRelation> PROJECT = TKey.register(
+            ProviderKeys.class,
+            "Project",
+            EntityRelation.class);
+
+    @FieldId(205)
     public static final TKey<ProviderKeys, EntityRelation> CASE = TKey.register(
             ProviderKeys.class,
             "Case",
             EntityRelation.class);
 
-    @FieldId(205)
+    @FieldId(206)
     public static final TKey<ProviderKeys, EntityRelation> TICKET = TKey.register(
             ProviderKeys.class,
             "Ticket",
             EntityRelation.class);
 
-    @FieldId(206)
+    @FieldId(207)
     public static final TKey<ProviderKeys, EntityRelation> TASK = TKey.register(
             ProviderKeys.class,
             "Task",
