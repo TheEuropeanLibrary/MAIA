@@ -1,1 +1,43 @@
-{"id":"1","Dataset":[{"Value":{"Id":"21","Name":"British Library integrated catalogue - Online catalogues of printed and electronic resources","Identifier":"a0037","Status":"Live"}},{"Value":{"Id":"22","Name":"EC1914 BL-Printed Literary Sources","Identifier":"a0554","Status":"Internal"}}],"PortalStatus":"LIVE","Image":["http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/British_library_london.jpg/230px-British_library_london.jpg","http://www.theeuropeanlibrary.org/exhibition/buildings/images/pictures/uk_l04.jpg","http://search.theeuropeanlibrary.org/images/treasure"],"ProviderType":"NATIONAL_LIBRARY","Name":[{"NameType":"MAIN","Language":"ENG","Value":"The British Library"},{"NameType":"INTERNAL","Language":"ENG","Value":"NL United Kingdom"},{"NameType":"ACRONYM","Language":"ENG","Value":"BL"}],"Country":"GB","LibraryOrganization":["CENL"],"Member":true,"Project":[{"Value":{"Id":"31","Name":"EC1914"}}],"MembershipType":"MEMBERS","Contact":[{"Value":{"Id":"11","Name":"Roly Keating","Role":"Director or Deputy Director","Email":""}},{"Value":{"Id":"12","Name":"Janet Zmroczek","Role":"Collections Contact","Email":""}},{"Value":{"Id":"13","Name":"Corine Deliot","Role":"Technical contact","Email":""}},{"Value":{"Id":"14","Name":"Rossitza Atanassova","Role":"Marketing Contact","Email":""}},{"Value":{"Id":"15","Name":"Library Coordinator Group","Role":"Janet Zmroczek","Email":""}}],"Coordinate":{"Latitude":51.5294,"Longitude":-0.1269},"Link":[{"LinkType":"LOGO","Value":"http://www.bl.uk/images/bl_logo_100.gif"},{"LinkType":"WEBSITE","Value":"www.bl.uk/"},{"LinkType":"CONTACTS","Value":"http://www.bl.uk/aboutus/contact/index.html"},{"LinkType":"OPENING","Value":"http://www.bl.uk/aboutus/quickinfo/loc/stp/opening/index.html#reading"},{"LinkType":"WIKIPEDIA_ENGLISH","Value":"http://en.wikipedia.org/wiki/British_Library"},{"LinkType":"WIKIPEDIA_NATIVE","Value":"http://en.wikipedia.org/wiki/British_Library"}],"Identifier":"P01264"}
+{
+    "id": "prov_0",
+    "OProvider": [{
+            "Value": {
+                "Id": "TEL",
+                "Name": "The European Library"
+            }
+        }, {
+            "ProviderRelationType": "AGGREGATOR",
+            "Value": {
+                "Id": "EU",
+                "Name": "Europeana"
+            }
+        }],
+    "Link": [{
+            "LinkType": "LOGO",
+            "Value": "http://test.html"
+        }, {
+            "LinkType": "OPENING",
+            "Value": "http://test2.html"
+        }],
+    "Country": "SE",
+    "ConsortiumType": "PURCHASING",
+    "Contact": [{
+            "Value": {
+                "Id": "d3aa0fe0-5c3b-451e-a75d-b60da3ca121b",
+                "Name": "Markus Muhr",
+                "Role": "Manager"
+            }
+        }],
+    "Identifier": "prov_0",
+    "Name": [{
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "TEL"
+        }, {
+            "Language": "ENG",
+            "NameType": "ACRONYM",
+            "Value": "Europeana"
+        }],
+    "Phone": ["555-12345678"],
+    "E-Mail": ["markus.muhr@kb.nl"]
+}
