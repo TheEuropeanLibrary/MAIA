@@ -1,6 +1,5 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
 import java.util.List;
 import java.util.UUID;
 import junit.framework.Assert;
@@ -9,7 +8,6 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
 import org.theeuropeanlibrary.maia.converter.json.EntityObjectMapper;
 import org.theeuropeanlibrary.maia.converter.json.ProviderEntityJsonConverter;
-import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
@@ -33,10 +31,10 @@ public class ProviderJsonConverterTest {
         EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.getInstance(), null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
 
-        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
-        String schemaStr = jsonSchema.toString();
-//        System.out.println(schemaStr);
-//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), schemaStr);
+//        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
+//        String schemaStr = jsonSchema.toString();
+////        System.out.println(schemaStr);
+//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
         
         String id = "prov_0";
         String name = "TEL";
@@ -46,8 +44,8 @@ public class ProviderJsonConverterTest {
         provider.setId(id);
         provider.addValue(ProviderKeys.PROVIDER, new EntityRelation("TEL", "The European Library"));
         provider.addValue(ProviderKeys.PROVIDER, new EntityRelation("EU", "Europeana"), ProviderRelationType.AGGREGATOR);
-        provider.addValue(ProviderKeys.LINK, new BasicLink("http://test.html"), LinkType.LOGO);
-        provider.addValue(ProviderKeys.LINK, new BasicLink("http://test2.html"), LinkType.OPENING);
+        provider.addValue(ProviderKeys.LINK, "http://test.html", LinkType.LOGO);
+        provider.addValue(ProviderKeys.LINK, "http://test2.html", LinkType.OPENING);
         provider.addValue(ProviderKeys.IDENTIFIER, id);
         provider.addValue(ProviderKeys.NAME, name, NameType.ACRONYM, Language.ENG);
         provider.addValue(ProviderKeys.NAME, otherName, NameType.ACRONYM, Language.ENG);
@@ -62,7 +60,7 @@ public class ProviderJsonConverterTest {
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);
-//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/test.json"), enc);
+//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
         Provider<String> providerDecoded = converter.decode(enc);
 
         List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderKeys.NAME);

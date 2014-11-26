@@ -129,10 +129,10 @@ public final class ProviderKeys {
             PortalStatus.class);
 
     @FieldId(152)
-    public static final TKey<ProviderKeys, BasicLink> LINK = TKey.register(
+    public static final TKey<ProviderKeys, String> LINK = TKey.register(
             ProviderKeys.class,
             "Link",
-            BasicLink.class);
+            String.class);
 
     @FieldId(153)
     public static final TKey<ProviderKeys, Coordinate> COORDINATE = TKey.register(

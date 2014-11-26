@@ -14,7 +14,13 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.LinkStatus;
  * @author Nuno Freire <nfreire@gmail.com>
  * @since Mar 18, 2011
  */
-public class Link extends BasicLink {
+public class Link {
+
+    /**
+     * uniform resource location
+     */
+    @FieldId(1)
+    protected String url;
 
     @FieldId(2)
     private Date lastChecked;
@@ -65,6 +71,23 @@ public class Link extends BasicLink {
         this.url = url;
         this.anchorKey = anchorKey;
         linkStatus = LinkStatus.NOT_CHECKED;
+    }
+
+    /**
+     * @return uniform resource identification to get to the actual value
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url uniform resource identification to get to the actual value
+     */
+    public void setUrl(String url) {
+        if (url == null) {
+            throw new IllegalArgumentException("Argument 'url' should not be null!");
+        }
+        this.url = url;
     }
 
     /**
