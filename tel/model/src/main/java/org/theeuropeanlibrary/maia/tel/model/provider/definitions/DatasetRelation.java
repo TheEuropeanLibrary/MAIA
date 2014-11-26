@@ -45,4 +45,9 @@ public class DatasetRelation extends EntityRelation {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "DatasetRelation{" + "id=" + getId() + ", name=" + getName() + "identifier=" + identifier + ", status=" + status + '}';
+    }
+
 }

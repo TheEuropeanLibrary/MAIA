@@ -1,5 +1,6 @@
 package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
 
+import java.util.Objects;
 import org.theeuropeanlibrary.maia.common.FieldId;
 
 /**
@@ -40,4 +41,30 @@ public class EntityRelation {
         this.name = name;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EntityRelation other = (EntityRelation) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "EntityRelation{" + "id=" + id + ", name=" + name + '}';
+    }
 }

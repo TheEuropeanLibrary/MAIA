@@ -123,10 +123,6 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
         Object value = null;
         Set<Enum<?>> qualifiers = new HashSet<>(3);
 
-        if (key == null) {
-            return;
-        }
-
         if (jp.getText() == null || jp.getText().equals("{")) {
             while (true) {
                 JsonToken token = jp.nextToken();
@@ -151,6 +147,10 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
                             jp.nextToken();
                         }
                         value = deserializer.deserialize(jp, dc);
+                    }
+
+                    if (jp.getCurrentToken().equals(JsonToken.END_OBJECT)) {
+                        break;
                     }
                 }
             }

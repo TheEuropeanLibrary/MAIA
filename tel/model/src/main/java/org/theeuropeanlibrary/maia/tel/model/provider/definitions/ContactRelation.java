@@ -22,7 +22,7 @@ public class ContactRelation extends EntityRelation {
     public ContactRelation(String id, String name) {
         super(id, name);
     }
-    
+
     public ContactRelation(String id, String name, String role, String email) {
         super(id, name);
         this.role = role;
@@ -43,6 +43,11 @@ public class ContactRelation extends EntityRelation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactRelation{" + "id=" + getId() + ", name=" + getName() + "role=" + role + ", email=" + email + '}';
     }
 
 }

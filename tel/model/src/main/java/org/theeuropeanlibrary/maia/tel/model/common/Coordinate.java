@@ -101,4 +101,9 @@ public class Coordinate {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Coordinate{" + "latitude=" + latitude + ", longitude=" + longitude + '}';
+    }
+
 }
