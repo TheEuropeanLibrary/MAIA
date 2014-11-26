@@ -22,6 +22,12 @@ public class ContactRelation extends EntityRelation {
     public ContactRelation(String id, String name) {
         super(id, name);
     }
+    
+    public ContactRelation(String id, String name, String role, String email) {
+        super(id, name);
+        this.role = role;
+        this.email = email;
+    }
 
     public String getRole() {
         return role;

@@ -159,6 +159,12 @@ public final class ProviderKeys {
             "Contact",
             ContactRelation.class);
 
+    @FieldId(203)
+    public static final TKey<ProviderKeys, String> IMAGE = TKey.register(
+            ProviderKeys.class,
+            "Image",
+            String.class);
+
     @FieldId(204)
     public static final TKey<ProviderKeys, EntityRelation> PROJECT = TKey.register(
             ProviderKeys.class,

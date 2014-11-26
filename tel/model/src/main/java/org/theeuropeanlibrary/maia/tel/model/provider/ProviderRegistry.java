@@ -67,6 +67,10 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         filterFactory.registerFilter("contact", new BaseEntityFilter(relKeys));
         
         relKeys = new LinkedHashSet<>();
+        relKeys.add(ProviderKeys.IMAGE);
+        filterFactory.registerFilter("image", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.PROJECT);
         filterFactory.registerFilter("project", new BaseEntityFilter(relKeys));
         
@@ -89,6 +93,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         keys.add(ProviderKeys.PROVIDER);
         keys.add(ProviderKeys.DATASET);
         keys.add(ProviderKeys.CONTACT);
+        keys.add(ProviderKeys.IMAGE);
         keys.add(ProviderKeys.PROJECT);
         keys.add(ProviderKeys.CASE);
         keys.add(ProviderKeys.TICKET);
@@ -102,6 +107,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         providerUserKeys.add(ProviderKeys.PROVIDER);
         providerUserKeys.add(ProviderKeys.DATASET);
         providerUserKeys.add(ProviderKeys.CONTACT);
+        providerUserKeys.add(ProviderKeys.IMAGE);
         providerUserKeys.add(ProviderKeys.PROJECT);
         providerUserKeys.add(ProviderKeys.CASE);
         providerUserKeys.add(ProviderKeys.TICKET);
@@ -117,6 +123,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         officeUserKeys.add(ProviderKeys.PROVIDER);
         officeUserKeys.add(ProviderKeys.DATASET);
         officeUserKeys.add(ProviderKeys.CONTACT);
+        officeUserKeys.add(ProviderKeys.IMAGE);
         officeUserKeys.add(ProviderKeys.PROJECT);
         officeUserKeys.add(ProviderKeys.CASE);
         officeUserKeys.add(ProviderKeys.TICKET);

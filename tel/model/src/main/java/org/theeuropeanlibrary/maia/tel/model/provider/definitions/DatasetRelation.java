@@ -10,6 +10,9 @@ import org.theeuropeanlibrary.maia.common.FieldId;
 public class DatasetRelation extends EntityRelation {
 
     @FieldId(3)
+    private String identifier;
+
+    @FieldId(4)
     private String status;
 
     public DatasetRelation() {
@@ -18,6 +21,20 @@ public class DatasetRelation extends EntityRelation {
 
     public DatasetRelation(String id, String name) {
         super(id, name);
+    }
+
+    public DatasetRelation(String id, String name, String identifier, String status) {
+        super(id, name);
+        this.identifier = identifier;
+        this.status = status;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getStatus() {
