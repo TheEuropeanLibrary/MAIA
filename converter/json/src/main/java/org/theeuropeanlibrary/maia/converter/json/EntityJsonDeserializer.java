@@ -43,6 +43,9 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
             }
 
             String keyName = jp.getCurrentName();
+            if (keyName == null) {
+                continue;
+            }
             if (keyName.equals("id")) {
                 String id = jp.getText();
                 entity.setId(id);
@@ -119,6 +122,10 @@ public abstract class EntityJsonDeserializer<T extends AbstractEntity> extends J
         TKey<?, ?> key = factory.getKey(keyName);
         Object value = null;
         Set<Enum<?>> qualifiers = new HashSet<>(3);
+
+        if (key == null) {
+            return;
+        }
 
         if (jp.getText() == null || jp.getText().equals("{")) {
             while (true) {
