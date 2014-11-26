@@ -3,8 +3,8 @@ package org.theeuropeanlibrary.maia.common;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,7 +35,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     /**
      * holds for each key a list of known qualified values
      */
-    private final Map<TKey<?, ?>, List<QualifiedValue<?>>> fields = new HashMap<>();
+    private final Map<TKey<?, ?>, List<QualifiedValue<?>>> fields = new LinkedHashMap<>();
 
     /**
      * Maintain index in order to retain ordering. null: not calculated yet
@@ -47,13 +47,13 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
      * holds relations starting from source nodes, giving back target nodes with
      * connected qualifications
      */
-    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> sourcesLookup = new HashMap<>();
+    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> sourcesLookup = new LinkedHashMap<>();
 
     /**
      * holds relations ending in target nodes, giving back source nodes with
      * connected qualifications
      */
-    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> targetsLookup = new HashMap<>();
+    private final Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> targetsLookup = new LinkedHashMap<>();
 
     /**
      * Creates a new instance of this class.
@@ -179,7 +179,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
                     "Argument 'value' should not be null!");
         }
 
-        Set<Enum<?>> quals = new HashSet<>();
+        Set<Enum<?>> quals = new LinkedHashSet<>();
         for (Enum<?> qualifier : qualifiers) {
             if (qualifier != null) {
                 quals.add(qualifier);
@@ -289,19 +289,19 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     @Override
     public <S, T> void addRelation(QualifiedValue<S> source, QualifiedValue<T> target,
             Enum<?>... qualifiers) {
-        Set<Enum<?>> qualifierSet = new HashSet<>();
+        Set<Enum<?>> qualifierSet = new LinkedHashSet<>();
         qualifierSet.addAll(Arrays.asList(qualifiers));
 
         Map<QualifiedValue<?>, Set<Enum<?>>> targetsMap = sourcesLookup.get(source);
         if (targetsMap == null) {
-            targetsMap = new HashMap<>();
+            targetsMap = new LinkedHashMap<>();
             sourcesLookup.put(source, targetsMap);
         }
         targetsMap.put(target, qualifierSet);
 
         Map<QualifiedValue<?>, Set<Enum<?>>> sourcesMap = targetsLookup.get(source);
         if (sourcesMap == null) {
-            sourcesMap = new HashMap<>();
+            sourcesMap = new LinkedHashMap<>();
             targetsLookup.put(target, sourcesMap);
         }
         sourcesMap.put(source, qualifierSet);
@@ -317,7 +317,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
             Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> startLookup,
             Map<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> syncLookup,
             QualifiedValue<T> value, Enum<?>... qualifiers) {
-        Set<QualifiedValue<?>> rems = new HashSet<>();
+        Set<QualifiedValue<?>> rems = new LinkedHashSet<>();
         if (qualifiers.length == 0) {
             Map<QualifiedValue<?>, Set<Enum<?>>> remove = startLookup.remove(value);
             if (remove != null) {
@@ -362,7 +362,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     @Override
     public <N, S, T> Set<QualifiedValue<T>> getTargetQualifiedValues(QualifiedValue<S> source,
             TKey<N, T> targetKey, Enum<?>... qualifiers) {
-        Set<QualifiedValue<T>> results = new HashSet<>();
+        Set<QualifiedValue<T>> results = new LinkedHashSet<>();
 
         Map<QualifiedValue<?>, Set<Enum<?>>> targetsMap = sourcesLookup.get(source);
         if (targetsMap != null) {
@@ -394,7 +394,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     @Override
     public <N, S, T> Set<QualifiedValue<S>> getSourceQualifiedValues(QualifiedValue<T> target,
             TKey<N, S> sourceKey, Enum<?>... qualifiers) {
-        Set<QualifiedValue<S>> results = new HashSet<>();
+        Set<QualifiedValue<S>> results = new LinkedHashSet<>();
 
         Map<QualifiedValue<?>, Set<Enum<?>>> sourcesMap = targetsLookup.get(target);
         if (sourcesMap != null) {
@@ -425,7 +425,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     @Override
     public <N, S, T> Set<QualifiedRelation<S, T>> getSourceQualifiedRelations(
             QualifiedValue<T> target, TKey<N, S> sourceKey, Enum<?>... qualifiers) {
-        Set<QualifiedRelation<S, T>> results = new HashSet<>();
+        Set<QualifiedRelation<S, T>> results = new LinkedHashSet<>();
 
         Map<QualifiedValue<?>, Set<Enum<?>>> sourcesMap = targetsLookup.get(target);
         if (sourcesMap != null) {
@@ -459,7 +459,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
     @Override
     public <N, S, T> Set<QualifiedRelation<S, T>> getTargetQualifiedRelations(
             QualifiedValue<S> source, TKey<N, T> targetKey, Enum<?>... qualifiers) {
-        Set<QualifiedRelation<S, T>> results = new HashSet<>();
+        Set<QualifiedRelation<S, T>> results = new LinkedHashSet<>();
 
         Map<QualifiedValue<?>, Set<Enum<?>>> targetsMap = sourcesLookup.get(source);
         if (targetsMap != null) {
@@ -495,7 +495,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
      * @return available keys
      */
     public Set<TKey<?, ?>> getAvailableKeys() {
-        return Collections.unmodifiableSet(new HashSet<>(fields.keySet()));
+        return Collections.unmodifiableSet(new LinkedHashSet<>(fields.keySet()));
     }
 
     /**
@@ -503,7 +503,7 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
      */
     @SuppressWarnings("rawtypes")
     public Set<QualifiedRelation<?, ?>> getAvailableRelations() {
-        Set<QualifiedRelation<?, ?>> relations = new HashSet<>();
+        Set<QualifiedRelation<?, ?>> relations = new LinkedHashSet<>();
         for (Entry<QualifiedValue<?>, Map<QualifiedValue<?>, Set<Enum<?>>>> sourceEntry : sourcesLookup.entrySet()) {
             for (Entry<QualifiedValue<?>, Set<Enum<?>>> targetEntry : sourceEntry.getValue().entrySet()) {
                 QualifiedRelation<?, ?> relation;
