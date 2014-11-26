@@ -29,8 +29,9 @@ public class BaseEntityFilter<T, I extends AbstractEntity<T>> implements EntityF
         Set<TKey<?, ?>> keys = entity.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
             if (filterKeys.contains(key)) {
-                List<QualifiedValue<?>> qvs = (List<QualifiedValue<?>>) entity.getQualifiedValues(key);
-                for (QualifiedValue<?> qv : qvs) {
+                List<?> qvs = entity.getQualifiedValues(key);
+                for (Object ob : qvs) {
+                	QualifiedValue<?> qv = (QualifiedValue<?>) ob;
                     instance.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
                 }
             }
