@@ -2,7 +2,6 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
-import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
 import org.theeuropeanlibrary.maia.tel.model.common.Coordinate;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
@@ -159,12 +158,6 @@ public final class ProviderKeys {
             "Contact",
             ContactRelation.class);
 
-    @FieldId(203)
-    public static final TKey<ProviderKeys, String> IMAGE = TKey.register(
-            ProviderKeys.class,
-            "Image",
-            String.class);
-
     @FieldId(204)
     public static final TKey<ProviderKeys, EntityRelation> PROJECT = TKey.register(
             ProviderKeys.class,
@@ -188,5 +181,11 @@ public final class ProviderKeys {
             ProviderKeys.class,
             "Task",
             EntityRelation.class);
+
+    @FieldId(208)
+    public static final TKey<ProviderKeys, String> IMAGE = TKey.register(
+            ProviderKeys.class,
+            "Image",
+            String.class);
 
 }
