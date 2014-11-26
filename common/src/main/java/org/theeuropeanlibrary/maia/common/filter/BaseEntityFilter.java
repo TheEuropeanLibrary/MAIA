@@ -1,7 +1,9 @@
 package org.theeuropeanlibrary.maia.common.filter;
 
+import java.util.List;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.AbstractEntity;
+import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.TKey;
 
 /**
@@ -22,13 +24,18 @@ public class BaseEntityFilter<T, I extends AbstractEntity<T>> implements EntityF
 
     @Override
     public I filter(I entity) {
+        AbstractEntity instance = entity.createInstance();
+        instance.setId(entity.getId());
         Set<TKey<?, ?>> keys = entity.getAvailableKeys();
         for (TKey<?, ?> key : keys) {
-            if (!filterKeys.contains(key)) {
-                entity.deleteValues(key);
+            if (filterKeys.contains(key)) {
+                List<QualifiedValue<?>> qvs = (List<QualifiedValue<?>>) entity.getQualifiedValues(key);
+                for (QualifiedValue<?> qv : qvs) {
+                    instance.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
+                }
             }
         }
-        return entity;
+        return (I) instance;
     }
 
 }

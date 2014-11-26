@@ -28,5 +28,9 @@ public class Provider<ID> extends AbstractEntity<ID> {
     public Set<Provider<ID>> getRelatedIn() {
         return relatedIn;
     }
-
+    
+    @Override
+    public AbstractEntity<ID> createInstance() {
+        return new Provider<>();
+    }
 }

@@ -539,4 +539,6 @@ public abstract class AbstractEntity<ID> implements Entity<ID> {
             return super.toString();
         }
     }
+    
+    public abstract AbstractEntity<ID> createInstance();
 }

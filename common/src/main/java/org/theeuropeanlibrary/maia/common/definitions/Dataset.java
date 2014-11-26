@@ -27,4 +27,9 @@ public class Dataset<ID> extends AbstractEntity<ID> {
     public void setProvider(Provider<ID> provider) {
         this.provider = provider;
     }
+
+    @Override
+    public AbstractEntity<ID> createInstance() {
+        return new Dataset<>();
+    }
 }

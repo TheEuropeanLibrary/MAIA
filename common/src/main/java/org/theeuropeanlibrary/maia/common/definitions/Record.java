@@ -30,4 +30,9 @@ public class Record<ID> extends AbstractEntity<ID> {
     public void setDataset(Dataset<ID> dataset) {
         this.dataset = dataset;
     }
+
+    @Override
+    public AbstractEntity<ID> createInstance() {
+        return new Record<>();
+    }
 }

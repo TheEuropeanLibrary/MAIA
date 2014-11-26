@@ -35,7 +35,7 @@ import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderType;
  */
 public class ProviderJsonConverterTest {
 
-        @Test
+    @Test
     public void encodeDecodeProviderTest() throws Exception {
         EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.getInstance(), null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
@@ -44,7 +44,6 @@ public class ProviderJsonConverterTest {
 //        String schemaStr = jsonSchema.toString();
 ////        System.out.println(schemaStr);
 //        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
-        
         String id = "prov_0";
         String name = "TEL";
         String otherName = "Europeana";
@@ -66,6 +65,8 @@ public class ProviderJsonConverterTest {
         cR1.setRole("Manager");
 //        cR1.setEmail("markus.muhr@theeuropeanlibrary.org");
         provider.addValue(ProviderKeys.CONTACT, cR1);
+
+//        Provider<String> prov = ProviderRegistry.getInstance().getFilterFactory().getFilterForName("general").filter(provider);
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);
@@ -96,7 +97,7 @@ public class ProviderJsonConverterTest {
 
         provider.addValue(ProviderKeys.PORTAL_STATUS, PortalStatus.LIVE);
         provider.addValue(ProviderKeys.COORDINATE, new Coordinate(51.5294, -0.1269));
-        
+
         provider.addValue(ProviderKeys.LINK, "http://www.bl.uk/images/bl_logo_100.gif", LinkType.LOGO);
         provider.addValue(ProviderKeys.LINK, "www.bl.uk/", LinkType.WEBSITE);
         provider.addValue(ProviderKeys.LINK, "http://www.bl.uk/aboutus/contact/index.html", LinkType.CONTACTS);
