@@ -17,4 +17,10 @@ public interface EntityFilter<T, I extends Entity<T>> {
      * @return entity with filtered content
      */
     I filter(I entity);
+
+    /**
+     * @param merger entity to be merged into
+     * @param mergee entity to be merged from
+     */
+    void merge(I merger, I mergee);
 }

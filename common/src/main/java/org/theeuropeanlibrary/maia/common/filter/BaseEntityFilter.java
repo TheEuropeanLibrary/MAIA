@@ -31,12 +31,27 @@ public class BaseEntityFilter<T, I extends AbstractEntity<T>> implements EntityF
             if (filterKeys.contains(key)) {
                 List<?> qvs = entity.getQualifiedValues(key);
                 for (Object ob : qvs) {
-                	QualifiedValue<?> qv = (QualifiedValue<?>) ob;
+                    QualifiedValue<?> qv = (QualifiedValue<?>) ob;
                     instance.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
                 }
             }
         }
         return (I) instance;
+    }
+
+    @Override
+    public void merge(I merger, I mergee) {
+        Set<TKey<?, ?>> keys = mergee.getAvailableKeys();
+        for (TKey key : keys) {
+            if (filterKeys.contains(key)) {
+                List<?> qvs = mergee.getQualifiedValues(key);
+                merger.deleteValues(key);
+                for (Object ob : qvs) {
+                    QualifiedValue<?> qv = (QualifiedValue<?>) ob;
+                    merger.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
+                }
+            }
+        }
     }
 
 }
