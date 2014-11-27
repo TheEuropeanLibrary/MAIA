@@ -9,6 +9,8 @@ import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.filter.EntityFilter;
 import org.theeuropeanlibrary.maia.common.filter.EntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
+import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
 
 /**
  * This class provides registration of keys for the provider in The European
@@ -61,27 +63,27 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.DATASET);
         filterFactory.registerFilter("dataset", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.CONTACT);
         filterFactory.registerFilter("contact", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.IMAGE);
         filterFactory.registerFilter("image", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.PROJECT);
         filterFactory.registerFilter("project", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.CASE);
         filterFactory.registerFilter("case", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.TICKET);
         filterFactory.registerFilter("ticket", new BaseEntityFilter(relKeys));
-        
+
         relKeys = new LinkedHashSet<>();
         relKeys.add(ProviderKeys.TASK);
         filterFactory.registerFilter("task", new BaseEntityFilter(relKeys));
@@ -130,6 +132,34 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         officeUserKeys.add(ProviderKeys.TASK);
         EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
         filterFactory.registerFilter("office", officeUserFilter);
+
+        filterFactory.registerFilter("simple", new EntityFilter<String, Provider<String>>() {
+
+            @Override
+            public Provider<String> filter(Provider<String> entity) {
+                Provider<String> simpleProvider = (Provider<String>) entity.createInstance();
+                simpleProvider.setId(entity.getId());
+                String name = entity.getFirstValue(ProviderKeys.NAME, NameType.MAIN);
+                if (name != null) {
+                    simpleProvider.addValue(ProviderKeys.NAME, name, NameType.MAIN);
+                }
+                String identifier = entity.getFirstValue(ProviderKeys.IDENTIFIER);
+                if (identifier != null) {
+                    simpleProvider.addValue(ProviderKeys.IDENTIFIER, identifier);
+                }
+                String logo = entity.getFirstValue(ProviderKeys.LINK, LinkType.LOGO);
+                if (logo != null) {
+                    simpleProvider.addValue(ProviderKeys.LINK, logo, LinkType.LOGO);
+                }
+                return simpleProvider;
+            }
+
+            @Override
+            public void merge(Provider<String> merger, Provider<String> mergee) {
+                throw new UnsupportedOperationException("This filter is only for view, it cannot be merged back.");
+            }
+
+        });
     }
 
     private Set<TKey<?, ?>> setupGeneralKeys() {
