@@ -40,10 +40,10 @@ public class ProviderJsonConverterTest {
         EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.getInstance(), null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
 
-        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
-        String schemaStr = jsonSchema.toString();
-////        System.out.println(schemaStr);
-        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
+//        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
+//        String schemaStr = jsonSchema.toString();
+//////        System.out.println(schemaStr);
+//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
         String id = "prov_0";
         String name = "TEL";
         String otherName = "Europeana";
@@ -70,7 +70,7 @@ public class ProviderJsonConverterTest {
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);
-        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
+//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
         Provider<String> providerDecoded = converter.decode(enc);
 
         List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderKeys.NAME);
