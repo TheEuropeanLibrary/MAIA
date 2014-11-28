@@ -1,11 +1,8 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 import junit.framework.Assert;
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
@@ -67,7 +64,6 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.CONTACT, cR1);
 
 //        Provider<String> prov = ProviderRegistry.getInstance().getFilterFactory().getFilterForName("general").filter(provider);
-
         String enc = converter.encode(provider);
 //        System.out.println(enc);
 //        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
