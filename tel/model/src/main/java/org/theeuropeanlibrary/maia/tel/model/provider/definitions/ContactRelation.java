@@ -15,6 +15,9 @@ public class ContactRelation extends EntityRelation {
     @FieldId(4)
     private String email;
 
+    @FieldId(5)
+    private String phone;
+
     public ContactRelation() {
         super();
     }
@@ -23,10 +26,11 @@ public class ContactRelation extends EntityRelation {
         super(id, name);
     }
 
-    public ContactRelation(String id, String name, String role, String email) {
+    public ContactRelation(String id, String name, String role, String email, String phone) {
         super(id, name);
         this.role = role;
         this.email = email;
+        this.phone = phone;
     }
 
     public String getRole() {
@@ -45,9 +49,17 @@ public class ContactRelation extends EntityRelation {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
-        return "ContactRelation{" + "id=" + getId() + ", name=" + getName() + "role=" + role + ", email=" + email + '}';
+        return "ContactRelation{" + "id=" + getId() + ", name=" + getName() + ", role=" + role + ", email=" + email + ", phone=" + phone + '}';
     }
 
 }

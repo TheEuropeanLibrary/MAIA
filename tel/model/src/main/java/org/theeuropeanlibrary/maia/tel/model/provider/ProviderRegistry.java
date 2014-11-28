@@ -1,7 +1,11 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import org.theeuropeanlibrary.maia.common.AbstractEntity;
+import org.theeuropeanlibrary.maia.common.Entity;
+import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
 import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilter;
@@ -38,9 +42,51 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         EntityFilter generalFilter = new BaseEntityFilter(generalKeys);
         filterFactory.registerFilter("general", generalFilter);
 
-        Set<TKey<?, ?>> additionalKeys = setupAdditionalKeys();
-        EntityFilter additionalFilter = new BaseEntityFilter(additionalKeys);
-        filterFactory.registerFilter("additional", additionalFilter);
+        final Set<TKey<?, ?>> addressKeys = setupAddressKeys();
+        filterFactory.registerFilter("address", new EntityFilter<String, Provider<String>>() {
+
+            @Override
+            public Provider<String> filter(Provider<String> entity) {
+                AbstractEntity instance = entity.createInstance();
+                instance.setId(entity.getId());
+                Set<TKey<?, ?>> keys = entity.getAvailableKeys();
+                for (TKey<?, ?> key : keys) {
+                    if (addressKeys.contains(key)) {
+                        List<?> qvs = entity.getQualifiedValues(key);
+                        for (Object ob : qvs) {
+                            Entity.QualifiedValue<?> qv = (Entity.QualifiedValue<?>) ob;
+                            instance.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
+                        }
+                    }
+                }
+                List<QualifiedValue<String>> qvs = entity.getQualifiedValues(ProviderKeys.LINK, LinkType.WEBSITE);
+                for (QualifiedValue<String> qv : qvs) {
+                    instance.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()])); 
+                }
+                return (Provider<String>) instance;
+            }
+
+            @Override
+            public void merge(Provider<String> merger, Provider<String> mergee) {
+                Set<TKey<?, ?>> keys = mergee.getAvailableKeys();
+                for (TKey key : keys) {
+                    if (addressKeys.contains(key)) {
+                        List<?> qvs = mergee.getQualifiedValues(key);
+                        merger.deleteValues(key);
+                        for (Object ob : qvs) {
+                            Entity.QualifiedValue<?> qv = (Entity.QualifiedValue<?>) ob;
+                            merger.addValue(key, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
+                        }
+                    }
+                }
+                 List<QualifiedValue<String>> qvs = mergee.getQualifiedValues(ProviderKeys.LINK, LinkType.WEBSITE);
+                 merger.deleteValues(ProviderKeys.LINK, LinkType.WEBSITE);
+                 for (QualifiedValue<String> qv : qvs) {
+                    merger.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()])); 
+                }
+            }
+
+        });
 
         Set<TKey<?, ?>> membershipKeys = setupMembershipKeys();
         EntityFilter membershipFilter = new BaseEntityFilter(membershipKeys);
@@ -89,7 +135,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         filterFactory.registerFilter("task", new BaseEntityFilter(relKeys));
 
         keys.addAll(generalKeys);
-        keys.addAll(additionalKeys);
+        keys.addAll(addressKeys);
         keys.addAll(membershipKeys);
         keys.addAll(portalKeys);
         keys.add(ProviderKeys.PROVIDER);
@@ -103,7 +149,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
         Set<TKey<?, ?>> providerUserKeys = new LinkedHashSet<>();
         providerUserKeys.addAll(generalKeys);
-        providerUserKeys.addAll(additionalKeys);
+        providerUserKeys.addAll(addressKeys);
         providerUserKeys.addAll(membershipKeys);
         providerUserKeys.addAll(portalKeys);
         providerUserKeys.add(ProviderKeys.PROVIDER);
@@ -119,7 +165,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
         Set<TKey<?, ?>> officeUserKeys = new LinkedHashSet<>();
         officeUserKeys.addAll(generalKeys);
-        officeUserKeys.addAll(additionalKeys);
+        officeUserKeys.addAll(addressKeys);
         officeUserKeys.addAll(membershipKeys);
         officeUserKeys.addAll(portalKeys);
         officeUserKeys.add(ProviderKeys.PROVIDER);
@@ -188,21 +234,13 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
         return generalKeys;
     }
 
-    private Set<TKey<?, ?>> setupAdditionalKeys() {
+    private Set<TKey<?, ?>> setupAddressKeys() {
         Set<TKey<?, ?>> additionalKeys = new LinkedHashSet<>();
 
+        additionalKeys.add(ProviderKeys.ADDRESS);
         additionalKeys.add(ProviderKeys.PHONE);
         additionalKeys.add(ProviderKeys.FAX);
         additionalKeys.add(ProviderKeys.EMAIL);
-        additionalKeys.add(ProviderKeys.DEA);
-        additionalKeys.add(ProviderKeys.EOD);
-        additionalKeys.add(ProviderKeys.LIBRARY_ORGANIZATION);
-        additionalKeys.add(ProviderKeys.CONSORTIUM_TYPE);
-        additionalKeys.add(ProviderKeys.NOTE);
-
-        uniqueKeys.add(ProviderKeys.DEA);
-        uniqueKeys.add(ProviderKeys.EOD);
-        uniqueKeys.add(ProviderKeys.CONSORTIUM_TYPE);
 
         return additionalKeys;
     }
@@ -212,7 +250,15 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
 
         membershipKeys.add(ProviderKeys.MEMBER);
         membershipKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
+        membershipKeys.add(ProviderKeys.DEA);
+        membershipKeys.add(ProviderKeys.EOD);
+        membershipKeys.add(ProviderKeys.LIBRARY_ORGANIZATION);
+        membershipKeys.add(ProviderKeys.CONSORTIUM_TYPE);
+        membershipKeys.add(ProviderKeys.NOTE);
 
+        uniqueKeys.add(ProviderKeys.DEA);
+        uniqueKeys.add(ProviderKeys.EOD);
+        uniqueKeys.add(ProviderKeys.CONSORTIUM_TYPE);
         uniqueKeys.add(ProviderKeys.MEMBER);
         uniqueKeys.add(ProviderKeys.MEMBERSHIP_TYPE);
 

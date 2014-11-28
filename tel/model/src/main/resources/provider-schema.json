@@ -33,6 +33,22 @@
                 }
             }
         },
+        "Address": {
+            "type": "array",
+            "items": {
+                "Value": {
+                    "Street": {
+                        "type": "string"
+                    },
+                    "Postcode": {
+                        "type": "string"
+                    },
+                    "City": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "Phone": {
             "type": "array",
             "items": {
@@ -50,6 +66,12 @@
             "items": {
                 "type": "string"
             }
+        },
+        "Member": {
+            "type": "boolean"
+        },
+        "MembershipType": {
+            "enum": ["MEMBERS", "LIBRARY_PROSPECT", "INSTITUTION_PROSPECT", "CONTRIBUTOR"]
         },
         "DEA": {
             "type": "boolean"
@@ -71,12 +93,6 @@
             "items": {
                 "type": "string"
             }
-        },
-        "Member": {
-            "type": "boolean"
-        },
-        "MembershipType": {
-            "enum": ["MEMBERS", "LIBRARY_PROSPECT", "INSTITUTION_PROSPECT", "CONTRIBUTOR"]
         },
         "PortalStatus": {
             "enum": ["PREPARATION", "INTERNAL", "ACCEPTANCE", "SUSPENDED", "LIVE"]
@@ -152,6 +168,9 @@
                         "type": "string"
                     },
                     "Email": {
+                        "type": "string"
+                    },
+                    "Phone": {
                         "type": "string"
                     }
                 }

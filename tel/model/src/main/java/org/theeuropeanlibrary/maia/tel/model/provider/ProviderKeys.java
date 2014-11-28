@@ -5,6 +5,7 @@ import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.tel.model.common.Coordinate;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.Address;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ContactRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.DatasetRelation;
@@ -59,6 +60,12 @@ public final class ProviderKeys {
             ProviderType.class);
 
     // Additional Information
+    @FieldId(50)
+    public static final TKey<ProviderKeys, Address> ADDRESS = TKey.register(
+            ProviderKeys.class,
+            "Address",
+            Address.class);
+    
     @FieldId(51)
     public static final TKey<ProviderKeys, String> PHONE = TKey.register(
             ProviderKeys.class,

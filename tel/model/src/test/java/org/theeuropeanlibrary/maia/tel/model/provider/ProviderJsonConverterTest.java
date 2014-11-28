@@ -1,8 +1,11 @@
 package org.theeuropeanlibrary.maia.tel.model.provider;
 
+import com.fasterxml.jackson.databind.jsonschema.JsonSchema;
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 import junit.framework.Assert;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Provider;
@@ -37,10 +40,10 @@ public class ProviderJsonConverterTest {
         EntityObjectMapper mapper = new EntityObjectMapper(ProviderRegistry.getInstance(), null, null);
         ProviderEntityJsonConverter converter = new ProviderEntityJsonConverter(mapper);
 
-//        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
-//        String schemaStr = jsonSchema.toString();
+        JsonSchema jsonSchema = mapper.generateJsonSchema(Provider.class);
+        String schemaStr = jsonSchema.toString();
 ////        System.out.println(schemaStr);
-//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
+        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider-schema.json"), schemaStr);
         String id = "prov_0";
         String name = "TEL";
         String otherName = "Europeana";
@@ -67,7 +70,7 @@ public class ProviderJsonConverterTest {
 
         String enc = converter.encode(provider);
 //        System.out.println(enc);
-//        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
+        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/provider.json"), enc);
         Provider<String> providerDecoded = converter.decode(enc);
 
         List<QualifiedValue<String>> nameField = providerDecoded.getQualifiedValues(ProviderKeys.NAME);
@@ -106,11 +109,11 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.IMAGE, "http://www.theeuropeanlibrary.org/exhibition/buildings/images/pictures/uk_l04.jpg");
         provider.addValue(ProviderKeys.IMAGE, "http://search.theeuropeanlibrary.org/images/treasure");
 
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("11", "Roly Keating", "Director or Deputy Director", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("12", "Janet Zmroczek", "Collections Contact", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("13", "Corine Deliot", "Technical contact", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("14", "Rossitza Atanassova", "Marketing Contact", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("15", "Library Coordinator Group", "Janet Zmroczek", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("11", "Roly Keating", "Director or Deputy Director", "", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("12", "Janet Zmroczek", "Collections Contact", "", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("13", "Corine Deliot", "Technical contact", "", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("14", "Rossitza Atanassova", "Marketing Contact", "", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("15", "Library Coordinator Group", "Janet Zmroczek", "", ""));
 
         provider.addValue(ProviderKeys.DATASET, new DatasetRelation("21", "British Library integrated catalogue - Online catalogues of printed and electronic resources", "a0037", "Live"));
         provider.addValue(ProviderKeys.DATASET, new DatasetRelation("22", "EC1914 BL-Printed Literary Sources", "a0554", "Internal"));

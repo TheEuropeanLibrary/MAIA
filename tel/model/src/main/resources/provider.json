@@ -19,25 +19,25 @@
             "LinkType": "OPENING",
             "Value": "http://test2.html"
         }],
+    "Identifier": "prov_0",
+    "Name": [{
+            "NameType": "ACRONYM",
+            "Language": "ENG",
+            "Value": "TEL"
+        }, {
+            "NameType": "ACRONYM",
+            "Language": "ENG",
+            "Value": "Europeana"
+        }],
     "Country": "SE",
+    "Phone": ["555-12345678"],
+    "E-Mail": ["markus.muhr@kb.nl"],
     "ConsortiumType": "PURCHASING",
     "Contact": [{
             "Value": {
-                "Id": "d3aa0fe0-5c3b-451e-a75d-b60da3ca121b",
+                "Id": "954ed5c6-f975-411a-8511-41408d686f1c",
                 "Name": "Markus Muhr",
                 "Role": "Manager"
             }
-        }],
-    "Identifier": "prov_0",
-    "Name": [{
-            "Language": "ENG",
-            "NameType": "ACRONYM",
-            "Value": "TEL"
-        }, {
-            "Language": "ENG",
-            "NameType": "ACRONYM",
-            "Value": "Europeana"
-        }],
-    "Phone": ["555-12345678"],
-    "E-Mail": ["markus.muhr@kb.nl"]
+        }]
 }
