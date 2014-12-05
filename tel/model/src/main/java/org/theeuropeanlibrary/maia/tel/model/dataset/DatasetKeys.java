@@ -8,7 +8,7 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Discipline;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DatasetType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DigitisedType;
-import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Status;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionStatus;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -55,10 +55,9 @@ public final class DatasetKeys {
             Country.class);
 
     @FieldId(5)
-    public static final TKey<DatasetKeys, Status> STATUS = TKey.register(
-            DatasetKeys.class,
+    public static final TKey<DatasetKeys, IngestionStatus> INGESTION_STATUS = TKey.register(DatasetKeys.class,
             "Status",
-            Status.class);
+            IngestionStatus.class);
 
     @FieldId(6)
     public static final TKey<DatasetKeys, DatasetType> DATASET_TYPE = TKey.register(

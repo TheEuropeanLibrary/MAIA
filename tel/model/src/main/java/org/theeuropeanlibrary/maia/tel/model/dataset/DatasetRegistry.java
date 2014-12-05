@@ -3,8 +3,11 @@ package org.theeuropeanlibrary.maia.tel.model.dataset;
 import java.util.HashSet;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.common.definitions.Dataset;
 import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilter;
+import org.theeuropeanlibrary.maia.common.filter.BaseEntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.filter.EntityFilter;
+import org.theeuropeanlibrary.maia.common.filter.EntityFilterFactory;
 import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
 
 /**
@@ -16,43 +19,44 @@ import org.theeuropeanlibrary.maia.common.registry.AbstractEntityRegistry;
  */
 public final class DatasetRegistry extends AbstractEntityRegistry {
 
-    public static DatasetRegistry INSTANCE = new DatasetRegistry();
+    private static DatasetRegistry INSTANCE;
 
-    private final EntityFilter generalFilter;
-    private final EntityFilter additionalFilter;
-    private final EntityFilter ingestionFilter;
-    private final EntityFilter controllingFilter;
-    private final EntityFilter redistributeFilter;
-    private final EntityFilter aggregationFilter;
-    private final EntityFilter portalFilter;
-    private final EntityFilter relationFilter;
-    private final EntityFilter providerUserFilter;
-    private final EntityFilter officeUserFilter;
-
+    private final EntityFilterFactory<String, Dataset<String>> filterFactory;
+    
     private DatasetRegistry() {
+        this(new BaseEntityFilterFactory());
+    }
+
+    private DatasetRegistry(EntityFilterFactory<String, Dataset<String>> filterFactory) {
+        INSTANCE = this;
+
+        this.filterFactory = filterFactory;
+
         Set<TKey<?, ?>> generalKeys = setupGeneralKeys();
-        generalFilter = new BaseEntityFilter(generalKeys);
+        EntityFilter generalFilter = new BaseEntityFilter(generalKeys);
+        filterFactory.registerFilter("general", generalFilter);
 
         Set<TKey<?, ?>> additionalKeys = setupAdditionalKeys();
-        additionalFilter = new BaseEntityFilter(additionalKeys);
+        EntityFilter additionalFilter = new BaseEntityFilter(additionalKeys);
+        filterFactory.registerFilter("additional", additionalFilter);
 
         Set<TKey<?, ?>> ingestionKeys = setupIngestionKeys();
-        ingestionFilter = new BaseEntityFilter(ingestionKeys);
+        EntityFilter ingestionFilter = new BaseEntityFilter(ingestionKeys);
 
         Set<TKey<?, ?>> controllingKeys = setupControllingKeys();
-        controllingFilter = new BaseEntityFilter(controllingKeys);
+        EntityFilter controllingFilter = new BaseEntityFilter(controllingKeys);
 
         Set<TKey<?, ?>> redistributeKeys = setupRedistributeKeys();
-        redistributeFilter = new BaseEntityFilter(redistributeKeys);
+        EntityFilter redistributeFilter = new BaseEntityFilter(redistributeKeys);
 
         Set<TKey<?, ?>> aggregationKeys = setupAggregationKeys();
-        aggregationFilter = new BaseEntityFilter(aggregationKeys);
+        EntityFilter aggregationFilter = new BaseEntityFilter(aggregationKeys);
 
         Set<TKey<?, ?>> portalKeys = setupPortalKeys();
-        portalFilter = new BaseEntityFilter(portalKeys);
+        EntityFilter portalFilter = new BaseEntityFilter(portalKeys);
 
         Set<TKey<?, ?>> relationKeys = setupRelationshipKeys();
-        relationFilter = new BaseEntityFilter(relationKeys);
+        EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
 
         keys.addAll(generalKeys);
         keys.addAll(additionalKeys);
@@ -72,7 +76,7 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         providerUserKeys.addAll(aggregationKeys);
         providerUserKeys.addAll(portalKeys);
         providerUserKeys.addAll(relationKeys);
-        providerUserFilter = new BaseEntityFilter(providerUserKeys);
+        EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
 
         Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
         officeUserKeys.addAll(generalKeys);
@@ -83,7 +87,31 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         officeUserKeys.addAll(aggregationKeys);
         officeUserKeys.addAll(portalKeys);
         officeUserKeys.addAll(relationKeys);
-        officeUserFilter = new BaseEntityFilter(officeUserKeys);
+        EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
+
+        filterFactory.registerFilter("simple", new EntityFilter<String, Dataset<String>>() {
+
+            @Override
+            public Dataset<String> filter(Dataset<String> entity) {
+                Dataset<String> simpleDataset = (Dataset<String>) entity.createInstance();
+                simpleDataset.setId(entity.getId());
+                String name = entity.getFirstValue(DatasetKeys.NAME);
+                if (name != null) {
+                    simpleDataset.addValue(DatasetKeys.NAME, name);
+                }
+                String identifier = entity.getFirstValue(DatasetKeys.IDENTIFIER);
+                if (identifier != null) {
+                    simpleDataset.addValue(DatasetKeys.IDENTIFIER, identifier);
+                }
+                return simpleDataset;
+            }
+
+            @Override
+            public void merge(Dataset<String> merger, Dataset<String> mergee) {
+                throw new UnsupportedOperationException("This filter is only for view, it cannot be merged back.");
+            }
+
+        });
     }
 
     private Set<TKey<?, ?>> setupGeneralKeys() {
@@ -92,19 +120,26 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         generalKeys.add(DatasetKeys.IDENTIFIER);
         generalKeys.add(DatasetKeys.LANGUAGE);
         generalKeys.add(DatasetKeys.COUNTRY);
-        generalKeys.add(DatasetKeys.STATUS);
+        generalKeys.add(DatasetKeys.INGESTION_STATUS);
         generalKeys.add(DatasetKeys.DATASET_TYPE);
-        validQualifiers.put(DatasetKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
-            {
-                add(DatasetQualifiers.NAME_TYPE);
-                add(DatasetQualifiers.LANGUAGE);
-            }
-        });
-        validQualifiers.put(DatasetKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
-            {
-                add(DatasetQualifiers.IDENTIFIER_TYPE);
-            }
-        });
+
+//        validQualifiers.put(DatasetKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
+//            {
+//                add(DatasetQualifiers.NAME_TYPE);
+//                add(DatasetQualifiers.LANGUAGE);
+//            }
+//        });
+//        validQualifiers.put(DatasetKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
+//            {
+//                add(DatasetQualifiers.IDENTIFIER_TYPE);
+//            }
+//        });
+
+        uniqueKeys.add(DatasetKeys.COUNTRY);
+        uniqueKeys.add(DatasetKeys.INGESTION_STATUS);
+        uniqueKeys.add(DatasetKeys.DATASET_TYPE);
+        uniqueKeys.add(DatasetKeys.IDENTIFIER);
+
         return generalKeys;
     }
 
@@ -186,44 +221,15 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         return relationKeys;
     }
 
-    public EntityFilter getGeneralFilter() {
-        return generalFilter;
+    public EntityFilterFactory<String, Dataset<String>> getFilterFactory() {
+        return filterFactory;
     }
 
-    public EntityFilter getAdditionalFilter() {
-        return additionalFilter;
-    }
-
-    public EntityFilter getIngestionFilter() {
-        return ingestionFilter;
-    }
-
-    public EntityFilter getControllingFilter() {
-        return controllingFilter;
-    }
-
-    public EntityFilter getRedistributeFilter() {
-        return redistributeFilter;
-    }
-
-    public EntityFilter getAggregationFilter() {
-        return aggregationFilter;
-    }
-
-    public EntityFilter getPortalFilter() {
-        return portalFilter;
-    }
-
-    public EntityFilter getRelationFilter() {
-        return relationFilter;
-    }
-
-    public EntityFilter getProviderUserFilter() {
-        return providerUserFilter;
-    }
-
-    public EntityFilter getOfficeUserFilter() {
-        return officeUserFilter;
+    public static synchronized DatasetRegistry getInstance() {
+        if (INSTANCE == null) {
+            new DatasetRegistry();
+        }
+        return INSTANCE;
     }
 
 }
