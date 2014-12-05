@@ -12,6 +12,7 @@ import org.theeuropeanlibrary.maia.tel.model.common.Coordinate;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.Address;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ContactRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.DatasetRelation;
@@ -83,13 +84,23 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.NAME, "The British Library", NameType.MAIN, Language.ENG);
         provider.addValue(ProviderKeys.NAME, "NL United Kingdom", NameType.INTERNAL, Language.ENG);
         provider.addValue(ProviderKeys.NAME, "BL", NameType.ACRONYM, Language.ENG);
+        provider.addValue(ProviderKeys.LANGUAGE, Language.ENG);
         provider.addValue(ProviderKeys.COUNTRY, Country.GB);
         provider.addValue(ProviderKeys.PROVIDER_TYPE, ProviderType.NATIONAL_LIBRARY);
 
+        provider.addValue(ProviderKeys.ADDRESS, new Address("Street xy", "1234", "London"));
+        provider.addValue(ProviderKeys.PHONE, "555-12345678");
+        provider.addValue(ProviderKeys.FAX, "555-567800");
+        provider.addValue(ProviderKeys.EMAIL, "john.smith@bl.uk");
+
+        provider.addValue(ProviderKeys.DEA, true);
+        provider.addValue(ProviderKeys.EOD, true);
+        provider.addValue(ProviderKeys.LIBRARY_ORGANIZATION, LibraryOrganization.CENL);
+        provider.addValue(ProviderKeys.CONSORTIUM_TYPE, ConsortiumType.AGGREGATION);
+        provider.addValue(ProviderKeys.NOTE, "bla bla bla");
+
         provider.addValue(ProviderKeys.MEMBER, true);
         provider.addValue(ProviderKeys.MEMBERSHIP_TYPE, MembershipType.MEMBERS);
-
-        provider.addValue(ProviderKeys.LIBRARY_ORGANIZATION, LibraryOrganization.CENL);
 
         provider.addValue(ProviderKeys.PORTAL_STATUS, PortalStatus.LIVE);
         provider.addValue(ProviderKeys.COORDINATE, new Coordinate(51.5294, -0.1269));
@@ -115,5 +126,9 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.DATASET, new DatasetRelation("22", "EC1914 BL-Printed Literary Sources", "a0554", "Internal"));
 
         provider.addValue(ProviderKeys.PROJECT, new EntityRelation("31", "EC1914"));
+
+        provider.addValue(ProviderKeys.TASK, new EntityRelation("132", "Update Information"));
+        
+        provider.addValue(ProviderKeys.TICKET, new EntityRelation("132", "Synchronization on portal doesn't work!"));
     }
 }

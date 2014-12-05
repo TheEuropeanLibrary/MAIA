@@ -19,6 +19,10 @@ public class Address {
 
     @FieldId(3)
     private String city;
+    
+    public Address() {
+        // default constructor
+    }
 
     public Address(String street, String postcode, String city) {
         this.street = street;

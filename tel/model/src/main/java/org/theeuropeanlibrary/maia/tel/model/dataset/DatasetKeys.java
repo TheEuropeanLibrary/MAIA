@@ -24,6 +24,12 @@ public final class DatasetKeys {
     }
 
     // General 
+    // Portal
+    // Collection Descriptions
+    // Ingestion
+    // Controlling
+    // Relations
+    
     @FieldId(1)
     public static final TKey<DatasetKeys, String> NAME = TKey.register(
             DatasetKeys.class,

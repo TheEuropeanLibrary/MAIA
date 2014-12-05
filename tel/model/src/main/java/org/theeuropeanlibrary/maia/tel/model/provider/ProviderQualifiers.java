@@ -2,7 +2,6 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderRelationType;
 import org.theeuropeanlibrary.maia.common.FieldId;
-import org.theeuropeanlibrary.maia.tel.model.common.qualifier.IdentifierType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
