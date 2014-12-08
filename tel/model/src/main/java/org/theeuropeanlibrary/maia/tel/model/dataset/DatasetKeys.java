@@ -6,9 +6,12 @@ import org.theeuropeanlibrary.maia.tel.model.common.BasicLink;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Discipline;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Agreement;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DatasetType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DigitisedType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionStatus;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.License;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Restriction;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -29,7 +32,6 @@ public final class DatasetKeys {
     // Ingestion
     // Controlling
     // Relations
-    
     @FieldId(1)
     public static final TKey<DatasetKeys, String> NAME = TKey.register(
             DatasetKeys.class,
@@ -95,4 +97,21 @@ public final class DatasetKeys {
             "Link",
             BasicLink.class);
 
+    @FieldId(101)
+    public static final TKey<DatasetKeys, Agreement> AGREEMENT = TKey.register(
+            DatasetKeys.class,
+            "Agreement",
+            Agreement.class);
+    
+    @FieldId(102)
+    public static final TKey<DatasetKeys, Restriction> RESTRICTION = TKey.register(
+            DatasetKeys.class,
+            "Restriction",
+            Restriction.class);
+    
+    @FieldId(103)
+    public static final TKey<DatasetKeys, License> LICENSE = TKey.register(
+            DatasetKeys.class,
+            "License",
+            License.class);
 }

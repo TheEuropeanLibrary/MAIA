@@ -22,7 +22,7 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
     private static DatasetRegistry INSTANCE;
 
     private final EntityFilterFactory<String, Dataset<String>> filterFactory;
-    
+
     private DatasetRegistry() {
         this(new BaseEntityFilterFactory());
     }
@@ -36,18 +36,19 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         EntityFilter generalFilter = new BaseEntityFilter(generalKeys);
         filterFactory.registerFilter("general", generalFilter);
 
+        Set<TKey<?, ?>> redistributeKeys = setupRedistributeKeys();
+        EntityFilter redistributeFilter = new BaseEntityFilter(redistributeKeys);
+        filterFactory.registerFilter("redistribute", redistributeFilter);
+
         Set<TKey<?, ?>> additionalKeys = setupAdditionalKeys();
         EntityFilter additionalFilter = new BaseEntityFilter(additionalKeys);
-        filterFactory.registerFilter("additional", additionalFilter);
+//        filterFactory.registerFilter("additional", additionalFilter);
 
         Set<TKey<?, ?>> ingestionKeys = setupIngestionKeys();
         EntityFilter ingestionFilter = new BaseEntityFilter(ingestionKeys);
 
         Set<TKey<?, ?>> controllingKeys = setupControllingKeys();
         EntityFilter controllingFilter = new BaseEntityFilter(controllingKeys);
-
-        Set<TKey<?, ?>> redistributeKeys = setupRedistributeKeys();
-        EntityFilter redistributeFilter = new BaseEntityFilter(redistributeKeys);
 
         Set<TKey<?, ?>> aggregationKeys = setupAggregationKeys();
         EntityFilter aggregationFilter = new BaseEntityFilter(aggregationKeys);
@@ -123,17 +124,12 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         generalKeys.add(DatasetKeys.INGESTION_STATUS);
         generalKeys.add(DatasetKeys.DATASET_TYPE);
 
-//        validQualifiers.put(DatasetKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.NAME_TYPE);
-//                add(DatasetQualifiers.LANGUAGE);
-//            }
-//        });
-//        validQualifiers.put(DatasetKeys.IDENTIFIER, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.IDENTIFIER_TYPE);
-//            }
-//        });
+        validQualifiers.put(DatasetKeys.NAME, new HashSet<Class<? extends Enum<?>>>() {
+            {
+                add(DatasetQualifiers.NAME_TYPE);
+                add(DatasetQualifiers.LANGUAGE);
+            }
+        });
 
         uniqueKeys.add(DatasetKeys.COUNTRY);
         uniqueKeys.add(DatasetKeys.INGESTION_STATUS);
@@ -141,6 +137,20 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         uniqueKeys.add(DatasetKeys.IDENTIFIER);
 
         return generalKeys;
+    }
+
+    private Set<TKey<?, ?>> setupRedistributeKeys() {
+        Set<TKey<?, ?>> redistributeKeys = new HashSet<>();
+
+        redistributeKeys.add(DatasetKeys.AGREEMENT);
+        redistributeKeys.add(DatasetKeys.RESTRICTION);
+        redistributeKeys.add(DatasetKeys.LICENSE);
+
+        uniqueKeys.add(DatasetKeys.AGREEMENT);
+        uniqueKeys.add(DatasetKeys.RESTRICTION);
+        uniqueKeys.add(DatasetKeys.LICENSE);
+
+        return redistributeKeys;
     }
 
     private Set<TKey<?, ?>> setupAdditionalKeys() {
@@ -189,13 +199,6 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
 //        ingestionKeys.add(DatasetKeys.MEMBER);
 //        ingestionKeys.add(DatasetKeys.MEMBERSHIP_TYPE);
         return controllingKeys;
-    }
-
-    private Set<TKey<?, ?>> setupRedistributeKeys() {
-        Set<TKey<?, ?>> redistributeKeys = new HashSet<>();
-//        ingestionKeys.add(DatasetKeys.MEMBER);
-//        ingestionKeys.add(DatasetKeys.MEMBERSHIP_TYPE);
-        return redistributeKeys;
     }
 
     private Set<TKey<?, ?>> setupAggregationKeys() {
