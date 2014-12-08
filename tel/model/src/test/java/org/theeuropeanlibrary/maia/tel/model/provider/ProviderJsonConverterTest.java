@@ -116,11 +116,11 @@ public class ProviderJsonConverterTest {
         provider.addValue(ProviderKeys.IMAGE, "http://www.theeuropeanlibrary.org/exhibition/buildings/images/pictures/uk_l04.jpg");
         provider.addValue(ProviderKeys.IMAGE, "http://search.theeuropeanlibrary.org/images/treasure");
 
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("11", "Roly Keating", "Director or Deputy Director", "", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("12", "Janet Zmroczek", "Collections Contact", "", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("13", "Corine Deliot", "Technical contact", "", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("14", "Rossitza Atanassova", "Marketing Contact", "", ""));
-        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("15", "Library Coordinator Group", "Janet Zmroczek", "", ""));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("11", "Roly Keating", "Director or Deputy Director", "Roly.Keating@bl.uk", "555-1234"));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("12", "Janet Zmroczek", "Collections Contact", "Janet.Zmroczek@bl.uk", "555-1234"));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("13", "Corine Deliot", "Technical contact", "Corine.Deliot@bl.uk", "555-1234"));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("14", "Rossitza Atanassova", "Marketing Contact", "Rossitza.Atanassova@bl.uk", "555-1234"));
+        provider.addValue(ProviderKeys.CONTACT, new ContactRelation("15", "Janet Zmroczek", "Library Coordinator Group" , "Janet.Zmroczek@bl.uk", "555-1234"));
 
         provider.addValue(ProviderKeys.DATASET, new DatasetRelation("21", "British Library integrated catalogue - Online catalogues of printed and electronic resources", "a0037", "Live"));
         provider.addValue(ProviderKeys.DATASET, new DatasetRelation("22", "EC1914 BL-Printed Literary Sources", "a0554", "Internal"));
