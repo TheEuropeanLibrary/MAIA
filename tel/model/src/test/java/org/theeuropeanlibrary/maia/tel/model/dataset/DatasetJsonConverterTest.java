@@ -94,8 +94,8 @@ public class DatasetJsonConverterTest {
         dataset.addValue(DatasetKeys.LICENSE, license);
 
         dataset.addValue(DatasetKeys.DIGITISATION_STATUS, DigitisationStatus.PARTIALLY_DIGITISED);
-        dataset.addValue(DatasetKeys.EXPECTED_RECORDS, 13000000);
-        dataset.addValue(DatasetKeys.EXPECTED_DIGITAL_OBJECTS, 1000000);
+        dataset.addValue(DatasetKeys.EXPECTED_RECORDS, "13000000");
+        dataset.addValue(DatasetKeys.EXPECTED_DIGITAL_OBJECTS, "1000000");
         dataset.addValue(DatasetKeys.DATA_FORMAT, "LCSH", DataType.AUTHORITY);
     }
 }

@@ -92,16 +92,16 @@ public final class DatasetKeys {
             DigitisationStatus.class);
 
     @FieldId(102)
-    public static final TKey<DatasetKeys, Integer> EXPECTED_RECORDS = TKey.register(
+    public static final TKey<DatasetKeys, String> EXPECTED_RECORDS = TKey.register(
             DatasetKeys.class,
             "ExpectedRecords",
-            Integer.class);
+            String.class);
 
     @FieldId(103)
-    public static final TKey<DatasetKeys, Integer> EXPECTED_DIGITAL_OBJECTS = TKey.register(
+    public static final TKey<DatasetKeys, String> EXPECTED_DIGITAL_OBJECTS = TKey.register(
             DatasetKeys.class,
             "ExpectedDigitalObjects",
-            Integer.class);
+            String.class);
     
     @FieldId(104)
     public static final TKey<DatasetKeys, String> DATA_FORMAT = TKey.register(
