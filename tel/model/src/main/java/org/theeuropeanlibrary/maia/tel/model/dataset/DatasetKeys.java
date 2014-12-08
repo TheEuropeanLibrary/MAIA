@@ -8,7 +8,7 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Discipline;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Agreement;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DatasetType;
-import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DigitisedType;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DigitisationStatus;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionStatus;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.License;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Restriction;
@@ -58,7 +58,7 @@ public final class DatasetKeys {
 
     @FieldId(5)
     public static final TKey<DatasetKeys, IngestionStatus> INGESTION_STATUS = TKey.register(DatasetKeys.class,
-            "Status",
+            "IngestionStatus",
             IngestionStatus.class);
 
     @FieldId(6)
@@ -68,50 +68,45 @@ public final class DatasetKeys {
             DatasetType.class);
 
     @FieldId(51)
-    public static final TKey<DatasetKeys, String> STATUS_INFO = TKey.register(
-            DatasetKeys.class,
-            "StatusInfo",
-            String.class);
-
-    @FieldId(52)
-    public static final TKey<DatasetKeys, DigitisedType> DIGITISED_TYPE = TKey.register(
-            DatasetKeys.class,
-            "DigitisedType",
-            DigitisedType.class);
-
-    @FieldId(53)
-    public static final TKey<DatasetKeys, Discipline> DISCIPLINE = TKey.register(
-            DatasetKeys.class,
-            "Discipline",
-            Discipline.class);
-
-    @FieldId(54)
-    public static final TKey<DatasetKeys, String> NOTE = TKey.register(
-            DatasetKeys.class,
-            "Note",
-            String.class);
-
-    @FieldId(55)
-    public static final TKey<DatasetKeys, BasicLink> LINK = TKey.register(
-            DatasetKeys.class,
-            "Link",
-            BasicLink.class);
-
-    @FieldId(101)
     public static final TKey<DatasetKeys, Agreement> AGREEMENT = TKey.register(
             DatasetKeys.class,
             "Agreement",
             Agreement.class);
-    
-    @FieldId(102)
+
+    @FieldId(52)
     public static final TKey<DatasetKeys, Restriction> RESTRICTION = TKey.register(
             DatasetKeys.class,
             "Restriction",
             Restriction.class);
-    
-    @FieldId(103)
+
+    @FieldId(53)
     public static final TKey<DatasetKeys, License> LICENSE = TKey.register(
             DatasetKeys.class,
             "License",
             License.class);
+
+    @FieldId(101)
+    public static final TKey<DatasetKeys, DigitisationStatus> DIGITISATION_STATUS = TKey.register(
+            DatasetKeys.class,
+            "DigitisationStatus",
+            DigitisationStatus.class);
+
+    @FieldId(102)
+    public static final TKey<DatasetKeys, Integer> EXPECTED_RECORDS = TKey.register(
+            DatasetKeys.class,
+            "ExpectedRecords",
+            Integer.class);
+
+    @FieldId(103)
+    public static final TKey<DatasetKeys, Integer> EXPECTED_DIGITAL_OBJECTS = TKey.register(
+            DatasetKeys.class,
+            "ExpectedDigitalObjects",
+            Integer.class);
+    
+    @FieldId(104)
+    public static final TKey<DatasetKeys, String> DATA_FORMAT = TKey.register(
+            DatasetKeys.class,
+            "DataFormat",
+            String.class);
+
 }

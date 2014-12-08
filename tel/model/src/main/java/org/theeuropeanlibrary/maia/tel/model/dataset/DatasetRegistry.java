@@ -40,9 +40,9 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         EntityFilter redistributeFilter = new BaseEntityFilter(redistributeKeys);
         filterFactory.registerFilter("redistribute", redistributeFilter);
 
-        Set<TKey<?, ?>> additionalKeys = setupAdditionalKeys();
-        EntityFilter additionalFilter = new BaseEntityFilter(additionalKeys);
-//        filterFactory.registerFilter("additional", additionalFilter);
+        Set<TKey<?, ?>> dataKeys = setupDataKeys();
+        EntityFilter dataFilter = new BaseEntityFilter(dataKeys);
+        filterFactory.registerFilter("data", dataFilter);
 
         Set<TKey<?, ?>> ingestionKeys = setupIngestionKeys();
         EntityFilter ingestionFilter = new BaseEntityFilter(ingestionKeys);
@@ -60,7 +60,7 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
 
         keys.addAll(generalKeys);
-        keys.addAll(additionalKeys);
+        keys.addAll(dataKeys);
         keys.addAll(ingestionKeys);
         keys.addAll(controllingKeys);
         keys.addAll(redistributeKeys);
@@ -70,7 +70,7 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
 
         Set<TKey<?, ?>> providerUserKeys = new HashSet<>();
         providerUserKeys.addAll(generalKeys);
-        providerUserKeys.addAll(additionalKeys);
+        providerUserKeys.addAll(dataKeys);
         providerUserKeys.addAll(ingestionKeys);
         providerUserKeys.addAll(controllingKeys);
         providerUserKeys.addAll(redistributeKeys);
@@ -81,7 +81,7 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
 
         Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
         officeUserKeys.addAll(generalKeys);
-        officeUserKeys.addAll(additionalKeys);
+        officeUserKeys.addAll(dataKeys);
         officeUserKeys.addAll(ingestionKeys);
         officeUserKeys.addAll(controllingKeys);
         officeUserKeys.addAll(redistributeKeys);
@@ -153,25 +153,43 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         return redistributeKeys;
     }
 
-    private Set<TKey<?, ?>> setupAdditionalKeys() {
-        Set<TKey<?, ?>> additionalKeys = new HashSet<>();
-        additionalKeys.add(DatasetKeys.STATUS_INFO);
-        additionalKeys.add(DatasetKeys.DIGITISED_TYPE);
-        additionalKeys.add(DatasetKeys.DISCIPLINE);
-        additionalKeys.add(DatasetKeys.NOTE);
-        additionalKeys.add(DatasetKeys.LINK);
-        validQualifiers.put(DatasetKeys.NOTE, new HashSet<Class<? extends Enum<?>>>() {
+    private Set<TKey<?, ?>> setupDataKeys() {
+        Set<TKey<?, ?>> dataKeys = new HashSet<>();
+        
+        dataKeys.add(DatasetKeys.DIGITISATION_STATUS);
+        dataKeys.add(DatasetKeys.EXPECTED_RECORDS);
+        dataKeys.add(DatasetKeys.EXPECTED_DIGITAL_OBJECTS);
+        dataKeys.add(DatasetKeys.DATA_FORMAT);
+        
+//        additionalKeys.add(DatasetKeys.STATUS_INFO);
+//        additionalKeys.add(DatasetKeys.DIGITISED_TYPE);
+//        additionalKeys.add(DatasetKeys.DISCIPLINE);
+//        additionalKeys.add(DatasetKeys.NOTE);
+//        additionalKeys.add(DatasetKeys.LINK);
+//        validQualifiers.put(DatasetKeys.NOTE, new HashSet<Class<? extends Enum<?>>>() {
+//            {
+//                add(DatasetQualifiers.NOTE_TYPE);
+//                add(DatasetQualifiers.LANGUAGE);
+//            }
+//        });
+        
+//        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
+//            {
+//                add(DatasetQualifiers.LINK_TYPE);
+//            }
+//        });
+        
+        validQualifiers.put(DatasetKeys.DATA_FORMAT, new HashSet<Class<? extends Enum<?>>>() {
             {
-                add(DatasetQualifiers.NOTE_TYPE);
-                add(DatasetQualifiers.LANGUAGE);
+                add(DatasetQualifiers.DATA_TYPE);
             }
         });
-        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
-            {
-                add(DatasetQualifiers.LINK_TYPE);
-            }
-        });
-        return additionalKeys;
+
+        uniqueKeys.add(DatasetKeys.DIGITISATION_STATUS);
+        uniqueKeys.add(DatasetKeys.EXPECTED_RECORDS);
+        uniqueKeys.add(DatasetKeys.EXPECTED_DIGITAL_OBJECTS);
+        
+        return dataKeys;
     }
 
     private Set<TKey<?, ?>> setupPortalKeys() {

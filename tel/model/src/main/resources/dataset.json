@@ -1,29 +1,10 @@
 {
-    "id": "a0037",
-    "Identifier": "a0037",
+    "id": "coll_0",
+    "Identifier": "coll_0",
     "Name": [{
-            "Value": "British Library integrated catalogue - Online catalogues of printed and electronic resources"
+            "NameType": "MAIN",
+            "Language": "ENG",
+            "Value": "TEL Collection"
         }],
-    "Language": ["ENG"],
-    "Country": "GB",
-    "Status": "PUBLISH",
-    "DatasetType": "CATALOGUE",
-    "Agreement": {
-        "Status": "PUBLISH",
-        "Signed": "01-01-2014",
-        "Appendix": "01-01-2014"
-    },
-    "Restriction": {
-        "Format": "OTHER",
-        "OtherFormat": "BLA",
-        "Terms": "test",
-        "Time": "01-01-2019",
-        "Duration": "01-01-2021"
-    },
-    "License": {
-        "Source": "OTHER",
-        "OtherSource": "LICENSE",
-        "Distribution": "BY",
-        "FurtherInformation": "BLA"
-    }
+    "Country": "SE"
 }

@@ -4,6 +4,7 @@ import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.IdentifierType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.DataType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.LinkType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.NoteType;
 
@@ -34,4 +35,7 @@ public final class DatasetQualifiers {
 
     @FieldId(5)
     public static final Class<LinkType> LINK_TYPE = LinkType.class;
+    
+    @FieldId(6)
+    public static final Class<DataType> DATA_TYPE = DataType.class;
 }
