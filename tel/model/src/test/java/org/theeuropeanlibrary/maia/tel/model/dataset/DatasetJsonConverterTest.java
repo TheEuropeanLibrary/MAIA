@@ -73,7 +73,6 @@ public class DatasetJsonConverterTest {
 
         dataset.addValue(DatasetKeys.IDENTIFIER, "a0037");
         dataset.addValue(DatasetKeys.NAME, "British Library integrated catalogue - Online catalogues of printed and electronic resources", NameType.MAIN, Language.ENG);
-        dataset.addValue(DatasetKeys.LANGUAGE, Language.ENG);
         dataset.addValue(DatasetKeys.COUNTRY, Country.GB);
         dataset.addValue(DatasetKeys.INGESTION_STATUS, IngestionStatus.PUBLISH);
         dataset.addValue(DatasetKeys.DATASET_TYPE, DatasetType.CATALOGUE);
