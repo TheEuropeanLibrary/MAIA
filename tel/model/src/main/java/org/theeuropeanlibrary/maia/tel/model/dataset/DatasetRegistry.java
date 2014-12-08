@@ -44,6 +44,14 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         EntityFilter dataFilter = new BaseEntityFilter(dataKeys);
         filterFactory.registerFilter("data", dataFilter);
 
+        Set<TKey<?, ?>> portalKeys = setupPortalKeys();
+        EntityFilter portalFilter = new BaseEntityFilter(portalKeys);
+        filterFactory.registerFilter("portal", portalFilter);
+
+        Set<TKey<?, ?>> descriptionKeys = setupDescriptionKeys();
+        EntityFilter descriptionFilter = new BaseEntityFilter(descriptionKeys);
+        filterFactory.registerFilter("description", descriptionFilter);
+
         Set<TKey<?, ?>> ingestionKeys = setupIngestionKeys();
         EntityFilter ingestionFilter = new BaseEntityFilter(ingestionKeys);
 
@@ -53,40 +61,41 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         Set<TKey<?, ?>> aggregationKeys = setupAggregationKeys();
         EntityFilter aggregationFilter = new BaseEntityFilter(aggregationKeys);
 
-        Set<TKey<?, ?>> portalKeys = setupPortalKeys();
-        EntityFilter portalFilter = new BaseEntityFilter(portalKeys);
-
         Set<TKey<?, ?>> relationKeys = setupRelationshipKeys();
         EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
 
         keys.addAll(generalKeys);
+        keys.addAll(redistributeKeys);
         keys.addAll(dataKeys);
+        keys.addAll(portalKeys);
+        keys.addAll(descriptionKeys);
         keys.addAll(ingestionKeys);
         keys.addAll(controllingKeys);
         keys.addAll(redistributeKeys);
         keys.addAll(aggregationKeys);
-        keys.addAll(portalKeys);
         keys.addAll(relationKeys);
 
         Set<TKey<?, ?>> providerUserKeys = new HashSet<>();
         providerUserKeys.addAll(generalKeys);
         providerUserKeys.addAll(dataKeys);
+        providerUserKeys.addAll(redistributeKeys);
+        providerUserKeys.addAll(portalKeys);
+        providerUserKeys.addAll(descriptionKeys);
         providerUserKeys.addAll(ingestionKeys);
         providerUserKeys.addAll(controllingKeys);
-        providerUserKeys.addAll(redistributeKeys);
         providerUserKeys.addAll(aggregationKeys);
-        providerUserKeys.addAll(portalKeys);
         providerUserKeys.addAll(relationKeys);
         EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
 
         Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
         officeUserKeys.addAll(generalKeys);
         officeUserKeys.addAll(dataKeys);
+        officeUserKeys.addAll(redistributeKeys);
+        officeUserKeys.addAll(portalKeys);
+        officeUserKeys.addAll(descriptionKeys);
         officeUserKeys.addAll(ingestionKeys);
         officeUserKeys.addAll(controllingKeys);
-        officeUserKeys.addAll(redistributeKeys);
         officeUserKeys.addAll(aggregationKeys);
-        officeUserKeys.addAll(portalKeys);
         officeUserKeys.addAll(relationKeys);
         EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
 
@@ -119,7 +128,6 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         Set<TKey<?, ?>> generalKeys = new HashSet<>();
         generalKeys.add(DatasetKeys.NAME);
         generalKeys.add(DatasetKeys.IDENTIFIER);
-        generalKeys.add(DatasetKeys.LANGUAGE);
         generalKeys.add(DatasetKeys.COUNTRY);
         generalKeys.add(DatasetKeys.INGESTION_STATUS);
         generalKeys.add(DatasetKeys.DATASET_TYPE);
@@ -155,12 +163,12 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
 
     private Set<TKey<?, ?>> setupDataKeys() {
         Set<TKey<?, ?>> dataKeys = new HashSet<>();
-        
+
         dataKeys.add(DatasetKeys.DIGITISATION_STATUS);
         dataKeys.add(DatasetKeys.EXPECTED_RECORDS);
         dataKeys.add(DatasetKeys.EXPECTED_DIGITAL_OBJECTS);
         dataKeys.add(DatasetKeys.DATA_FORMAT);
-        
+
 //        additionalKeys.add(DatasetKeys.STATUS_INFO);
 //        additionalKeys.add(DatasetKeys.DIGITISED_TYPE);
 //        additionalKeys.add(DatasetKeys.DISCIPLINE);
@@ -172,13 +180,11 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
 //                add(DatasetQualifiers.LANGUAGE);
 //            }
 //        });
-        
 //        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
 //            {
 //                add(DatasetQualifiers.LINK_TYPE);
 //            }
 //        });
-        
         validQualifiers.put(DatasetKeys.DATA_FORMAT, new HashSet<Class<? extends Enum<?>>>() {
             {
                 add(DatasetQualifiers.DATA_TYPE);
@@ -188,21 +194,51 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         uniqueKeys.add(DatasetKeys.DIGITISATION_STATUS);
         uniqueKeys.add(DatasetKeys.EXPECTED_RECORDS);
         uniqueKeys.add(DatasetKeys.EXPECTED_DIGITAL_OBJECTS);
-        
+
         return dataKeys;
     }
 
     private Set<TKey<?, ?>> setupPortalKeys() {
         Set<TKey<?, ?>> portalKeys = new HashSet<>();
-//        portalKeys.add(DatasetKeys.PORTAL_STATUS);
-//        portalKeys.add(DatasetKeys.LINK);
-//        portalKeys.add(DatasetKeys.COORDINATE);
-//        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.LINK_TYPE);
-//            }
-//        });
+
+        portalKeys.add(DatasetKeys.PORTAL_STATUS);
+        portalKeys.add(DatasetKeys.LINK);
+        portalKeys.add(DatasetKeys.NOTE);
+
+        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
+            {
+                add(DatasetQualifiers.LINK_TYPE);
+            }
+        });
+        validQualifiers.put(DatasetKeys.NOTE, new HashSet<Class<? extends Enum<?>>>() {
+            {
+                add(DatasetQualifiers.NOTE_TYPE);
+            }
+        });
+
+        uniqueKeys.add(DatasetKeys.PORTAL_STATUS);
+
         return portalKeys;
+    }
+
+    private Set<TKey<?, ?>> setupDescriptionKeys() {
+        Set<TKey<?, ?>> descriptionKeys = new HashSet<>();
+
+        descriptionKeys.add(DatasetKeys.DISCIPLINE);
+        descriptionKeys.add(DatasetKeys.LANGUAGE);
+        descriptionKeys.add(DatasetKeys.SUBJECT);
+        descriptionKeys.add(DatasetKeys.TIME_COVERAGE);
+        descriptionKeys.add(DatasetKeys.SPATIAL_COVERAGE);
+        descriptionKeys.add(DatasetKeys.ITEM_TYPE);
+        descriptionKeys.add(DatasetKeys.COLLECTION_DESCRIPTION);
+
+        validQualifiers.put(DatasetKeys.COLLECTION_DESCRIPTION, new HashSet<Class<? extends Enum<?>>>() {
+            {
+                add(DatasetQualifiers.LANGUAGE);
+            }
+        });
+
+        return descriptionKeys;
     }
 
     private Set<TKey<?, ?>> setupIngestionKeys() {

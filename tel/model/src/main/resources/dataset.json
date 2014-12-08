@@ -1,10 +1,50 @@
 {
-    "id": "coll_0",
-    "Identifier": "coll_0",
+    "id": "a0037",
+    "Identifier": "a0037",
     "Name": [{
             "NameType": "MAIN",
             "Language": "ENG",
-            "Value": "TEL Collection"
+            "Value": "British Library integrated catalogue - Online catalogues of printed and electronic resources"
         }],
-    "Country": "SE"
+    "Language": ["ENG", "ENG"],
+    "Country": "GB",
+    "IngestionStatus": "PUBLISH",
+    "DatasetType": "CATALOGUE",
+    "Agreement": {
+        "Status": "PUBLISH",
+        "Signed": "01-01-2014",
+        "Appendix": "01-01-2014"
+    },
+    "Restriction": {
+        "Format": "OTHER",
+        "OtherFormat": "BLA",
+        "Terms": "test",
+        "Time": "01-01-2019",
+        "Duration": "01-01-2021"
+    },
+    "License": {
+        "Source": "OTHER",
+        "OtherSource": "LICENSE",
+        "Distribution": "BY",
+        "FurtherInformation": "BLA"
+    },
+    "DigitisationStatus": "PARTIALLY_DIGITISED",
+    "ExpectedRecords": "13000000",
+    "ExpectedDigitalObjects": "1000000",
+    "DataFormat": [{
+            "DataType": "AUTHORITY",
+            "Value": "LCSH"
+        }],
+    "Discipline": ["HUMANITIES"],
+    "Subject": ["MEDIEVAL_HISTORY"],
+    "TimeCoverage": ["RENAISSANCE"],
+    "SpatialCoverage": ["PARIS"],
+    "ItemType": ["BLUE_PRINT"],
+    "CollectionDescription": [{
+            "Language": "ENG",
+            "Value": {
+                "Title": "Title",
+                "Description": "KatNUK je glavni katalog naše knjižnice in je hkrati največji katalog posamezne knjižnice v Sloveniji. Obsega več kot 900.000 bibliografskih zapisov, ki predstavljajo: gradivo, ki ga knjižnica tekoče pridobiva od leta 1988; za obdobje 1774-1948 samo popis knjig in vse gradivo, ki ga je knjižnica pridobila v obdobju od 1948-1987. V katalogu so popisane monografske publikacije, novejše periodične publikacije in članki iz slovenskih strokovnih časnikov in revij (tekoče se popisujejo od leta 1990)"
+            }
+        }]
 }

@@ -1,4 +1,6 @@
-package org.theeuropeanlibrary.maia.tel.model.common.qualifier;
+package org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions;
+
+
 
 /**
  *

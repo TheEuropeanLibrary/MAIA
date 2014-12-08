@@ -20,6 +20,12 @@ import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionStatus
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.License;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.LicenseType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Restriction;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.CollectionDescription;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Discipline;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.ItemType;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.SpatialCoverage;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Subject;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.TimeCoverage;
 
 /**
  * This class tests conversion from and to xml representations for the The
@@ -37,7 +43,7 @@ public class DatasetJsonConverterTest {
 
 //        JsonSchema jsonSchema = mapper.generateJsonSchema(Dataset.class);
 //        String schemaStr = jsonSchema.toString();
-//////        System.out.println(schemaStr);
+////        System.out.println(schemaStr);
 //        FileUtils.writeStringToFile(new File("/home/markus/NetBeansProjects/MAIA/tel/model/src/main/resources/dataset-schema.json"), schemaStr);
         String id = "coll_0";
         String name = "TEL Collection";
@@ -97,5 +103,13 @@ public class DatasetJsonConverterTest {
         dataset.addValue(DatasetKeys.EXPECTED_RECORDS, "13000000");
         dataset.addValue(DatasetKeys.EXPECTED_DIGITAL_OBJECTS, "1000000");
         dataset.addValue(DatasetKeys.DATA_FORMAT, "LCSH", DataType.AUTHORITY);
+
+        dataset.addValue(DatasetKeys.DISCIPLINE, Discipline.HUMANITIES);
+        dataset.addValue(DatasetKeys.LANGUAGE, Language.ENG);
+        dataset.addValue(DatasetKeys.SUBJECT, Subject.MEDIEVAL_HISTORY);
+        dataset.addValue(DatasetKeys.TIME_COVERAGE, TimeCoverage.RENAISSANCE);
+        dataset.addValue(DatasetKeys.SPATIAL_COVERAGE, SpatialCoverage.PARIS);
+        dataset.addValue(DatasetKeys.ITEM_TYPE, ItemType.BLUE_PRINT);
+        dataset.addValue(DatasetKeys.COLLECTION_DESCRIPTION, new CollectionDescription("Title", "KatNUK je glavni katalog naše knjižnice in je hkrati največji katalog posamezne knjižnice v Sloveniji. Obsega več kot 900.000 bibliografskih zapisov, ki predstavljajo: gradivo, ki ga knjižnica tekoče pridobiva od leta 1988; za obdobje 1774-1948 samo popis knjig in vse gradivo, ki ga je knjižnica pridobila v obdobju od 1948-1987. V katalogu so popisane monografske publikacije, novejše periodične publikacije in članki iz slovenskih strokovnih časnikov in revij (tekoče se popisujejo od leta 1990)"), Language.ENG);
     }
 }
