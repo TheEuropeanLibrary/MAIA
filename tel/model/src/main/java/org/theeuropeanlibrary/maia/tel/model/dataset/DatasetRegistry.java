@@ -1,6 +1,7 @@
 package org.theeuropeanlibrary.maia.tel.model.dataset;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.common.definitions.Dataset;
@@ -52,52 +53,92 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         EntityFilter descriptionFilter = new BaseEntityFilter(descriptionKeys);
         filterFactory.registerFilter("description", descriptionFilter);
 
+        Set<TKey<?, ?>> harvestingKeys = setupHarvestingKeys();
+        EntityFilter harvestingFilter = new BaseEntityFilter(harvestingKeys);
+        filterFactory.registerFilter("harvesting", harvestingFilter);
+
         Set<TKey<?, ?>> ingestionKeys = setupIngestionKeys();
         EntityFilter ingestionFilter = new BaseEntityFilter(ingestionKeys);
+        filterFactory.registerFilter("ingestion", ingestionFilter);
 
-        Set<TKey<?, ?>> controllingKeys = setupControllingKeys();
-        EntityFilter controllingFilter = new BaseEntityFilter(controllingKeys);
+        Set<TKey<?, ?>> statisticKeys = setupStatisticsKeys();
+        EntityFilter statisticFilter = new BaseEntityFilter(statisticKeys);
+        filterFactory.registerFilter("statistic", statisticFilter);
 
         Set<TKey<?, ?>> aggregationKeys = setupAggregationKeys();
         EntityFilter aggregationFilter = new BaseEntityFilter(aggregationKeys);
+        filterFactory.registerFilter("aggregation", aggregationFilter);
 
-        Set<TKey<?, ?>> relationKeys = setupRelationshipKeys();
-        EntityFilter relationFilter = new BaseEntityFilter(relationKeys);
+        Set<TKey<?, ?>> relKeys = new LinkedHashSet<>();
+        relKeys.add(DatasetKeys.PROJECT);
+        filterFactory.registerFilter("project", new BaseEntityFilter(relKeys));
+
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(DatasetKeys.CASE);
+        filterFactory.registerFilter("case", new BaseEntityFilter(relKeys));
+
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(DatasetKeys.TICKET);
+        filterFactory.registerFilter("ticket", new BaseEntityFilter(relKeys));
+
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(DatasetKeys.TASK);
+        filterFactory.registerFilter("task", new BaseEntityFilter(relKeys));
+        
+        relKeys = new LinkedHashSet<>();
+        relKeys.add(DatasetKeys.SUBSET);
+        filterFactory.registerFilter("subset", new BaseEntityFilter(relKeys));
 
         keys.addAll(generalKeys);
         keys.addAll(redistributeKeys);
         keys.addAll(dataKeys);
         keys.addAll(portalKeys);
         keys.addAll(descriptionKeys);
+        keys.addAll(harvestingKeys);
         keys.addAll(ingestionKeys);
-        keys.addAll(controllingKeys);
-        keys.addAll(redistributeKeys);
+        keys.addAll(statisticKeys);
         keys.addAll(aggregationKeys);
-        keys.addAll(relationKeys);
+        keys.add(DatasetKeys.PROJECT);
+        keys.add(DatasetKeys.CASE);
+        keys.add(DatasetKeys.TICKET);
+        keys.add(DatasetKeys.TASK);
+        keys.add(DatasetKeys.SUBSET);
 
         Set<TKey<?, ?>> providerUserKeys = new HashSet<>();
         providerUserKeys.addAll(generalKeys);
-        providerUserKeys.addAll(dataKeys);
         providerUserKeys.addAll(redistributeKeys);
+        providerUserKeys.addAll(dataKeys);
         providerUserKeys.addAll(portalKeys);
         providerUserKeys.addAll(descriptionKeys);
+        providerUserKeys.addAll(harvestingKeys);
         providerUserKeys.addAll(ingestionKeys);
-        providerUserKeys.addAll(controllingKeys);
+        providerUserKeys.addAll(statisticKeys);
         providerUserKeys.addAll(aggregationKeys);
-        providerUserKeys.addAll(relationKeys);
+        providerUserKeys.add(DatasetKeys.PROJECT);
+        providerUserKeys.add(DatasetKeys.CASE);
+        providerUserKeys.add(DatasetKeys.TICKET);
+        providerUserKeys.add(DatasetKeys.TASK);
+        providerUserKeys.add(DatasetKeys.SUBSET);
         EntityFilter providerUserFilter = new BaseEntityFilter(providerUserKeys);
+        filterFactory.registerFilter("provider", providerUserFilter);
 
         Set<TKey<?, ?>> officeUserKeys = new HashSet<>();
         officeUserKeys.addAll(generalKeys);
-        officeUserKeys.addAll(dataKeys);
         officeUserKeys.addAll(redistributeKeys);
+        officeUserKeys.addAll(dataKeys);
         officeUserKeys.addAll(portalKeys);
         officeUserKeys.addAll(descriptionKeys);
+        officeUserKeys.addAll(harvestingKeys);
         officeUserKeys.addAll(ingestionKeys);
-        officeUserKeys.addAll(controllingKeys);
+        officeUserKeys.addAll(statisticKeys);
         officeUserKeys.addAll(aggregationKeys);
-        officeUserKeys.addAll(relationKeys);
+        officeUserKeys.add(DatasetKeys.PROJECT);
+        officeUserKeys.add(DatasetKeys.CASE);
+        officeUserKeys.add(DatasetKeys.TICKET);
+        officeUserKeys.add(DatasetKeys.TASK);
+        officeUserKeys.add(DatasetKeys.SUBSET);
         EntityFilter officeUserFilter = new BaseEntityFilter(officeUserKeys);
+        filterFactory.registerFilter("office", officeUserFilter);
 
         filterFactory.registerFilter("simple", new EntityFilter<String, Dataset<String>>() {
 
@@ -241,42 +282,62 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         return descriptionKeys;
     }
 
-    private Set<TKey<?, ?>> setupIngestionKeys() {
+    private Set<TKey<?, ?>> setupHarvestingKeys() {
         Set<TKey<?, ?>> ingestionKeys = new HashSet<>();
-//        ingestionKeys.add(DatasetKeys.MEMBER);
-//        ingestionKeys.add(DatasetKeys.MEMBERSHIP_TYPE);
+
+        ingestionKeys.add(DatasetKeys.HARVESTING_TIME);
+        ingestionKeys.add(DatasetKeys.HARVESTING_TIME_OTHER);
+        ingestionKeys.add(DatasetKeys.HARVESTING_DATE);
+        ingestionKeys.add(DatasetKeys.HARVESTING_UPDATE);
+        ingestionKeys.add(DatasetKeys.HARVESTING_RECORDS);
+
+        uniqueKeys.add(DatasetKeys.HARVESTING_TIME);
+        uniqueKeys.add(DatasetKeys.HARVESTING_TIME_OTHER);
+        uniqueKeys.add(DatasetKeys.HARVESTING_DATE);
+        uniqueKeys.add(DatasetKeys.HARVESTING_UPDATE);
+        uniqueKeys.add(DatasetKeys.HARVESTING_RECORDS);
+
         return ingestionKeys;
     }
 
-    private Set<TKey<?, ?>> setupControllingKeys() {
-        Set<TKey<?, ?>> controllingKeys = new HashSet<>();
-//        ingestionKeys.add(DatasetKeys.MEMBER);
-//        ingestionKeys.add(DatasetKeys.MEMBERSHIP_TYPE);
-        return controllingKeys;
+    private Set<TKey<?, ?>> setupIngestionKeys() {
+        Set<TKey<?, ?>> ingestionKeys = new HashSet<>();
+
+        ingestionKeys.add(DatasetKeys.INGESTION_NUMBER);
+        ingestionKeys.add(DatasetKeys.INGESTION_UPDATE);
+
+        return ingestionKeys;
+    }
+
+    private Set<TKey<?, ?>> setupStatisticsKeys() {
+        Set<TKey<?, ?>> statisticKeys = new HashSet<>();
+
+        statisticKeys.add(DatasetKeys.STATISTIC);
+
+        return statisticKeys;
     }
 
     private Set<TKey<?, ?>> setupAggregationKeys() {
         Set<TKey<?, ?>> aggregationKeys = new HashSet<>();
-//        ingestionKeys.add(DatasetKeys.MEMBER);
-//        ingestionKeys.add(DatasetKeys.MEMBERSHIP_TYPE);
+
+        aggregationKeys.add(DatasetKeys.AGGREGATION_DATE);
+        aggregationKeys.add(DatasetKeys.AGGREGATION_UPDATE);
+        aggregationKeys.add(DatasetKeys.EUROPEANA_ID);
+        aggregationKeys.add(DatasetKeys.EUROPEANA_RECORDS);
+        aggregationKeys.add(DatasetKeys.DIGITISED_CONTENT_RIGHTS);
+        aggregationKeys.add(DatasetKeys.EUROPEANA_DELIVERY_DATE);
+        
+        uniqueKeys.add(DatasetKeys.AGGREGATION_DATE);
+        uniqueKeys.add(DatasetKeys.AGGREGATION_UPDATE);
+        uniqueKeys.add(DatasetKeys.EUROPEANA_ID);
+        uniqueKeys.add(DatasetKeys.EUROPEANA_RECORDS);
+        uniqueKeys.add(DatasetKeys.DIGITISED_CONTENT_RIGHTS);
+        uniqueKeys.add(DatasetKeys.EUROPEANA_DELIVERY_DATE);
+
         return aggregationKeys;
     }
 
-    private Set<TKey<?, ?>> setupRelationshipKeys() {
-        Set<TKey<?, ?>> relationKeys = new HashSet<>();
-//        relationKeys.add(DatasetKeys.PROVIDER);
-//        relationKeys.add(DatasetKeys.CONTACT);
-//        relationKeys.add(DatasetKeys.PROJECT);
-//        relationKeys.add(DatasetKeys.CASE);
-//        relationKeys.add(DatasetKeys.TICKET);
-//        relationKeys.add(DatasetKeys.TASK);
-//        validQualifiers.put(DatasetKeys.PROVIDER, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.PROVIDER_RELATIONSHIP_TYPE);
-//            }
-//        });
-        return relationKeys;
-    }
+
 
     public EntityFilterFactory<String, Dataset<String>> getFilterFactory() {
         return filterFactory;

@@ -6,7 +6,6 @@
             "Language": "ENG",
             "Value": "British Library integrated catalogue - Online catalogues of printed and electronic resources"
         }],
-    "Language": ["ENG", "ENG"],
     "Country": "GB",
     "IngestionStatus": "PUBLISH",
     "DatasetType": "CATALOGUE",
@@ -36,6 +35,7 @@
             "Value": "LCSH"
         }],
     "Discipline": ["HUMANITIES"],
+    "Language": ["ENG"],
     "Subject": ["MEDIEVAL_HISTORY"],
     "TimeCoverage": ["RENAISSANCE"],
     "SpatialCoverage": ["PARIS"],
@@ -45,6 +45,72 @@
             "Value": {
                 "Title": "Title",
                 "Description": "KatNUK je glavni katalog naše knjižnice in je hkrati največji katalog posamezne knjižnice v Sloveniji. Obsega več kot 900.000 bibliografskih zapisov, ki predstavljajo: gradivo, ki ga knjižnica tekoče pridobiva od leta 1988; za obdobje 1774-1948 samo popis knjig in vse gradivo, ki ga je knjižnica pridobila v obdobju od 1948-1987. V katalogu so popisane monografske publikacije, novejše periodične publikacije in članki iz slovenskih strokovnih časnikov in revij (tekoče se popisujejo od leta 1990)"
+            }
+        }],
+    "HarvestingTime": "Other",
+    "HarvestingTimeOther": "Weekly",
+    "HarvestingDate": "01-01-2012",
+    "HarvestingUpdate": "01-01-2014",
+    "HarvestedRecords": "1000000",
+    "IngestionNumber": [{
+            "Value": {
+                "Type": "Loading",
+                "Number": "1000000"
+            }
+        }, {
+            "Value": {
+                "Type": "Indexing",
+                "Number": "1000000"
+            }
+        }],
+    "IngestionUpdate": [{
+            "Value": {
+                "Type": "Loading",
+                "Date": "01-01-2014",
+                "Number": "5000"
+            }
+        }, {
+            "Value": {
+                "Type": "Indexing",
+                "Date": "01-01-2014",
+                "Number": "5000"
+            }
+        }],
+    "Statistic": [{
+            "Value": {
+                "Type": "EDM",
+                "Status": "01-01-2014",
+                "Url": "5000"
+            }
+        }],
+    "AggregationDate": "01-01-2012",
+    "AggregationUpdate": "01-01-2014",
+    "EuropeanaId": "91209312",
+    "EuropeanaRecords": "1000000",
+    "DigitisedContentRights": "CC0",
+    "EuropeanaDeliveryDate": "01-01-2014",
+    "Project": [{
+            "Value": {
+                "Id": "31",
+                "Name": "EC1914"
+            }
+        }],
+    "Task": [{
+            "Value": {
+                "Id": "132",
+                "Name": "Update Information"
+            }
+        }],
+    "Ticket": [{
+            "Value": {
+                "Id": "132",
+                "Name": "Synchronization on portal doesn't work!"
+            }
+        }],
+    "Subset": [{
+            "Value": {
+                "Id": "132",
+                "Name": "a0037_a"
             }
         }]
 }
