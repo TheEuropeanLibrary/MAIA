@@ -1,6 +1,7 @@
 package org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions;
 
-import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.theeuropeanlibrary.maia.common.FieldId;
 
 /**
@@ -10,40 +11,66 @@ import org.theeuropeanlibrary.maia.common.FieldId;
  */
 public class CollectionDescription {
 
-    @FieldId(1)
-    private String title;
+	@FieldId(1)
+	private String title;
 
-    @FieldId(2)
-    private String description;
+	@FieldId(2)
+	private String description;
 
-    public CollectionDescription() {
-        // default constructor
+	public CollectionDescription() {
+		// default constructor
+	}
+
+	public CollectionDescription(String title, String description) {
+		this.title = title;
+		this.description = description;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	@Override
+    public int hashCode() {
+		
+        return new HashCodeBuilder(8574, 3243).
+            append(title).
+            append(description).
+            toHashCode();
     }
 
-    public CollectionDescription(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
+	@Override
+	public boolean equals(Object obj) {
 
-    public String getTitle() {
-        return title;
-    }
+		if (!(obj instanceof CollectionDescription))
+			return false;
+		if (obj == this)
+			return true;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+		CollectionDescription c = (CollectionDescription) obj;
+		
+		return new EqualsBuilder().
+	            append(c.getTitle(), this.title).
+	            append(c.getDescription(), this.description).
+	            isEquals();
+	}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "CollectionDescription{" + "title=" + title + ", description=" + description + '}';
-    }
+	@Override
+	public String toString() {
+		return "CollectionDescription{" + "title=" + title + ", description="
+				+ description + '}';
+	}
 
 }
