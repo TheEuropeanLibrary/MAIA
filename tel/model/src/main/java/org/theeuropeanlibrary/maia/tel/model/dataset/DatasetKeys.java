@@ -2,6 +2,8 @@ package org.theeuropeanlibrary.maia.tel.model.dataset;
 
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
+import org.theeuropeanlibrary.maia.tel.model.common.EntityRelation;
+import org.theeuropeanlibrary.maia.tel.model.common.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Agreement;
@@ -19,9 +21,6 @@ import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.It
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.SpatialCoverage;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Subject;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.TimeCoverage;
-import org.theeuropeanlibrary.maia.tel.model.provider.ProviderKeys;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
 
 /**
  * This class holds all the keys and qualifiers defining an provider in The
@@ -114,31 +113,31 @@ public final class DatasetKeys {
             String.class);
 
     @FieldId(151)
-    public static final TKey<ProviderKeys, PortalStatus> PORTAL_STATUS = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, PortalStatus> PORTAL_STATUS = TKey.register(
+            DatasetKeys.class,
             "PortalStatus",
             PortalStatus.class);
 
     @FieldId(152)
-    public static final TKey<ProviderKeys, String> LINK = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> LINK = TKey.register(
+            DatasetKeys.class,
             "Link",
             String.class);
 
     @FieldId(153)
-    public static final TKey<ProviderKeys, String> NOTE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> NOTE = TKey.register(
+            DatasetKeys.class,
             "Note",
             String.class);
 
 //    @FieldId(201)
-//    public static final TKey<ProviderKeys, String> DISCIPLINE = TKey.register(
-//            ProviderKeys.class,
+//    public static final TKey<DatasetKeys, String> DISCIPLINE = TKey.register(
+//            DatasetKeys.class,
 //            "Discipline",
 //            String.class);
     @FieldId(201)
-    public static final TKey<ProviderKeys, Discipline> DISCIPLINE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, Discipline> DISCIPLINE = TKey.register(
+            DatasetKeys.class,
             "Discipline",
             Discipline.class);
 
@@ -238,68 +237,68 @@ public final class DatasetKeys {
             Statistic.class);
 
     @FieldId(401)
-    public static final TKey<ProviderKeys, String> AGGREGATION_DATE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> AGGREGATION_DATE = TKey.register(
+            DatasetKeys.class,
             "AggregationDate",
             String.class);
 
     @FieldId(402)
-    public static final TKey<ProviderKeys, String> AGGREGATION_UPDATE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> AGGREGATION_UPDATE = TKey.register(
+            DatasetKeys.class,
             "AggregationUpdate",
             String.class);
 
     @FieldId(403)
-    public static final TKey<ProviderKeys, String> EUROPEANA_ID = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> EUROPEANA_ID = TKey.register(
+            DatasetKeys.class,
             "EuropeanaId",
             String.class);
 
     @FieldId(404)
-    public static final TKey<ProviderKeys, String> EUROPEANA_RECORDS = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> EUROPEANA_RECORDS = TKey.register(
+            DatasetKeys.class,
             "EuropeanaRecords",
             String.class);
 
     @FieldId(405)
-    public static final TKey<ProviderKeys, String> DIGITISED_CONTENT_RIGHTS = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> DIGITISED_CONTENT_RIGHTS = TKey.register(
+            DatasetKeys.class,
             "DigitisedContentRights",
             String.class);
 
     @FieldId(405)
-    public static final TKey<ProviderKeys, String> EUROPEANA_DELIVERY_DATE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, String> EUROPEANA_DELIVERY_DATE = TKey.register(
+            DatasetKeys.class,
             "EuropeanaDeliveryDate",
             String.class);
 
     @FieldId(451)
-    public static final TKey<ProviderKeys, EntityRelation> PROJECT = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, EntityRelation> PROJECT = TKey.register(
+            DatasetKeys.class,
             "Project",
             EntityRelation.class);
 
     @FieldId(452)
-    public static final TKey<ProviderKeys, EntityRelation> CASE = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, EntityRelation> CASE = TKey.register(
+            DatasetKeys.class,
             "Case",
             EntityRelation.class);
 
     @FieldId(453)
-    public static final TKey<ProviderKeys, EntityRelation> TICKET = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, EntityRelation> TICKET = TKey.register(
+            DatasetKeys.class,
             "Ticket",
             EntityRelation.class);
 
     @FieldId(454)
-    public static final TKey<ProviderKeys, EntityRelation> TASK = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, EntityRelation> TASK = TKey.register(
+            DatasetKeys.class,
             "Task",
             EntityRelation.class);
 
     @FieldId(455)
-    public static final TKey<ProviderKeys, EntityRelation> SUBSET = TKey.register(
-            ProviderKeys.class,
+    public static final TKey<DatasetKeys, EntityRelation> SUBSET = TKey.register(
+            DatasetKeys.class,
             "Subset",
             EntityRelation.class);
 

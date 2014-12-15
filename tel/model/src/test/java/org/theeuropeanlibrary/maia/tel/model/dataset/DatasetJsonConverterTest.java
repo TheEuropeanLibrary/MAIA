@@ -7,6 +7,8 @@ import org.theeuropeanlibrary.maia.common.Entity.QualifiedValue;
 import org.theeuropeanlibrary.maia.common.definitions.Dataset;
 import org.theeuropeanlibrary.maia.converter.json.EntityObjectMapper;
 import org.theeuropeanlibrary.maia.converter.json.DatasetEntityJsonConverter;
+import org.theeuropeanlibrary.maia.tel.model.common.EntityRelation;
+import org.theeuropeanlibrary.maia.tel.model.common.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
@@ -31,8 +33,6 @@ import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.It
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.SpatialCoverage;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Subject;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.TimeCoverage;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
 
 /**
  * This class tests conversion from and to xml representations for the The

@@ -179,6 +179,9 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
                 add(DatasetQualifiers.LANGUAGE);
             }
         });
+        
+        qualifiers.add(DatasetQualifiers.NAME_TYPE);
+        qualifiers.add(DatasetQualifiers.LANGUAGE);
 
         uniqueKeys.add(DatasetKeys.COUNTRY);
         uniqueKeys.add(DatasetKeys.INGESTION_STATUS);
@@ -210,27 +213,13 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
         dataKeys.add(DatasetKeys.EXPECTED_DIGITAL_OBJECTS);
         dataKeys.add(DatasetKeys.DATA_FORMAT);
 
-//        additionalKeys.add(DatasetKeys.STATUS_INFO);
-//        additionalKeys.add(DatasetKeys.DIGITISED_TYPE);
-//        additionalKeys.add(DatasetKeys.DISCIPLINE);
-//        additionalKeys.add(DatasetKeys.NOTE);
-//        additionalKeys.add(DatasetKeys.LINK);
-//        validQualifiers.put(DatasetKeys.NOTE, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.NOTE_TYPE);
-//                add(DatasetQualifiers.LANGUAGE);
-//            }
-//        });
-//        validQualifiers.put(DatasetKeys.LINK, new HashSet<Class<? extends Enum<?>>>() {
-//            {
-//                add(DatasetQualifiers.LINK_TYPE);
-//            }
-//        });
         validQualifiers.put(DatasetKeys.DATA_FORMAT, new HashSet<Class<? extends Enum<?>>>() {
             {
                 add(DatasetQualifiers.DATA_TYPE);
             }
         });
+        
+        qualifiers.add(DatasetQualifiers.DATA_TYPE);
 
         uniqueKeys.add(DatasetKeys.DIGITISATION_STATUS);
         uniqueKeys.add(DatasetKeys.EXPECTED_RECORDS);
@@ -256,6 +245,9 @@ public final class DatasetRegistry extends AbstractEntityRegistry {
                 add(DatasetQualifiers.NOTE_TYPE);
             }
         });
+        
+        qualifiers.add(DatasetQualifiers.LINK_TYPE);
+        qualifiers.add(DatasetQualifiers.NOTE_TYPE);
 
         uniqueKeys.add(DatasetKeys.PORTAL_STATUS);
 

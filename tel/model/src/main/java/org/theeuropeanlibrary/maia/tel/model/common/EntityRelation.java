@@ -1,4 +1,4 @@
-package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
+package org.theeuropeanlibrary.maia.tel.model.common;
 
 import java.util.Objects;
 import org.theeuropeanlibrary.maia.common.FieldId;

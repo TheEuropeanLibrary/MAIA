@@ -8,7 +8,7 @@ import org.theeuropeanlibrary.maia.tel.model.common.qualifier.NameType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LibraryOrganization;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LinkType;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
+import org.theeuropeanlibrary.maia.tel.model.common.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderRelationType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderType;
 

@@ -1,5 +1,6 @@
 package org.theeuropeanlibrary.maia.tel.model.provider.definitions;
 
+import org.theeuropeanlibrary.maia.tel.model.common.EntityRelation;
 import org.theeuropeanlibrary.maia.common.FieldId;
 
 /**

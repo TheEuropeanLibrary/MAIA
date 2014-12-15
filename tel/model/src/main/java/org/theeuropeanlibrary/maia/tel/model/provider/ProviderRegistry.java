@@ -61,7 +61,7 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
                 }
                 List<QualifiedValue<String>> qvs = entity.getQualifiedValues(ProviderKeys.LINK, LinkType.WEBSITE);
                 for (QualifiedValue<String> qv : qvs) {
-                    instance.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()])); 
+                    instance.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
                 }
                 return (Provider<String>) instance;
             }
@@ -79,10 +79,10 @@ public final class ProviderRegistry extends AbstractEntityRegistry {
                         }
                     }
                 }
-                 List<QualifiedValue<String>> qvs = mergee.getQualifiedValues(ProviderKeys.LINK, LinkType.WEBSITE);
-                 merger.deleteValues(ProviderKeys.LINK, LinkType.WEBSITE);
-                 for (QualifiedValue<String> qv : qvs) {
-                    merger.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()])); 
+                List<QualifiedValue<String>> qvs = mergee.getQualifiedValues(ProviderKeys.LINK, LinkType.WEBSITE);
+                merger.deleteValues(ProviderKeys.LINK, LinkType.WEBSITE);
+                for (QualifiedValue<String> qv : qvs) {
+                    merger.addValue(ProviderKeys.LINK, qv.getValue(), qv.getQualifiers().toArray(new Enum[qv.getQualifiers().size()]));
                 }
             }
 

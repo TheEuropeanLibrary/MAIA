@@ -3,15 +3,15 @@ package org.theeuropeanlibrary.maia.tel.model.provider;
 import org.theeuropeanlibrary.maia.common.FieldId;
 import org.theeuropeanlibrary.maia.common.TKey;
 import org.theeuropeanlibrary.maia.tel.model.common.Coordinate;
+import org.theeuropeanlibrary.maia.tel.model.common.EntityRelation;
+import org.theeuropeanlibrary.maia.tel.model.common.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Country;
 import org.theeuropeanlibrary.maia.tel.model.common.qualifier.Language;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.Address;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ConsortiumType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ContactRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.DatasetRelation;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.LibraryOrganization;
-import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.MembershipType;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.ProviderType;
 
