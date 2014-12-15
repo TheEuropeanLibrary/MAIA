@@ -21,6 +21,8 @@ import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionStatus
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.IngestionUpdate;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.License;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.LicenseType;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.LinkType;
+import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.NoteType;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Restriction;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.Statistic;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.CollectionDescription;
@@ -30,6 +32,7 @@ import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Sp
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.Subject;
 import org.theeuropeanlibrary.maia.tel.model.dataset.definitions.descriptions.TimeCoverage;
 import org.theeuropeanlibrary.maia.tel.model.provider.definitions.EntityRelation;
+import org.theeuropeanlibrary.maia.tel.model.provider.definitions.PortalStatus;
 
 /**
  * This class tests conversion from and to xml representations for the The
@@ -101,6 +104,10 @@ public class DatasetJsonConverterTest {
         license.setDistribution(LicenseType.BY);
         license.setFurtherInformation("BLA");
         dataset.addValue(DatasetKeys.LICENSE, license);
+        
+        dataset.addValue(DatasetKeys.PORTAL_STATUS, PortalStatus.LIVE);
+        dataset.addValue(DatasetKeys.LINK, "http://www.theeuropeanlibrary.org/tel4/collection/a0037", LinkType.ACCESS);
+        dataset.addValue(DatasetKeys.NOTE, "Limited access", NoteType.ACCESS_RIGHTS);
 
         dataset.addValue(DatasetKeys.DIGITISATION_STATUS, DigitisationStatus.PARTIALLY_DIGITISED);
         dataset.addValue(DatasetKeys.EXPECTED_RECORDS, "13000000");
