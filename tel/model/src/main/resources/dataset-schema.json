@@ -4,8 +4,11 @@
         "id": {
             "type": "string"
         },
-        "IngestionStatus": {
-            "enum": ["ACCEPTANCE", "PUBLISH"]
+        "Identifier": {
+            "type": "string"
+        },
+        "DatasetType": {
+            "enum": ["BIBLIOGRAPHY", "CATALOGUE", "COLLECTION", "DATABASE", "DATASET", "FINDING_AIDS", "PASSTHROUGH", "PERSONAL_COLLECTION", "REPOSITORY", "VIRUTAL_EXHIBITION"]
         },
         "Country": {
             "enum": ["AD", "AE", "AF", "AG", "AI", "AL", "AM", "AN", "AO", "AQ", "AR", "AS", "AT", "AU", "AW", "AX", "AZ", "BA", "BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BL", "BM", "BN", "BO", "BR", "BS", "BT", "BV", "BW", "BY", "BZ", "CA", "CC", "CD", "CF", "CG", "CH", "CI", "CK", "CL", "CM", "CN", "CO", "CR", "CS", "CU", "CV", "CX", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", "EC", "EE", "EG", "EH", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FO", "FR", "GA", "GB", "GD", "GE", "GF", "GG", "GH", "GI", "GL", "GM", "GN", "GP", "GQ", "GR", "GS", "GT", "GU", "GW", "GY", "HK", "HM", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IO", "IQ", "IR", "IS", "IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KP", "KR", "KW", "KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", "LY", "MA", "MC", "MD", "ME", "MF", "MG", "MH", "MK", "ML", "MM", "MN", "MO", "MP", "MQ", "MR", "MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NC", "NE", "NF", "NG", "NI", "NL", "NO", "NP", "NR", "NU", "NZ", "OM", "PA", "PE", "PF", "PG", "PH", "PK", "PL", "PM", "PN", "PR", "PS", "PT", "PW", "PY", "QA", "RE", "RO", "RS", "RU", "RW", "SA", "SB", "SC", "SD", "SE", "SG", "SH", "SI", "SJ", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", "SY", "SZ", "TC", "TD", "TF", "TG", "TH", "TJ", "TK", "TL", "TM", "TN", "TO", "TR", "TT", "TV", "TW", "TZ", "UA", "UG", "UM", "US", "UY", "UZ", "VA", "VC", "VE", "VG", "VI", "VN", "VU", "WF", "WS", "YE", "YT", "ZA", "ZM", "ZW", "XX"]
@@ -24,11 +27,22 @@
                 }
             }
         },
-        "Identifier": {
-            "type": "string"
+        "IngestionStatus": {
+            "enum": ["ACCEPTANCE", "PUBLISH"]
         },
-        "DatasetType": {
-            "enum": ["BIBLIOGRAPHY", "CATALOGUE", "COLLECTION", "DATABASE", "DATASET", "FINDING_AIDS", "PASSTHROUGH", "PERSONAL_COLLECTION", "REPOSITORY", "VIRUTAL_EXHIBITION"]
+        "Agreement": {
+            "type": "object",
+            "properties": {
+                "Status": {
+                    "enum": ["NONE", "READY", "INTERNAL_READY", "PUBLISH"]
+                },
+                "Signed": {
+                    "type": "string"
+                },
+                "Appendix": {
+                    "type": "string"
+                }
+            }
         },
         "License": {
             "type": "object",
@@ -43,20 +57,6 @@
                     "enum": ["BY", "BY_ND", "BY_NC", "BY_NC_ND", "BY_NC_SA", "BY_SA", "FRANCE", "OTHER"]
                 },
                 "FurtherInformation": {
-                    "type": "string"
-                }
-            }
-        },
-        "Agreement": {
-            "type": "object",
-            "properties": {
-                "Status": {
-                    "enum": ["NONE", "READY", "INTERNAL_READY", "PUBLISH"]
-                },
-                "Signed": {
-                    "type": "string"
-                },
-                "Appendix": {
                     "type": "string"
                 }
             }
@@ -95,22 +95,11 @@
                 }
             }
         },
-        "ExpectedDigitalObjects": {
-            "type": "string"
-        },
         "DigitisationStatus": {
             "enum": ["DIGITISED", "NON_DIGITISED", "PARTIALLY_DIGITISED"]
         },
-        "Link": {
-            "type": "array",
-            "items": {
-                "LinkType": {
-                    "enum": ["DESCRIPTION", "ACCESS"]
-                },
-                "Value": {
-                    "type": "string"
-                }
-            }
+        "ExpectedDigitalObjects": {
+            "type": "string"
         },
         "Note": {
             "type": "array",
@@ -123,14 +112,19 @@
                 }
             }
         },
-        "PortalStatus": {
-            "enum": ["PREPARATION", "INTERNAL", "ACCEPTANCE", "SUSPENDED", "LIVE"]
-        },
-        "ItemType": {
+        "Link": {
             "type": "array",
             "items": {
-                "enum": ["BLUE_PRINT"]
+                "LinkType": {
+                    "enum": ["DESCRIPTION", "ACCESS"]
+                },
+                "Value": {
+                    "type": "string"
+                }
             }
+        },
+        "PortalStatus": {
+            "enum": ["PREPARATION", "INTERNAL", "ACCEPTANCE", "SUSPENDED", "LIVE"]
         },
         "CollectionDescription": {
             "type": "array",
@@ -148,12 +142,6 @@
                 }
             }
         },
-        "SpatialCoverage": {
-            "type": "array",
-            "items": {
-                "enum": ["PARIS"]
-            }
-        },
         "Discipline": {
             "type": "array",
             "items": {
@@ -164,6 +152,12 @@
             "type": "array",
             "items": {
                 "enum": ["RENAISSANCE"]
+            }
+        },
+        "SpatialCoverage": {
+            "type": "array",
+            "items": {
+                "enum": ["PARIS"]
             }
         },
         "Language": {
@@ -178,8 +172,11 @@
                 "enum": ["MEDIEVAL_HISTORY"]
             }
         },
-        "HarvestingDate": {
-            "type": "string"
+        "ItemType": {
+            "type": "array",
+            "items": {
+                "enum": ["BLUE_PRINT"]
+            }
         },
         "HarvestingTime": {
             "type": "string"
@@ -187,10 +184,13 @@
         "HarvestedRecords": {
             "type": "string"
         },
-        "HarvestingTimeOther": {
+        "HarvestingUpdate": {
             "type": "string"
         },
-        "HarvestingUpdate": {
+        "HarvestingDate": {
+            "type": "string"
+        },
+        "HarvestingTimeOther": {
             "type": "string"
         },
         "IngestionUpdate": {
@@ -238,22 +238,22 @@
                 }
             }
         },
-        "EuropeanaRecords": {
-            "type": "string"
-        },
         "EuropeanaDeliveryDate": {
             "type": "string"
         },
-        "EuropeanaId": {
+        "DigitisedContentRights": {
+            "type": "string"
+        },
+        "EuropeanaRecords": {
             "type": "string"
         },
         "AggregationUpdate": {
             "type": "string"
         },
-        "AggregationDate": {
+        "EuropeanaId": {
             "type": "string"
         },
-        "DigitisedContentRights": {
+        "AggregationDate": {
             "type": "string"
         },
         "Project": {
